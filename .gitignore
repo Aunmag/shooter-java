@@ -1,0 +1,9 @@
+# General
+target
+*.log
+shooter.iml
+
+# Assets
+src/main/resources/**/*.png
+src/main/resources/**/*.ogg
+src/main/resources/**/*.fnt
