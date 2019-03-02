@@ -1,12 +1,8 @@
 package aunmag.shooter.game.client.states
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.basics.BaseGrid
 import aunmag.shooter.core.font.FontStyleDefault
-import aunmag.shooter.core.gui.GuiButton
-import aunmag.shooter.core.gui.GuiLabel
-import aunmag.shooter.core.gui.GuiManager
-import aunmag.shooter.core.gui.GuiPage
+import aunmag.shooter.core.gui.*
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
 import aunmag.shooter.game.client.App
@@ -32,13 +28,13 @@ class Pause {
         page.add(GuiLabel(3, 3, 6, 1, Constants.TITLE))
         // TODO: Change
         page.add(GuiLabel(
-                BaseGrid.grid24,
+                Grid(24),
                 6, 8, 12, 1,
                 "v " + Constants.VERSION,
                 FontStyleDefault.labelLight
         ))
         page.add(GuiLabel(
-                BaseGrid.grid24,
+                Grid(24),
                 6, 9, 12, 1,
                 " by " + Constants.DEVELOPER,
                 FontStyleDefault.labelLight

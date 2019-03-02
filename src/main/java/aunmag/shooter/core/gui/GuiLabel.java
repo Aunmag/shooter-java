@@ -1,6 +1,5 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.basics.BaseGrid;
 import aunmag.shooter.core.basics.BaseQuad;
 import aunmag.shooter.core.font.FontStyle;
 import aunmag.shooter.core.font.FontStyleDefault;
@@ -10,11 +9,11 @@ import org.joml.Vector4f;
 public class GuiLabel extends BaseQuad {
 
     private static final int padding = 2;
-    private BaseGrid grid;
+    private Grid grid;
     private Text text;
 
     public GuiLabel(int x, int y, int width, int height, String message) {
-        this(BaseGrid.grid12, x, y, width, height, message, FontStyleDefault.label);
+        this(Grid.GRID_12, x, y, width, height, message, FontStyleDefault.label);
     }
 
     public GuiLabel(
@@ -25,11 +24,11 @@ public class GuiLabel extends BaseQuad {
             String message,
             FontStyle style
     ) {
-        this(BaseGrid.grid12, x, y, width, height, message, style);
+        this(Grid.GRID_12, x, y, width, height, message, style);
     }
 
     public GuiLabel(
-            BaseGrid grid,
+            Grid grid,
             int x,
             int y,
             int width,

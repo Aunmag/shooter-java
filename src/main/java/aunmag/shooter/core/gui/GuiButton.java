@@ -1,6 +1,5 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.basics.BaseGrid;
 import aunmag.shooter.core.basics.BaseQuad;
 import aunmag.shooter.core.font.FontStyleDefault;
 import aunmag.shooter.core.input.Input;
@@ -31,11 +30,11 @@ public class GuiButton extends GuiLabel {
             String text,
             @Nullable Runnable action
     ) {
-        this(BaseGrid.grid12, x, y, width, height, text, action);
+        this(Grid.GRID_12, x, y, width, height, text, action);
     }
 
     public GuiButton(
-            BaseGrid grid,
+            Grid grid,
             int x,
             int y,
             int width,

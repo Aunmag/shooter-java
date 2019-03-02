@@ -1,8 +1,8 @@
 package aunmag.shooter.game.gui
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.basics.BaseGrid
 import aunmag.shooter.core.font.FontStyleDefault
+import aunmag.shooter.core.gui.Grid
 import aunmag.shooter.core.gui.GuiLabel
 import aunmag.shooter.core.utilities.FluidToggle
 import aunmag.shooter.core.utilities.UtilsGraphics
@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11
 class Parameter(title: String, var value: Float, x: Int, y: Int) {
 
     companion object {
-        private val grid = BaseGrid(36)
+        private val grid = Grid(36)
         private val pulse = FluidToggle(Application.time, 0.2)
 
         fun update() {
