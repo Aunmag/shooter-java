@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>aunmag.shooter</groupId>
     <artifactId>shooter</artifactId>
-    <version>0.0.1</version>
+    <version>0.3.113</version>
 
     <properties>
         <main-class>aunmag.shooter.game.client.App</main-class>
