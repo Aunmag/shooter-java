@@ -3,9 +3,10 @@ package aunmag.shooter.game.gui
 import aunmag.shooter.core.Application
 import aunmag.shooter.core.font.FontStyleDefault
 import aunmag.shooter.core.gui.Grid
-import aunmag.shooter.core.gui.GuiLabel
+import aunmag.shooter.core.gui.Label
 import aunmag.shooter.core.utilities.FluidToggle
 import aunmag.shooter.core.utilities.UtilsGraphics
+import org.joml.Vector4f
 import org.lwjgl.opengl.GL11
 
 class Parameter(title: String, var value: Float, x: Int, y: Int) {
@@ -23,10 +24,10 @@ class Parameter(title: String, var value: Float, x: Int, y: Int) {
     }
 
     var isPulsing = false
-    private val label = GuiLabel(grid, x, y, 1, 1, title, FontStyleDefault.labelLight)
+    private val label = Label(grid, x, y, 1, 1, title, FontStyleDefault.labelLight)
 
     init {
-        label.setTextColour(1.0f, 1.0f, 1.0f, 0.5f)
+        label.setTextColour(Vector4f(1.0f, 1.0f, 1.0f, 0.5f))
     }
 
     fun render() {

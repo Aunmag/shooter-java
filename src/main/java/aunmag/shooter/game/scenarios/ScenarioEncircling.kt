@@ -2,9 +2,9 @@ package aunmag.shooter.game.scenarios
 
 import aunmag.shooter.core.Application
 import aunmag.shooter.core.font.FontStyleDefault
-import aunmag.shooter.core.gui.GuiButton
-import aunmag.shooter.core.gui.GuiLabel
-import aunmag.shooter.core.gui.GuiPage
+import aunmag.shooter.core.gui.Button
+import aunmag.shooter.core.gui.Label
+import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.Timer
 import aunmag.shooter.core.utilities.UtilsGraphics
@@ -218,16 +218,16 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         val wallpaper = Texture.getOrCreate(
                 "images/wallpapers/$wallpaperName", Texture.Type.WALLPAPER
         )
-        val page = GuiPage(wallpaper)
+        val page = Page(wallpaper)
 
         val title = if (isVictory) "Well done!" else "You have died"
         val kills = player?.kills ?: 0
         val wavesSurvived = if (isVictory) wave else wave - 1
         val score = "You killed $kills zombies and survived $wavesSurvived/$waveFinal waves."
 
-        page.add(GuiLabel(4, 3, 4, 1, title))
-        page.add(GuiLabel(4, 4, 4, 1, score, FontStyleDefault.labelLight))
-        page.add(GuiButton(4, 9, 4, 1, "Back to main menu", GuiButton.actionBack))
+        page.add(Label(4, 3, 4, 1, title))
+        page.add(Label(4, 4, 4, 1, score, FontStyleDefault.labelLight))
+        page.add(Button(4, 9, 4, 1, "Back to main menu", Button.ACTION_BACK))
 
         page.open()
         App.main.isPause = true

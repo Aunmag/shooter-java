@@ -1,11 +1,12 @@
 package aunmag.shooter.game.gui
 
 import aunmag.shooter.core.font.FontStyleDefault
-import aunmag.shooter.core.gui.GuiLabel
+import aunmag.shooter.core.gui.Label
 import aunmag.shooter.core.utilities.Operative
 import aunmag.shooter.core.utilities.TimeFlow
 import aunmag.shooter.core.utilities.Timer
 import aunmag.shooter.core.utilities.UtilsMath
+import org.joml.Vector4f
 
 internal class Notification(
         time: TimeFlow,
@@ -16,8 +17,8 @@ internal class Notification(
     private val timeFadeIn = 0.125f
     private val timeFadeOut = 0.5f
     private val timer = Timer(time, 3.0)
-    private val title = GuiLabel(5, 4, 2, 1, title)
-    private val details = GuiLabel(5, 5, 2, 1, details, FontStyleDefault.labelLight)
+    private val title = Label(5, 4, 2, 1, title)
+    private val details = Label(5, 5, 2, 1, details, FontStyleDefault.labelLight)
 
     init {
         timer.next()
@@ -40,9 +41,10 @@ internal class Notification(
         }.toFloat()
 
         val alpha = UtilsMath.limitNumber(timeFade, 0f, 1f)
+        val color = Vector4f(1f, 1f, 1f, alpha)
 
-        title.setTextColour(1f, 1f, 1f, alpha)
-        details.setTextColour(1f, 1f, 1f, alpha)
+        title.setTextColour(color)
+        details.setTextColour(color)
 
         title.render()
         details.render()

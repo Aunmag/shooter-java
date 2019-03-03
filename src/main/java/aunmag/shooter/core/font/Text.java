@@ -15,7 +15,7 @@ public class Text extends BaseQuad {
 
     final FontStyle style;
     @Nullable private TextVao vao = null;
-    private Vector4f colour = new Vector4f(1f, 1f, 1f, 1f);
+    private Vector4f colour = new Vector4f(1f, 1f, 1f, 1f); // TODO: Made default static
     private Matrix4f projection;
     private boolean isRenderingOrdered = false;
     private boolean isOnWorldRendering = false;
@@ -101,13 +101,6 @@ public class Text extends BaseQuad {
     }
 
     /* Setters */
-
-    public void setColour(float red, float green, float blue, float alpha) {
-        colour.x = red;
-        colour.y = green;
-        colour.z = blue;
-        colour.w = alpha;
-    }
 
     public void setColour(Vector4f colour) {
         this.colour = colour;
