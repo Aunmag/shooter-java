@@ -42,6 +42,7 @@ public final class TextManager {
             textsByFont.removeAll(textsToDelete);
         }
 
+        Application.getShader().setUniformColourDefault();
         TextVao.unbind();
     }
 

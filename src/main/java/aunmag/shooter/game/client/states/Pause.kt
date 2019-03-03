@@ -10,6 +10,7 @@ import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Constants
+import org.joml.Vector4f
 
 class Pause {
 
@@ -31,19 +32,16 @@ class Pause {
         val page = Page(wallpaper)
 
         page.add(Label(3, 3, 6, 1, Constants.TITLE))
-        // TODO: Change
-        page.add(Label(
+
+        val version = Label(
                 Grid(24),
-                6, 8, 12, 1,
-                "v " + Constants.VERSION,
+                11, 8, 2, 1,
+                "v" + Constants.VERSION,
                 FontStyleDefault.labelLight
-        ))
-        page.add(Label(
-                Grid(24),
-                6, 9, 12, 1,
-                " by " + Constants.DEVELOPER,
-                FontStyleDefault.labelLight
-        ))
+        )
+        version.setTextColour(Vector4f(1f, 1f, 1f, 0.75f))
+
+        page.add(version)
         page.add(buttonContinue)
         page.add(Button(4, 8, 4, 1, "New game") { App.main.newGame() })
         page.add(Button(4, 9, 4, 1, "Help", createPageHelp()::open))
