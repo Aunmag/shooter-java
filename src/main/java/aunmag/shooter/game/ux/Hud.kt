@@ -1,7 +1,7 @@
 package aunmag.shooter.game.ux
 
-import aunmag.shooter.core.font.FontStyleDefault
-import aunmag.shooter.core.font.Text
+import aunmag.shooter.core.gui.font.FontStyle
+import aunmag.shooter.core.gui.font.Text
 import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.data.player
@@ -12,7 +12,7 @@ class Hud {
     private val health = Parameter("Health", 0.0f, 30, 32)
     private val stamina = Parameter("Stamina", 0.0f, 30, 33)
     private val ammo = Parameter("Ammo", 0.0f, 30, 34)
-    private val debug = Text(10f, 10f, "", FontStyleDefault.simple)
+    private val debug = Text(10f, 10f, "", FontStyle.SIMPLE)
 
     fun update() {
         Parameter.update()

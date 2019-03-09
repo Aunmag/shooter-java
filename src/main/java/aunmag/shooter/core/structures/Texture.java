@@ -23,6 +23,16 @@ public class Texture extends BaseQuad {
     private int id;
     private Model model;
 
+    public static Texture createEmpty() {
+        return new Texture(
+            new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB),
+            true,
+            true,
+            1,
+            1
+        );
+    }
+
     public static Texture getOrCreate(String name, Type type) {
         return getOrCreate(name, type, null, null, null, null);
     }

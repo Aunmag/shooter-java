@@ -1,10 +1,10 @@
 package aunmag.shooter.game.scenarios
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.font.FontStyleDefault
 import aunmag.shooter.core.gui.Button
 import aunmag.shooter.core.gui.Label
 import aunmag.shooter.core.gui.Page
+import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.Timer
 import aunmag.shooter.core.utilities.UtilsGraphics
@@ -226,7 +226,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         val score = "You killed $kills zombies and survived $wavesSurvived/$waveFinal waves."
 
         page.add(Label(4, 3, 4, 1, title))
-        page.add(Label(4, 4, 4, 1, score, FontStyleDefault.labelLight))
+        page.add(Label(4, 4, 4, 1, score, FontStyle.LABEL_LIGHT))
         page.add(Button(4, 9, 4, 1, "Back to main menu", Button.ACTION_BACK))
 
         page.open()

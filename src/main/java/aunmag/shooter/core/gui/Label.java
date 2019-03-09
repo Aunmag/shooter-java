@@ -1,9 +1,8 @@
 package aunmag.shooter.core.gui;
 
 import aunmag.shooter.core.basics.BaseQuad;
-import aunmag.shooter.core.font.FontStyle;
-import aunmag.shooter.core.font.FontStyleDefault;
-import aunmag.shooter.core.font.Text;
+import aunmag.shooter.core.gui.font.FontStyle;
+import aunmag.shooter.core.gui.font.Text;
 import org.joml.Vector4f;
 
 public class Label extends BaseQuad {
@@ -13,7 +12,7 @@ public class Label extends BaseQuad {
     protected BaseQuad screenQuad;
 
     public Label(int x, int y, int width, int height, String message) {
-        this(Grid.GRID_12, x, y, width, height, message, FontStyleDefault.label);
+        this(Grid.GRID_12, x, y, width, height, message, FontStyle.LABEL);
     }
 
     public Label(

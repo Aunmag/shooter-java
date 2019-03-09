@@ -1,31 +1,31 @@
-package aunmag.shooter.core.font;
+package aunmag.shooter.core.gui.font;
 
-class Character {
+public class Character {
 
-    final int asciiId;
-    final float offsetX;
-    final float offsetY;
-    final float offsetAdvanceX;
-    final float sizeX;
-    final float sizeY;
-    final Float[] textureCoordinates;
+    public final int ascii;
+    public final float offsetX;
+    public final float offsetY;
+    public final float offsetAdvance;
+    public final float sizeX;
+    public final float sizeY;
+    public final Float[] textureCoordinates;
 
-    Character(
-            int asciiId,
+    public Character(
+            int ascii,
             float x1,
             float y1,
             float textureSizeX,
             float textureSizeY,
             float offsetX,
             float offsetY,
-            float offsetAdvanceX,
+            float offsetAdvance,
             float sizeX,
             float sizeY
     ) {
-        this.asciiId = asciiId;
+        this.ascii = ascii;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
-        this.offsetAdvanceX = offsetAdvanceX;
+        this.offsetAdvance = offsetAdvance;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
 

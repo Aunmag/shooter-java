@@ -1,7 +1,8 @@
-package aunmag.shooter.core.font;
+package aunmag.shooter.core.gui.font;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.basics.BaseQuad;
+import aunmag.shooter.core.utilities.UtilsGraphics;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -13,9 +14,10 @@ public class Text extends BaseQuad {
 
     public static final TextManager manager = new TextManager();
 
-    final FontStyle style;
-    @Nullable private TextVao vao = null;
-    private Vector4f colour = new Vector4f(1f, 1f, 1f, 1f); // TODO: Made default static
+    public final FontStyle style;
+    @Nullable
+    private TextVao vao = null;
+    private Vector4f colour = UtilsGraphics.COLOR_WHITE;
     private Matrix4f projection;
     private boolean isRenderingOrdered = false;
     private boolean isOnWorldRendering = false;
@@ -38,14 +40,14 @@ public class Text extends BaseQuad {
         vao = new TextVao(message, style);
 
         setSize(
-                vao.getWidth() * Application.getWindow().getCenterX(),
-                vao.height * Application.getWindow().getCenterY()
+                vao.sizeX * Application.getWindow().getCenterX(),
+                vao.sizeY * Application.getWindow().getCenterY()
         );
     }
 
     public void updateProjection() {
-        float x = getPosition().x();
-        float y = getPosition().y();
+        var x = getPosition().x();
+        var y = getPosition().y();
         Vector2f position;
 
         if (isOnWorldRendering) {
@@ -77,7 +79,7 @@ public class Text extends BaseQuad {
 
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
-        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vao.vertexCount);
+        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vao.vertices);
         GL20.glDisableVertexAttribArray(0);
         GL20.glDisableVertexAttribArray(1);
 
@@ -85,12 +87,10 @@ public class Text extends BaseQuad {
     }
 
     public void remove() {
-        if (isRemoved()) {
-            return;
+        if (!isRemoved()) {
+            removeVao();
+            super.remove();
         }
-
-        removeVao();
-        super.remove();
     }
 
     private void removeVao() {
@@ -107,12 +107,10 @@ public class Text extends BaseQuad {
     }
 
     public void setOnWorldRendering(boolean isOnWorldRendering) {
-        if (this.isOnWorldRendering == isOnWorldRendering) {
-            return;
+        if (this.isOnWorldRendering != isOnWorldRendering) {
+            this.isOnWorldRendering = isOnWorldRendering;
+            updateProjection();
         }
-
-        this.isOnWorldRendering = isOnWorldRendering;
-        updateProjection();
     }
 
     /* Getters */

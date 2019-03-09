@@ -1,7 +1,7 @@
 package aunmag.shooter.game.gui
 
-import aunmag.shooter.core.font.FontStyleDefault
 import aunmag.shooter.core.gui.Label
+import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.utilities.Operative
 import aunmag.shooter.core.utilities.TimeFlow
 import aunmag.shooter.core.utilities.Timer
@@ -18,7 +18,7 @@ internal class Notification(
     private val timeFadeOut = 0.5f
     private val timer = Timer(time, 3.0)
     private val title = Label(5, 4, 2, 1, title)
-    private val details = Label(5, 5, 2, 1, details, FontStyleDefault.labelLight)
+    private val details = Label(5, 5, 2, 1, details, FontStyle.LABEL_LIGHT)
 
     init {
         timer.next()

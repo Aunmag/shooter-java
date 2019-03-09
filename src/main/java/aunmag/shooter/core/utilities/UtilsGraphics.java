@@ -10,6 +10,8 @@ import org.lwjgl.opengl.GL20;
 
 public final class UtilsGraphics {
 
+    public static final Vector4f COLOR_WHITE = new Vector4f(1f, 1f, 1f, 1f);
+
     private UtilsGraphics() {}
 
     public static void drawPrepare() {

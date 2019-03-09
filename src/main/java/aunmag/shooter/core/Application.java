@@ -3,7 +3,7 @@ package aunmag.shooter.core;
 import aunmag.shooter.core.audio.AudioMaster;
 import aunmag.shooter.core.audio.AudioSample;
 import aunmag.shooter.core.audio.AudioSource;
-import aunmag.shooter.core.font.Text;
+import aunmag.shooter.core.gui.font.Text;
 import aunmag.shooter.core.input.Input;
 import aunmag.shooter.core.shaders.ShaderTextured;
 import aunmag.shooter.core.structures.Model;

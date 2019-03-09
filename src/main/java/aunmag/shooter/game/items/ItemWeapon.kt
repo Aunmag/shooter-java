@@ -1,8 +1,8 @@
 package aunmag.shooter.game.items
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.font.FontStyleDefault
-import aunmag.shooter.core.font.Text
+import aunmag.shooter.core.gui.font.FontStyle
+import aunmag.shooter.core.gui.font.Text
 import aunmag.shooter.core.input.Input
 import aunmag.shooter.core.math.BodyCircle
 import aunmag.shooter.core.math.CollisionCC
@@ -35,7 +35,7 @@ class ItemWeapon private constructor(
     private val pulseMin = 0.12f
     private val pulseMax = 0.18f
     private val rotationVelocity = Math.PI.toFloat()
-    private val text = Text(x, y, weapon.type.name, FontStyleDefault.simple)
+    private val text = Text(x, y, weapon.type.name, FontStyle.SIMPLE)
 
     init {
         text.setOnWorldRendering(true)

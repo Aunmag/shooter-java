@@ -1,9 +1,9 @@
 package aunmag.shooter.game.gui
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.font.FontStyleDefault
 import aunmag.shooter.core.gui.Grid
 import aunmag.shooter.core.gui.Label
+import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.utilities.FluidToggle
 import aunmag.shooter.core.utilities.UtilsGraphics
 import org.joml.Vector4f
@@ -24,7 +24,7 @@ class Parameter(title: String, var value: Float, x: Int, y: Int) {
     }
 
     var isPulsing = false
-    private val label = Label(grid, x, y, 1, 1, title, FontStyleDefault.labelLight)
+    private val label = Label(grid, x, y, 1, 1, title, FontStyle.LABEL_LIGHT)
 
     init {
         label.setTextColour(Vector4f(1.0f, 1.0f, 1.0f, 0.5f))

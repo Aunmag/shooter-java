@@ -1,11 +1,11 @@
 package aunmag.shooter.game.client.states
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.font.FontStyleDefault
 import aunmag.shooter.core.gui.Button
 import aunmag.shooter.core.gui.Grid
 import aunmag.shooter.core.gui.Label
 import aunmag.shooter.core.gui.Page
+import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
 import aunmag.shooter.game.client.App
@@ -37,7 +37,7 @@ class Pause {
                 Grid(24),
                 11, 8, 2, 1,
                 "v" + Constants.VERSION,
-                FontStyleDefault.labelLight
+                FontStyle.LABEL_LIGHT
         )
         version.setTextColour(Vector4f(1f, 1f, 1f, 0.75f))
 
@@ -55,7 +55,7 @@ class Pause {
                 "images/wallpapers/help", Texture.Type.WALLPAPER
         )
         val page = Page(wallpaper)
-        val style = FontStyleDefault.labelLight
+        val style = FontStyle.LABEL_LIGHT
 
         page.add(Label(5, 1, 2, 1, "Help"))
         page.add(Label(4, 3, 1, 1, "Movement", style))

@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.font.FontStyleDefault;
+import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.input.Input;
 import aunmag.shooter.core.utilities.UtilsGraphics;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +39,7 @@ public class Button extends Label {
             String text,
             @Nullable Runnable action
     ) {
-        super(grid, x, y, width, height, text, FontStyleDefault.label);
+        super(grid, x, y, width, height, text, FontStyle.LABEL);
         this.action = action;
     }
 
