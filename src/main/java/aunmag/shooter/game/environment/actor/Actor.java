@@ -1,7 +1,6 @@
 package aunmag.shooter.game.environment.actor;
 
 import aunmag.shooter.core.audio.AudioSample;
-import aunmag.shooter.core.audio.AudioSampleType;
 import aunmag.shooter.core.audio.AudioSource;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
@@ -53,7 +52,7 @@ public class Actor extends Operative {
     static {
         for (int i = 0; i < samples.length; i++) {
             String sampleName = "sounds/actors/human_hurt_" + (i + 1);
-            samples[i] = AudioSample.getOrCreate(sampleName, AudioSampleType.OGG);
+            samples[i] = AudioSample.getOrCreate(sampleName);
         }
     }
 
@@ -68,6 +67,8 @@ public class Actor extends Operative {
         isAiming.setFlexDegree(AIMING_FLEX);
 
         kinetics = new Kinetics(type.weight);
+
+        audioSource.setVolume(5);
     }
 
     public void update() {
@@ -83,6 +84,7 @@ public class Actor extends Operative {
         updateCollision();
         hands.update();
         updateWeapon();
+        updateAudioSource();
     }
 
     private void updateStamina() {
@@ -151,6 +153,10 @@ public class Actor extends Operative {
         }
 
         weapon.update();
+    }
+
+    private void updateAudioSource() {
+        audioSource.setPosition(body.position.x, body.position.y);
     }
 
     private void walk() {

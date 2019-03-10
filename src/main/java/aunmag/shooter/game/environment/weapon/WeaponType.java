@@ -1,7 +1,6 @@
 package aunmag.shooter.game.environment.weapon;
 
 import aunmag.shooter.core.audio.AudioSample;
-import aunmag.shooter.core.audio.AudioSampleType;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.game.environment.magazine.MagazineType;
 import aunmag.shooter.game.environment.projectile.ProjectileType;
@@ -41,7 +40,7 @@ public class WeaponType {
         String path = "weapons/" + name;
         this.name = name;
         this.texture = Texture.getOrCreate(path + "/image", Texture.Type.SPRITE);
-        this.sample = AudioSample.getOrCreate(path + "/shot", AudioSampleType.OGG);
+        this.sample = AudioSample.getOrCreate(path + "/shot");
         this.shotsPerMinute = shotsPerMinute;
         this.velocity = velocity;
         this.velocityDeflection = velocity * 0.03f;

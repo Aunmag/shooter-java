@@ -1,82 +1,81 @@
 package aunmag.shooter.core.audio;
 
 import aunmag.shooter.core.Configs;
-import org.lwjgl.BufferUtils;
+import aunmag.shooter.core.utilities.UtilsFile;
 import org.lwjgl.openal.AL10;
-import org.newdawn.slick.openal.OggData;
-import org.newdawn.slick.openal.OggDecoder;
-import org.newdawn.slick.openal.WaveData;
+import org.lwjgl.stb.STBVorbis;
+import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.libc.LibCStdlib;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.IntBuffer;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 
 public final class AudioSample {
 
+    public static final int EMPTY = 0;
     private static HashMap<String, Integer> samples = new HashMap<>();
 
     private AudioSample() {}
 
-    public static int getOrCreate(String name, AudioSampleType type) {
-        if (!Configs.isSamplesLoadingEnabled()) {
-            return 0;
-        }
-
-        if (samples.containsKey(name)) {
-            return samples.get(name);
+    public static int getOrCreate(String name) {
+        if (Configs.isSamplesLoadingEnabled()) {
+            return samples.computeIfAbsent(name, AudioSample::load2);
         } else {
-            int sample;
-
-            if (type == AudioSampleType.OGG) {
-                sample = loadOggSample(name);
-            } else {
-                sample = loadWavSample(name);
-            }
-
-            samples.put(name, sample);
-            return sample;
+            return EMPTY;
         }
     }
 
-    private static int loadOggSample(String name) {
-        String path = "/" + name + ".ogg";
-        InputStream inputStream = AudioMaster.class.getResourceAsStream(path);
-        OggData oggData;
+    private static int load2(String name) {
+        var path = "/" + name + ".ogg";
+        ByteBuffer bytes;
 
         try {
-            oggData = new OggDecoder().getData(inputStream);
+            bytes = UtilsFile.readByteBuffer(path);
         } catch (IOException e) {
-            String message = String.format("Can't load audio file at \"%s\"!", path);
-            System.err.println(message);
-            return 0;
+            UtilsFile.printReadError(path);
+            return EMPTY;
         }
 
-        IntBuffer intBuffer = BufferUtils.createIntBuffer(1);
-        AL10.alGenBuffers(intBuffer);
-        int buffer = intBuffer.get(0);
-        int format;
+        MemoryStack.stackPush();
+        var channelsBuffer = MemoryStack.stackMallocInt(1);
 
-        if (oggData.channels > 1) {
-            format = AL10.AL_FORMAT_STEREO16;
+        MemoryStack.stackPush();
+        var sampleRateBuffer = MemoryStack.stackMallocInt(1);
+
+        var bufferRaw = STBVorbis.stb_vorbis_decode_memory(
+                bytes,
+                channelsBuffer,
+                sampleRateBuffer
+        );
+
+        var channels = channelsBuffer.get();
+        var sampleRate = sampleRateBuffer.get();
+
+        MemoryStack.stackPop();
+        MemoryStack.stackPop();
+
+        var buffer = EMPTY;
+
+        if (bufferRaw != null) {
+            buffer = AL10.alGenBuffers();
+            AL10.alBufferData(buffer, toFormat(channels), bufferRaw, sampleRate);
+            LibCStdlib.free(bufferRaw);
         } else {
-            format = AL10.AL_FORMAT_MONO16;
+            UtilsFile.printReadError(path);
         }
-
-        AL10.alBufferData(buffer, format, oggData.data, oggData.rate);
 
         return buffer;
     }
 
-    private static int loadWavSample(String name) {
-        String path = "/" + name + ".wav";
-        InputStream inputStream = AudioMaster.class.getResourceAsStream(path);
-        WaveData waveData = WaveData.create(inputStream);
-
-        int buffer = AL10.alGenBuffers();
-        AL10.alBufferData(buffer, waveData.format, waveData.data, waveData.samplerate);
-        waveData.dispose();
-        return buffer;
+    private static int toFormat(int channels) {
+        if (channels == 1) {
+            return AL10.AL_FORMAT_MONO16;
+        } else if (channels == 2) {
+            return AL10.AL_FORMAT_STEREO16;
+        } else {
+            return -1;
+        }
     }
 
     public static void cleanUp() {

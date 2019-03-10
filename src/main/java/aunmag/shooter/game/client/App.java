@@ -14,7 +14,6 @@ public final class App extends Application {
 
     static {
         Configs.setFullscreen(true);
-        Configs.setSamplesLoadingEnabled(false); // TODO: This is temporary. Remove it
         main = new App();
     }
 
