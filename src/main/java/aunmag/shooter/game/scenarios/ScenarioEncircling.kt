@@ -140,7 +140,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
                 skillFactor * type.velocity,
                 type.velocityFactorSprint,
                 type.velocityRotation,
-                skillFactor * type.strength,
+                type.damage,
                 type.reaction
         )
     }
