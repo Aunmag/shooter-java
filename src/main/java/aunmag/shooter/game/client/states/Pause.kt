@@ -14,8 +14,11 @@ import org.joml.Vector4f
 
 class Pause {
 
-    val buttonContinue = Button(4, 7, 4, 1, "Continue", Button.ACTION_BACK)
+    val buttonContinue = Button(4, 6, 4, 1, "Continue", Button.ACTION_BACK)
     private val theme = UtilsAudio.getOrCreateSoundOgg("sounds/music/menu")
+    
+    // Объект страницы настроек
+    val settingsPage: SettingsPage = SettingsPage()
 
     init {
         theme.setIsLooped(true)
@@ -25,7 +28,7 @@ class Pause {
         Page.STACK.setOnQuit{App.main.isPause = false}
     }
 
-    private fun createPageMain() {
+    fun createPageMain() {
         val wallpaper = Texture.getOrCreate(
                 "images/wallpapers/main_menu", Texture.Type.WALLPAPER
         )
@@ -43,7 +46,9 @@ class Pause {
 
         page.add(version)
         page.add(buttonContinue)
-        page.add(Button(4, 8, 4, 1, "New game") { App.main.newGame() })
+        page.add(Button(4, 7, 4, 1, "New game") { App.main.newGame() })
+        page.add(Button(4, 8, 4, 1, "Settings",
+                           settingsPage.createPageSettings()::open))
         page.add(Button(4, 9, 4, 1, "Help", createPageHelp()::open))
         page.add(Button(4, 10, 4, 1, "Exit", createPageExit()::open))
 

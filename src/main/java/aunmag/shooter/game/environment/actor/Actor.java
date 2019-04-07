@@ -30,8 +30,8 @@ public class Actor extends Operative {
 
     private static final int[] samples = new int[6];
 
+    public ActorType type;
     public final World world;
-    public final ActorType type;
     public final BodyCircle body;
     public final Kinetics kinetics;
     private float health = 1.0f;
@@ -263,6 +263,10 @@ public class Actor extends Operative {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public void setType(ActorType type) {
+        this.type = type;
     }
 
     /* Getters */

@@ -4,20 +4,28 @@ import aunmag.shooter.core.input.Input
 import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Player
+import aunmag.shooter.game.environment.actor.Actor
 import aunmag.shooter.game.client.graphics.CameraShaker
 import aunmag.shooter.game.client.graphics.Crosshair
 import aunmag.shooter.game.environment.World
+import aunmag.shooter.game.client.states.ScenarioStatus;
 import aunmag.shooter.game.scenarios.ScenarioEncircling
+import aunmag.shooter.game.scenarios.Scenario
 import aunmag.shooter.game.ux.Hud
 import org.lwjgl.glfw.GLFW
 
 class Game {
 
-    val world = World()
-    val player = Player(world)
-    private val scenario = ScenarioEncircling(world)
-    private val crosshair = Crosshair(player.actor) // TODO: Change implementation
-    private val hud = Hud()
+    val world: World = World()
+    val player: Player = Player(world)
+    val crosshair: Crosshair = Crosshair(player.actor)
+    private val scenario: Scenario = ScenarioEncircling(world)
+    private val hud: Hud = Hud()
+    
+    init {
+        // При создании экземпляра меняем ему тип игрока на выбранный
+        player.actor.setType(ScenarioStatus.scenarioEncircling.actorType);
+    }
 
     fun resume() {
         world.playSounds()

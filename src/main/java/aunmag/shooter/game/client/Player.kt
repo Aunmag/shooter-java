@@ -13,8 +13,10 @@ import org.lwjgl.glfw.GLFW
 
 class Player(world: World) {
 
-    val actor = Actor(ActorType.human, world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
-    private val blackout = Blackout(actor)
+    // Текущий игрок
+    var actor = Actor(ActorType.human, world, 0f, 0f,
+            -UtilsMath.PIx0_5.toFloat())
+    private var blackout = Blackout(actor)
 
     init {
         actor.weapon = Weapon(world, WeaponType.pm)
