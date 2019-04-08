@@ -25,18 +25,17 @@ public class FluidToggle extends FluidValue {
     /* Setters */
 
     public void setTarget(float target) {
-        target = UtilsMath.limitNumber(target, VALUE_MIN, VALUE_MAX);
-        super.setTarget(target);
+        super.setTarget(UtilsMath.limitNumber(target, VALUE_MIN, VALUE_MAX));
     }
 
     /* Getters */
 
     public boolean isCompletelyOn() {
-        return getCurrent() == VALUE_MAX;
+        return getCurrent() >= VALUE_MAX;
     }
 
     public boolean isCompletelyOff() {
-        return getCurrent() == VALUE_MIN;
+        return getCurrent() <= VALUE_MIN;
     }
 
 }

@@ -53,12 +53,10 @@ public class Ai extends Operative {
             }
 
             if (memoryTarget.isReached()) {
-                doAttack();
+                subject.control.attack();
             } else {
                 chaseTarget();
             }
-        } else {
-            doNothing();
         }
     }
 
@@ -114,36 +112,20 @@ public class Ai extends Operative {
     }
 
     private void chaseTarget() {
-        subject.isAttacking = false;
-        subject.isWalkingForward = true;
-        subject.isSprinting = isBehindTarget();
-        turnOnTarget();
+        subject.control.attack();
+        subject.control.walkForward();
+
+        if (isBehindTarget()) {
+            subject.control.sprint();
+        }
+
+        subject.control.turnTo(memoryTarget.getDirection());
 
         if (Math.abs(memoryTarget.getRadiansDifference()) > UtilsMath.PIx0_5) {
             deviateRoute();
         } else if (memoryTarget.getDistance() < 3) {
-            subject.isSprinting = true;
+            subject.control.sprint();
         }
-    }
-
-    private void turnOnTarget() {
-        float timeDelta = (float) subject.world.getTime().getDelta();
-        float velocity = subject.type.velocityRotation;
-        float velocityFuture = (subject.kinetics.velocityRadians + velocity) * timeDelta;
-        float radiansDifference = UtilsMath.radiansDifference(
-                subject.body.radians,
-                memoryTarget.getDirection()
-        );
-
-        if (velocityFuture * 2f > Math.abs(radiansDifference)) {
-            return;
-        }
-
-        if (radiansDifference < 0) {
-            velocity = -velocity;
-        }
-
-        subject.kinetics.addEnergy(0, 0, velocity, timeDelta);
     }
 
     @Deprecated
@@ -162,17 +144,6 @@ public class Ai extends Operative {
             subject.body.correctRadians();
         }
         */
-    }
-
-    private void doAttack() {
-        subject.isAttacking = true;
-        subject.isWalkingForward = false;
-    }
-
-    private void doNothing() {
-        subject.isAttacking = false;
-        subject.isSprinting = false;
-        subject.isWalkingForward = false;
     }
 
     public void render() {}

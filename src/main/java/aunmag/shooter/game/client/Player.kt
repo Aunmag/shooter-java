@@ -30,15 +30,32 @@ class Player(world: World) {
     }
 
     private fun updateInputForActions() {
-        actor.isWalkingForward = Input.keyboard.isKeyDown(GLFW.GLFW_KEY_W)
-        actor.isWalkingBack = Input.keyboard.isKeyDown(GLFW.GLFW_KEY_S)
-        actor.isWalkingLeft = Input.keyboard.isKeyDown(GLFW.GLFW_KEY_A)
-        actor.isWalkingRight = Input.keyboard.isKeyDown(GLFW.GLFW_KEY_D)
-        actor.isSprinting = Input.keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)
-        actor.isAttacking = Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_1)
+        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
+            actor.control.walkForward()
+        }
 
-        if (Input.mouse.isButtonPressed(GLFW.GLFW_MOUSE_BUTTON_2)) {
-            actor.isAiming.toggle()
+        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
+            actor.control.walkBack()
+        }
+
+        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
+            actor.control.walkLeft()
+        }
+
+        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
+            actor.control.walkRight()
+        }
+
+        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+            actor.control.sprint()
+        }
+
+        if (Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_1)) {
+            actor.control.attack()
+        }
+
+        if (Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_2)) {
+            actor.control.aim()
         }
 
         if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_R) && actor.hasWeapon) {

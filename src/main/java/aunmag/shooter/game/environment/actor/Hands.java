@@ -32,7 +32,11 @@ public class Hands {
     public void update() {
         updatePosition();
 
-        if (actor.isAttacking && !actor.getHasWeapon() && attackTimer.isDone()) {
+        if (
+                actor.control.isAttacking()
+                && !actor.getHasWeapon()
+                && attackTimer.isDone()
+        ) {
             attack();
             attackTimer.next();
         }

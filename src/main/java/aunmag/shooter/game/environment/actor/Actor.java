@@ -40,13 +40,7 @@ public class Actor extends Operative {
     private Weapon weapon = null;
     public final Hands hands;
     private AudioSource audioSource = new AudioSource();
-
-    public boolean isWalkingForward = false;
-    public boolean isWalkingBack = false;
-    public boolean isWalkingLeft = false;
-    public boolean isWalkingRight = false;
-    public boolean isSprinting = false;
-    public boolean isAttacking = false;
+    public final Control control = new Control();
     public final FluidToggle isAiming;
 
     static {
@@ -72,28 +66,29 @@ public class Actor extends Operative {
     }
 
     public void update() {
-        if (!isAlive()) {
+        if (isAlive()) {
+            updateStamina();
+            updateAiming();
+            walk();
+            updateKinetics();
+            updateCollision();
+            hands.update();
+            updateWeapon();
+            updateAudioSource();
+        } else {
             remove();
-            return;
         }
 
-        updateStamina();
-        isAiming.update();
-        walk();
-        updateKinetics();
-        updateCollision();
-        hands.update();
-        updateWeapon();
-        updateAudioSource();
+        control.reset();
     }
 
     private void updateStamina() {
         stamina.update();
         float spend = AIMING_STAMINA_COST * isAiming.getCurrent();
 
-        if (isWalking()) {
+        if (control.isWalking()) {
             spend += WALKING_STAMINA_COST;
-            if (isSprinting) {
+            if (control.isSprinting()) {
                 spend += SPRINT_STAMINA_COST;
             }
         }
@@ -146,7 +141,7 @@ public class Actor extends Operative {
                 body.position.y + offset * (float) Math.sin(body.radians)
         );
 
-        if (isAttacking) {
+        if (control.isAttacking()) {
             weapon.trigger.pressBy(this);
         } else {
             weapon.trigger.release();
@@ -159,26 +154,67 @@ public class Actor extends Operative {
         audioSource.setPosition(body.position.x, body.position.y);
     }
 
+    private void updateAiming() {
+        if (control.isAiming()) {
+            isAiming.on();
+        } else {
+            isAiming.off();
+        }
+
+        isAiming.update();
+    }
+
     private void walk() {
-        if (isWalkingForward) {
+        turn();
+
+        if (control.isWalkingForward()) {
             move(type.velocity, 0);
         }
 
-        if (isWalkingBack) {
+        if (control.isWalkingBack()) {
             move(type.velocity * VELOCITY_FACTOR_BACK, -Math.PI);
         }
 
-        if (isWalkingLeft) {
+        if (control.isWalkingLeft()) {
             move(type.velocity * VELOCITY_FACTOR_ASIDE, +UtilsMath.PIx0_5);
         }
 
-        if (isWalkingRight) {
+        if (control.isWalkingRight()) {
             move(type.velocity * VELOCITY_FACTOR_ASIDE, -UtilsMath.PIx0_5);
         }
     }
 
+    private void turn() {
+        var turningTo = control.getTurningTo();
+        if (turningTo == null) {
+            return;
+        }
+
+        var velocity = type.velocityRotation;
+        var distance = UtilsMath.radiansDifference(body.radians, turningTo);
+
+        if (Math.abs(distance) < 0.0001) {
+            return;
+        }
+
+        if (distance < 0) {
+            velocity = -velocity;
+        }
+
+        var velocityCurrent = kinetics.velocityRadians;
+        var velocityFuture = velocity + velocityCurrent;
+        var distanceFuture = velocityFuture / kinetics.radiansRestrictionFactor;
+        var distanceExcess = distanceFuture / distance;
+
+        if (distanceExcess > 1) {
+            velocity /= distanceExcess;
+        }
+
+        kinetics.addEnergy(0, 0, velocity, (float) world.getTime().getDelta());
+    }
+
     private void move(double velocity, double radiansTurn) {
-        if (isSprinting && isWalkingForward) {
+        if (control.isSprinting() && control.isWalkingForward()) {
             float efficiency = this.stamina.calculateEfficiency();
             velocity *= type.velocityFactorSprint * efficiency + (1 - efficiency);
         }
@@ -277,10 +313,6 @@ public class Actor extends Operative {
 
     public boolean isAlive() {
         return health > 0;
-    }
-
-    public boolean isWalking() {
-        return isWalkingForward || isWalkingBack || isWalkingLeft || isWalkingRight;
     }
 
     public boolean getHasWeapon() {
