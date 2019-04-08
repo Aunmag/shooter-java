@@ -16,8 +16,7 @@ class Pause {
 
     val buttonContinue = Button(4, 6, 4, 1, "Continue", Button.ACTION_BACK)
     private val theme = UtilsAudio.getOrCreateSoundOgg("sounds/music/menu")
-    
-    // Объект страницы настроек
+
     val settingsPage: SettingsPage = SettingsPage()
 
     init {

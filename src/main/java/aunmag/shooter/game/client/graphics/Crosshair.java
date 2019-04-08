@@ -63,11 +63,4 @@ public class Crosshair {
         GL11.glDisable(GL11.GL_LINE_STIPPLE);
     }
 
-    /* Setters */
-
-    // Меняет текущего актёра
-    public void changeActor(Actor newActor) {
-        shooter = newActor;
-    }
-
 }

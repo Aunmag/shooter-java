@@ -3,10 +3,10 @@ package aunmag.shooter.game.client.states;
 import aunmag.shooter.game.environment.actor.ActorType;
 
 public class ScenarioStatus {
-    // Текущий выбранный тип игрока
+    // Selected player type in the current scenario
     public ActorType actorType = ActorType.human;
 
-    /* Статусы для каждого сценария */
+    /* Statuses for each scenario */
 
     // Scenario Encircling
     public static final ScenarioStatus scenarioEncircling =

@@ -23,7 +23,7 @@ class Game {
     private val hud: Hud = Hud()
     
     init {
-        // При создании экземпляра меняем ему тип игрока на выбранный
+        // When creating an instance, change its player type to the selected one
         player.actor.setType(ScenarioStatus.scenarioEncircling.actorType);
     }
 

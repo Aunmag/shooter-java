@@ -19,23 +19,14 @@ public class ActorType {
     public final Texture texture;
 
     public ActorType(
-            // Название
             String name,
-            // Радиус игрока
             float radius,
-            // Вес
             float weight,
-            // Сила
             float strength,
-            // Скорость движения
             float velocity,
-            // Скорость рывка
             float velocityFactorSprint,
-            // Скорость вращения
             float velocityRotation,
-            // Урон
             float damage,
-            // Скорость реакции
             float reaction
     ) {
         this.name = name;
@@ -53,7 +44,6 @@ public class ActorType {
 
     /* Types */
 
-    // Персонаж игрока - классический
     public static final ActorType human = new ActorType(
             "human",
             0.225f,
@@ -66,7 +56,6 @@ public class ActorType {
             0.1f
     );
 
-    // Персонаж игрока - ковбой
     public static final ActorType humanCowboy = new ActorType(
             "human cowboy",
             human.radius,
@@ -79,7 +68,6 @@ public class ActorType {
             1.2f * human.reaction
     );
 
-    // Зомби - классический
     public static final ActorType zombie = new ActorType(
             "zombie",
             human.radius,
@@ -92,7 +80,6 @@ public class ActorType {
             0.3f
     );
 
-    // Зомби - проворный
     public static final ActorType zombieAgile = new ActorType(
             "zombie agile",
             0.8f * zombie.radius,
@@ -105,7 +92,6 @@ public class ActorType {
             0.1f
     );
 
-    // Зомби - большой
     public static final ActorType zombieHeavy = new ActorType(
             "zombie heavy",
             1.2f * zombie.radius,
@@ -118,8 +104,7 @@ public class ActorType {
             0.4f
     );
 
-    // Массив с типами персонажей, которыми может управлять игрок
-    //   (Это те типы, на которые реагируют соперники игрока)
+    // Types, player can use
     public static final ActorType[] playableTypes = {
         human,
         humanCowboy,
