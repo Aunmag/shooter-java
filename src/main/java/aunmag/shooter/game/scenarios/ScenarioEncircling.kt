@@ -126,12 +126,12 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     private fun updateZombiesTypes() {
         val skillFactor = (difficulty - 1) * (wave - 1) + 1
-        zombie = creteZombieType(ActorType.zombie, skillFactor)
-        zombieAgile = creteZombieType(ActorType.zombieAgile, skillFactor)
-        zombieHeavy = creteZombieType(ActorType.zombieHeavy, skillFactor)
+        zombie = createZombieType(ActorType.zombie, skillFactor)
+        zombieAgile = createZombieType(ActorType.zombieAgile, skillFactor)
+        zombieHeavy = createZombieType(ActorType.zombieHeavy, skillFactor)
     }
 
-    private fun creteZombieType(type: ActorType, skillFactor: Float): ActorType {
+    private fun createZombieType(type: ActorType, skillFactor: Float): ActorType {
         return ActorType(
                 type.name,
                 type.radius,
@@ -141,7 +141,8 @@ class ScenarioEncircling(world: World) : Scenario(world) {
                 type.velocityFactorSprint,
                 type.velocityRotation,
                 type.damage,
-                type.reaction
+                type.reaction,
+                type.primaryWeaponType
         )
     }
 
@@ -181,19 +182,20 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     private fun selectRandomWeaponType(): WeaponType {
-        return when (UtilsMath.randomizeBetween(1, 2 * wave)) {
+        return when (UtilsMath.randomizeBetween(1, 2 * wave + 1)) {
             1 -> WeaponType.pm
             2 -> WeaponType.tt
-            3 -> WeaponType.mp43sawedOff
-            4 -> WeaponType.mp27
-            5 -> WeaponType.pp91kedr
-            6 -> WeaponType.pp19bizon
-            7 -> WeaponType.aks74u
-            8 -> WeaponType.ak74m
-            9 -> WeaponType.rpk74
-            10 -> WeaponType.saiga12k
-            11 -> WeaponType.pkm
-            12 -> WeaponType.pkpPecheneg
+            3 -> WeaponType.coltSingleActionArmy
+            4 -> WeaponType.mp43sawedOff
+            5 -> WeaponType.mp27
+            6 -> WeaponType.pp91kedr
+            7 -> WeaponType.pp19bizon
+            8 -> WeaponType.aks74u
+            9 -> WeaponType.ak74m
+            10 -> WeaponType.rpk74
+            11 -> WeaponType.saiga12k
+            12 -> WeaponType.pkm
+            13 -> WeaponType.pkpPecheneg
             else -> WeaponType.laserGun
         }
     }

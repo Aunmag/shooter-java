@@ -27,7 +27,7 @@ class Pause {
         Page.STACK.setOnQuit{App.main.isPause = false}
     }
 
-    fun createPageMain() {
+    private fun createPageMain() {
         val wallpaper = Texture.getOrCreate(
                 "images/wallpapers/main_menu", Texture.Type.WALLPAPER
         )

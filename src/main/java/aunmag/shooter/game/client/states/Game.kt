@@ -5,6 +5,7 @@ import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Player
 import aunmag.shooter.game.environment.actor.Actor
+import aunmag.shooter.game.environment.weapon.Weapon
 import aunmag.shooter.game.client.graphics.CameraShaker
 import aunmag.shooter.game.client.graphics.Crosshair
 import aunmag.shooter.game.environment.World
@@ -18,13 +19,20 @@ class Game {
 
     val world: World = World()
     val player: Player = Player(world)
-    val crosshair: Crosshair = Crosshair(player.actor)
+    val crosshair: Crosshair = Crosshair(player.actor)  // TODO: Change implementation
     private val scenario: Scenario = ScenarioEncircling(world)
     private val hud: Hud = Hud()
     
     init {
-        // When creating an instance, change its player type to the selected one
+        // When creating an instance:
+        // Change player's type to the selected one
         player.actor.setType(ScenarioStatus.scenarioEncircling.actorType);
+        // Change player's weapon to the primary weapon of current player's type
+        player.actor.setWeapon(
+                Weapon(player.actor.world,
+                       player.actor.type.primaryWeaponType
+                )
+        );
     }
 
     fun resume() {

@@ -1,6 +1,7 @@
 package aunmag.shooter.game.environment.actor;
 
 import aunmag.shooter.core.structures.Texture;
+import aunmag.shooter.game.environment.weapon.WeaponType;
 import aunmag.shooter.game.Config;
 
 public class ActorType {
@@ -16,6 +17,7 @@ public class ActorType {
     public final float velocityRotation;
     public final float damage;
     public final float reaction;
+    public final WeaponType primaryWeaponType;
     public final Texture texture;
 
     public ActorType(
@@ -27,7 +29,8 @@ public class ActorType {
             float velocityFactorSprint,
             float velocityRotation,
             float damage,
-            float reaction
+            float reaction,
+            WeaponType primaryWeaponType
     ) {
         this.name = name;
         this.radius = radius;
@@ -38,6 +41,7 @@ public class ActorType {
         this.velocityRotation = velocityRotation;
         this.damage = damage;
         this.reaction = reaction;
+        this.primaryWeaponType = primaryWeaponType;
 
         texture = Texture.getOrCreate("actors/" + name + "/image", Texture.Type.SPRITE);
     }
@@ -53,7 +57,8 @@ public class ActorType {
             2.76f,
             8,
             STRENGTH_DEFAULT / 16f,
-            0.1f
+            0.1f,
+            WeaponType.pm
     );
 
     public static final ActorType humanCowboy = new ActorType(
@@ -65,7 +70,8 @@ public class ActorType {
             1.2f * human.velocityFactorSprint,
             1.2f * human.velocityRotation,
             0.9f * human.damage,
-            1.2f * human.reaction
+            1.2f * human.reaction,
+            WeaponType.coltSingleActionArmy
     );
 
     public static final ActorType zombie = new ActorType(
@@ -77,7 +83,8 @@ public class ActorType {
             0.4f * human.velocityFactorSprint,
             0.4f * human.velocityRotation,
             human.strength / 8f,
-            0.3f
+            0.3f,
+            null
     );
 
     public static final ActorType zombieAgile = new ActorType(
@@ -89,7 +96,8 @@ public class ActorType {
             zombie.velocityFactorSprint,
             2.5f * zombie.velocityRotation,
             0.4f * zombie.damage,
-            0.1f
+            0.1f,
+            null
     );
 
     public static final ActorType zombieHeavy = new ActorType(
@@ -101,7 +109,8 @@ public class ActorType {
             zombie.velocityFactorSprint,
             0.7f * zombie.velocityRotation,
             1.8f * zombie.damage,
-            0.4f
+            0.4f,
+            null
     );
 
     // Types, player can use

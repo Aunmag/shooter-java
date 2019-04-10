@@ -198,4 +198,15 @@ public class WeaponType {
             GRIP_OFFSET_EXTENDED
     );
 
+    public static final WeaponType coltSingleActionArmy = new WeaponType(
+            "Colt SAA",
+            SEMI_AUTO_SHOTS_PER_MINUTE / 4,
+            450,
+            0.01f,
+            0.1f,
+            false,
+            new MagazineType(ProjectileType._11_48x33mmR, true, 6, 3f),
+            GRIP_OFFSET_STEP
+    );
+
 }

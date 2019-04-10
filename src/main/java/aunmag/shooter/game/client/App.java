@@ -73,10 +73,6 @@ public final class App extends Application {
         return isDebug;
     }
 
-    public Pause getPause() {
-        return pause;
-    }
-
     public boolean isPause() {
         return isPause;
     }

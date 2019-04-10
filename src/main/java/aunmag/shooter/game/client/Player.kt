@@ -18,7 +18,7 @@ class Player(world: World) {
     private var blackout = Blackout(actor)
 
     init {
-        actor.weapon = Weapon(world, WeaponType.pm)
+        actor.weapon = Weapon(world, actor.type.primaryWeaponType)
         world.actors.all.add(actor)
         App.getCamera().mount.holder = actor.body.position
     }
