@@ -66,6 +66,10 @@ class World {
         projectiles.render()
         GL11.glLineWidth(1f)
 
+        if (App.main.isDebug) {
+            ais.render()
+        }
+
         if (!App.main.isDebug) {
             Application.getShader().bind()
             trees.render()

@@ -137,4 +137,26 @@ public final class UtilsMath {
         return number;
     }
 
+    public static Vector2f lead(
+            Vector2f sourcePosition,
+            Vector2f sourceVelocity,
+            Vector2f targetPosition,
+            Vector2f targetVelocity
+    ) {
+        if (targetVelocity.x == 0 || targetVelocity.y == 0) {
+            return targetPosition;
+        }
+
+        var distance = targetPosition.distance(sourcePosition);
+        var advance = distance / new Vector2f()
+                .add(targetVelocity)
+                .sub(sourceVelocity)
+                .length();
+
+        return new Vector2f()
+                .add(targetVelocity)
+                .mul(advance)
+                .add(targetPosition);
+    }
+
 }
