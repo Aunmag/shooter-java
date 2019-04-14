@@ -2,9 +2,11 @@ package aunmag.shooter.game.client.states
 
 import aunmag.shooter.core.input.Input
 import aunmag.shooter.core.utilities.UtilsGraphics
+import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Player
 import aunmag.shooter.game.environment.actor.Actor
+import aunmag.shooter.game.environment.actor.ActorType
 import aunmag.shooter.game.environment.weapon.Weapon
 import aunmag.shooter.game.client.graphics.CameraShaker
 import aunmag.shooter.game.client.graphics.Crosshair
@@ -18,19 +20,18 @@ import org.lwjgl.glfw.GLFW
 class Game {
 
     val world: World = World()
-    val player: Player = Player(world)
-    val crosshair: Crosshair = Crosshair(player.actor)  // TODO: Change implementation
+    val actor = Actor(ScenarioStatus.scenarioEncircling.actorType,
+            world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
+    val player: Player = Player(actor)
+    val crosshair: Crosshair = Crosshair(actor)  // TODO: Change implementation
     private val scenario: Scenario = ScenarioEncircling(world)
     private val hud: Hud = Hud()
     
     init {
-        // When creating an instance:
-        // Change player's type to the selected one
-        player.actor.setType(ScenarioStatus.scenarioEncircling.actorType);
-        // Change player's weapon to the primary weapon of current player's type
-        player.actor.setWeapon(
-                Weapon(player.actor.world,
-                       player.actor.type.primaryWeaponType
+        // Change player's weapon to the primary weapon of current actors's type
+        actor.setWeapon(
+                Weapon(actor.world,
+                       actor.type.primaryWeaponType
                 )
         );
     }

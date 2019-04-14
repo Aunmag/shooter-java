@@ -1,6 +1,5 @@
 package aunmag.shooter.game.ai;
 
-import java.util.Arrays;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.TimeFlow;
@@ -69,8 +68,8 @@ public class Ai extends Operative {
 
         for (Actor actor: subject.world.getActors().all) {
             if (actor.isAlive()
-                    && Arrays.asList(
-                            ActorType.playableTypes).contains(actor.type)) {
+                    && (actor.type == ActorType.human
+                        || actor.type == ActorType.humanCowboy)) {
                 memoryTarget.setActor(actor);
                 break;
             }

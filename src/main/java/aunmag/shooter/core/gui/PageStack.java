@@ -39,6 +39,12 @@ public class PageStack {
         }
     }
 
+    public void removeLast(int count) {
+        while (count-- > 0 && getCurrentIndex() >= 0) {
+            pages.remove(getCurrentIndex());
+        }
+    }
+
     /* Setters */
 
     public void setOnQuit(@Nullable Runnable onQuit) {

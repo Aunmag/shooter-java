@@ -2,19 +2,17 @@ package aunmag.shooter.game.client
 
 import aunmag.shooter.core.Application
 import aunmag.shooter.core.input.Input
-import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
-import aunmag.shooter.game.environment.actor.ActorType
 import aunmag.shooter.game.environment.weapon.Weapon
 import aunmag.shooter.game.environment.weapon.WeaponType
 import aunmag.shooter.game.ux.Blackout
 import org.lwjgl.glfw.GLFW
 
-class Player(world: World) {
+class Player(actor: Actor) {
 
-    var actor = Actor(ActorType.human, world, 0f, 0f,
-            -UtilsMath.PIx0_5.toFloat())
+    val actor: Actor = actor
+    val world: World = actor.getWorld()
     private var blackout = Blackout(actor)
 
     init {

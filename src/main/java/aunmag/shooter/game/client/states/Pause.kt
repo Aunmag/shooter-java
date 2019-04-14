@@ -10,6 +10,9 @@ import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Constants
+import aunmag.shooter.game.scenarios.Scenario
+import aunmag.shooter.game.client.states.ScenarioStatus
+import aunmag.shooter.game.environment.actor.ActorType
 import org.joml.Vector4f
 
 class Pause {
@@ -45,7 +48,9 @@ class Pause {
 
         page.add(version)
         page.add(buttonContinue)
-        page.add(Button(4, 7, 4, 1, "New game") { App.main.newGame() })
+        page.add(Button(4, 7, 4, 1, "New game",
+                        createCharacterSelectionPage(ScenarioStatus.scenarioEncircling)
+                        ::open))
         page.add(Button(4, 8, 4, 1, "Settings",
                            settingsPage.createPageSettings()::open))
         page.add(Button(4, 9, 4, 1, "Help", createPageHelp()::open))
@@ -75,6 +80,28 @@ class Pause {
         page.add(Label(4, 8, 1, 1, "Menu", style))
         page.add(Label(7, 8, 1, 1, "Escape", style))
         page.add(Button(4, 10, 4, 1, "Back", Button.ACTION_BACK))
+
+        return page
+    }
+
+    private fun createCharacterSelectionPage(scenarioStatus: ScenarioStatus): Page {
+        val wallpaper = Texture.getOrCreate(
+                "images/wallpapers/main_menu", Texture.Type.WALLPAPER
+        )
+        val page = Page(wallpaper)
+        // val style = FontStyle.LABEL_LIGHT
+
+        page.add(Label(3, 3, 6, 1, "Select your character"))
+        page.add(Button(4, 7, 4, 1, "Classic") {
+            scenarioStatus.actorType = ActorType.human
+            App.main.newGame()
+            Page.STACK.removeLast(1)
+        })
+        page.add(Button(4, 8, 4, 1, "Cowboy") {
+            scenarioStatus.actorType = ActorType.humanCowboy
+            App.main.newGame()
+            Page.STACK.removeLast(1)
+        })
 
         return page
     }
