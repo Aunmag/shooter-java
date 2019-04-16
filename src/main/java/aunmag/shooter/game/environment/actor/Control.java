@@ -10,7 +10,8 @@ public class Control {
     private boolean isWalkingRight = false;
     private boolean isSprinting = false;
     private boolean isAttacking = false;
-    private boolean isAiming = false;
+    private boolean isHoldAiming = false;
+    private boolean isPressAiming = false;
     @Nullable
     private Float turningTo = null;
 
@@ -21,7 +22,7 @@ public class Control {
         isWalkingRight = false;
         isSprinting = false;
         isAttacking = false;
-        isAiming = false;
+        isHoldAiming = false;
         turningTo = null;
     }
 
@@ -49,12 +50,18 @@ public class Control {
         isAttacking = true;
     }
 
-    public void aim() {
-        isAiming = true;
+    public void holdAiming() {
+        isHoldAiming = true;
     }
 
     public void turnTo(float angle) {
         turningTo = angle;
+    }
+
+    /* Setters */
+
+    public void setPressAiming(boolean isPressAiming) {
+        this.isPressAiming = isPressAiming;
     }
 
     /* Getters */
@@ -90,8 +97,12 @@ public class Control {
         return isAttacking;
     }
 
-    public boolean isAiming() {
-        return isAiming;
+    public boolean isHoldAiming() {
+        return isHoldAiming;
+    }
+
+    public boolean isPressAiming() {
+        return isPressAiming;
     }
 
     public boolean isTurning() {

@@ -6,6 +6,14 @@ public class ScenarioStatus {
     // Selected player type in the current scenario
     public ActorType actorType = ActorType.human;
 
+    /* Global Settings */
+
+    public enum CrosshairControl {
+        PRESS,
+        HOLD,
+    }
+    public static CrosshairControl crosshairControl = CrosshairControl.PRESS;
+
     /* Statuses for each scenario */
 
     // Scenario Encircling

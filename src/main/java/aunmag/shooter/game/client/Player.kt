@@ -2,6 +2,8 @@ package aunmag.shooter.game.client
 
 import aunmag.shooter.core.Application
 import aunmag.shooter.core.input.Input
+import aunmag.shooter.game.client.states.ScenarioStatus
+import aunmag.shooter.game.client.states.ScenarioStatus.CrosshairControl
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
 import aunmag.shooter.game.environment.weapon.Weapon
@@ -51,9 +53,15 @@ class Player(actor: Actor) {
         if (Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_1)) {
             actor.control.attack()
         }
-
-        if (Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_2)) {
-            actor.control.aim()
+        
+        if (ScenarioStatus.crosshairControl == CrosshairControl.PRESS) {
+            if (Input.mouse.isButtonPressed(GLFW.GLFW_MOUSE_BUTTON_2)) {
+                actor.control.setPressAiming(!actor.control.isPressAiming())
+            }
+        } else {
+            if (Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_2)) {
+                actor.control.holdAiming()
+            }
         }
 
         if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_R) && actor.hasWeapon) {

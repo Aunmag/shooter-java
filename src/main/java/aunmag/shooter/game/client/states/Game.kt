@@ -11,7 +11,7 @@ import aunmag.shooter.game.environment.weapon.Weapon
 import aunmag.shooter.game.client.graphics.CameraShaker
 import aunmag.shooter.game.client.graphics.Crosshair
 import aunmag.shooter.game.environment.World
-import aunmag.shooter.game.client.states.ScenarioStatus;
+import aunmag.shooter.game.client.states.ScenarioStatus
 import aunmag.shooter.game.scenarios.ScenarioEncircling
 import aunmag.shooter.game.scenarios.Scenario
 import aunmag.shooter.game.ux.Hud
