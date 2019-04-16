@@ -31,7 +31,7 @@ public class Reaction {
     }
 
     public boolean isPhase(int fraction) {
-        return counter % fraction == 0;
+        return timer.isDone() && counter % fraction == 0;
     }
 
     public boolean isFirstPhase() {
