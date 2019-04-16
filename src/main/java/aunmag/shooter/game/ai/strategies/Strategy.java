@@ -38,22 +38,27 @@ public abstract class Strategy {
     /* Analyzing methods */
 
     public void findEnemy() {
-        var previous = (Actor) null;
+        var actorOld = (Actor) null;
+        var actorNew = (Actor) null;
 
         if (ai.enemy != null) {
-            previous = ai.enemy.actor;
+            actorOld = ai.enemy.actor;
         }
 
-        ai.enemy = null;
+        if (actorOld != null && (!actorOld.isAlive() || actorOld.isRemoved())) {
+            actorOld = null;
+            ai.enemy = null;
+        }
 
         for (var actor: ai.actor.world.getActors().all) {
             if (actor.isAlive() && actor.type == ActorType.human) {
-                ai.enemy = new Enemy(ai, actor);
+                actorNew = actor;
                 break;
             }
         }
 
-        if (ai.enemy != null && ai.enemy.actor != previous) {
+        if (actorNew != null && actorOld != actorNew) {
+            ai.enemy = new Enemy(ai, actorNew);
             findEnemyBypass();
         }
     }
