@@ -33,4 +33,9 @@ public class Lazy<T> {
         return value;
     }
 
+    @Nullable
+    public T getRaw() {
+        return value;
+    }
+
 }
