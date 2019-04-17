@@ -137,6 +137,9 @@ public final class UtilsMath {
         return number;
     }
 
+    /**
+     * Predicts the meet point of two moving objects.
+     */
     public static Vector2f lead(
             Vector2f sourcePosition,
             Vector2f sourceVelocity,
