@@ -13,13 +13,6 @@ public class ChaseStrategy extends Strategy {
         if (ai.reaction.isSlowPhase()) {
             findEnemy();
         }
-
-        var enemy = ai.enemy;
-        var bypass = ai.bypass;
-
-        if (bypass == null || isClose(bypass) || enemy == null || isClose(enemy)) {
-            ai.bypass = null;
-        }
     }
 
     @Override

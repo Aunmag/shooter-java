@@ -3,7 +3,6 @@ package aunmag.shooter.game.ai.strategies;
 import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.ai.Ai;
-import aunmag.shooter.game.ai.memory.Bypass;
 import aunmag.shooter.game.ai.memory.Enemy;
 import aunmag.shooter.game.environment.actor.Actor;
 import aunmag.shooter.game.environment.actor.ActorType;
@@ -59,28 +58,7 @@ public abstract class Strategy {
 
         if (actorNew != null && actorOld != actorNew) {
             ai.enemy = new Enemy(ai, actorNew);
-            findEnemyBypass();
         }
-    }
-
-    public void findEnemyBypass() {
-        if (ai.enemy == null) {
-            ai.bypass = null;
-        } else {
-            ai.bypass = new Bypass(
-                    ai,
-                    ai.enemy,
-                    UtilsMath.randomizeBetween(0, (float) UtilsMath.PIx2),
-                    UtilsMath.randomizeBetween(
-                            closeDistanceToEnemy,
-                            closeDistanceToEnemy * 2
-                    )
-            );
-        }
-    }
-
-    public boolean isClose(Bypass destination) {
-        return destination.distance.get() < closeDistanceToDestination;
     }
 
     public boolean isClose(Enemy enemy) {
@@ -104,13 +82,7 @@ public abstract class Strategy {
             return;
         }
 
-        var direction = ai.enemy.direction.get();
-
-        if (ai.bypass != null) {
-            direction = ai.bypass.direction.get();
-        }
-
-        ai.actor.control.turnTo(direction);
+        ai.actor.control.turnTo(ai.enemy.direction.get());
         ai.actor.control.walkForward();
 
         if (isContact(enemy) && isClose(enemy)) {
