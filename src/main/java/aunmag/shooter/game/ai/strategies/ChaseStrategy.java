@@ -10,7 +10,7 @@ public class ChaseStrategy extends Strategy {
 
     @Override
     public void analyze() {
-        if (ai.reaction.isEighthPhase()) {
+        if (ai.reaction.isSlowPhase()) {
             findEnemy();
         }
 

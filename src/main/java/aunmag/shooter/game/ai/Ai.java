@@ -29,9 +29,8 @@ public class Ai extends Operative {
             remove();
         } else {
             reaction.update();
-            strategy.update();
 
-            if (reaction.isFirstPhase()) {
+            if (reaction.isQuickPhase()) {
                 if (enemy != null) {
                     enemy.refresh();
                 }
@@ -45,7 +44,7 @@ public class Ai extends Operative {
                 strategy = new ChaseStrategy(this);
             }
 
-            reaction.next();
+            strategy.update();
         }
     }
 
