@@ -2,10 +2,12 @@ package aunmag.shooter.game.ai.memory;
 
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Lazy;
+import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.ai.Ai;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.joml.Vector2f;
+import org.lwjgl.opengl.GL11;
 
 public class Enemy extends Destination {
 
@@ -54,6 +56,20 @@ public class Enemy extends Destination {
 
     protected boolean computeIsReached() {
         return new CollisionCC(ai.actor.hands.coverage, actor.body).isTrue();
+    }
+
+    @Override
+    public void render() {
+        super.render();
+
+        GL11.glColor4f(1.0f, 0.4f, 0.4f, 0.05f);
+        UtilsGraphics.drawCircle(
+                ai.actor.body.position.x,
+                ai.actor.body.position.y,
+                ai.getStrategy().closeDistanceToEnemy,
+                true,
+                true
+        );
     }
 
 }

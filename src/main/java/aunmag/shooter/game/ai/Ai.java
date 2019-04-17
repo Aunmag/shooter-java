@@ -1,13 +1,11 @@
 package aunmag.shooter.game.ai;
 
 import aunmag.shooter.core.utilities.Operative;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.game.ai.memory.Enemy;
 import aunmag.shooter.game.ai.strategies.ChaseStrategy;
 import aunmag.shooter.game.ai.strategies.Strategy;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.opengl.GL11;
 
 public class Ai extends Operative {
 
@@ -42,15 +40,14 @@ public class Ai extends Operative {
 
     public void render() {
         if (enemy != null) {
-            var x = actor.body.position.x();
-            var y = actor.body.position.y();
-
-            GL11.glColor4f(1.0f, 0.4f, 0.4f, 0.25f);
-            var position = enemy.position.get();
-            var distance = strategy.closeDistanceToEnemy;
-            UtilsGraphics.drawLine(x, y, position.x, position.y, true);
-            UtilsGraphics.drawCircle(x, y, distance, false, true);
+            enemy.render();
         }
+    }
+
+    /* Getters */
+
+    public Strategy getStrategy() {
+        return strategy;
     }
 
 }
