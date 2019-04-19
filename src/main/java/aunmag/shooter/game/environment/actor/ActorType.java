@@ -65,7 +65,7 @@ public class ActorType {
             0.4f * human.velocityFactorSprint,
             0.4f * human.velocityRotation,
             human.strength / 8f,
-            0.3f
+            0.2f
     );
 
     public static final ActorType zombieAgile = new ActorType(
@@ -89,7 +89,7 @@ public class ActorType {
             zombie.velocityFactorSprint,
             0.7f * zombie.velocityRotation,
             1.8f * zombie.damage,
-            0.4f
+            0.3f
     );
 
 }
