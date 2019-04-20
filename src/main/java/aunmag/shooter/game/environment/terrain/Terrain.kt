@@ -4,7 +4,7 @@ import aunmag.shooter.core.Application
 import aunmag.shooter.core.Configs
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsGraphics
-import aunmag.shooter.game.client.App
+import aunmag.shooter.game.client.Context
 import org.lwjgl.opengl.GL11
 
 class Terrain {
@@ -29,7 +29,7 @@ class Terrain {
     }
 
     fun render() {
-        if (App.main.isDebug) {
+        if (Context.main.isDebug) {
             renderGrid()
         } else {
             renderTexture()

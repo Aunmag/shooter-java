@@ -3,8 +3,7 @@ package aunmag.shooter.game.ux
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.gui.font.Text
 import aunmag.shooter.core.utilities.UtilsMath
-import aunmag.shooter.game.client.App
-import aunmag.shooter.game.data.player
+import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.gui.Parameter
 
 class Hud {
@@ -16,10 +15,10 @@ class Hud {
 
     fun update() {
         Parameter.update()
-        health.value = player?.health ?: 0f
-        stamina.value = player?.stamina?.current ?: 0f
-        ammo.value = player?.weapon?.magazine?.calculateVolumeRatio() ?: 0f
-        ammo.isPulsing = player?.weapon?.magazine?.isReloading ?: false
+        health.value = Context.main.playerActor?.health ?: 0f
+        stamina.value = Context.main.playerActor?.stamina?.current ?: 0f
+        ammo.value = Context.main.playerActor?.weapon?.magazine?.calculateVolumeRatio() ?: 0f
+        ammo.isPulsing = Context.main.playerActor?.weapon?.magazine?.isReloading ?: false
     }
 
     fun render() {
@@ -27,13 +26,13 @@ class Hud {
         stamina.render()
         ammo.render()
 
-        if (App.main.isDebug) {
+        if (Context.main.application.isDebug) {
             renderDebug()
         }
     }
 
     private fun renderDebug() {
-        val game = App.main.game ?: return
+        val game = Context.main.game ?: return
         val world = game.world
 
         var timeSpentUpdate = 0f // TODO: Invoke data

@@ -2,7 +2,7 @@ package aunmag.shooter.game.client.states
 
 import aunmag.shooter.core.input.Input
 import aunmag.shooter.core.utilities.UtilsGraphics
-import aunmag.shooter.game.client.App
+import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.client.Player
 import aunmag.shooter.game.client.graphics.CameraShaker
 import aunmag.shooter.game.client.graphics.Crosshair
@@ -35,7 +35,7 @@ class Game {
         CameraShaker.update()
 
         if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
-            App.main.isPause = true
+            Context.main.application.isPause = true
         }
 
         hud.update()

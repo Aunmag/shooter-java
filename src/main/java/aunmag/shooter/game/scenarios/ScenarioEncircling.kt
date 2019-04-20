@@ -11,8 +11,7 @@ import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.core.utilities.UtilsMath.limitNumber
 import aunmag.shooter.game.ai.Ai
-import aunmag.shooter.game.client.App
-import aunmag.shooter.game.data.player
+import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.data.soundGameOver
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
@@ -73,7 +72,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     override fun update() {
-        if (player?.isAlive != true) {
+        if (Context.main.playerActor?.isAlive != true) {
             gameOver(false)
             return
         }
@@ -90,7 +89,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     override fun render() {
-        if (App.main.isDebug) {
+        if (Context.main.isDebug) {
             renderBorders()
         }
     }
@@ -146,7 +145,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     private fun confinePlayerPosition() {
-        val position = player?.body?.position ?: return
+        val position = Context.main.playerActor?.body?.position ?: return
         position.x = limitNumber(position.x, -bordersDistance, bordersDistance)
         position.y = limitNumber(position.y, -bordersDistance, bordersDistance)
     }
@@ -161,8 +160,8 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         val distance = Application.getCamera().distanceView / 2f
         val direction = UtilsMath.randomizeBetween(0f, UtilsMath.PIx2.toFloat())
 
-        val centerX = player?.body?.position?.x ?: 0f
-        val centerY = player?.body?.position?.y ?: 0f
+        val centerX = Context.main.playerActor?.body?.position?.x ?: 0f
+        val centerY = Context.main.playerActor?.body?.position?.y ?: 0f
         val x = centerX - distance * Math.cos(direction.toDouble()).toFloat()
         val y = centerY - distance * Math.sin(direction.toDouble()).toFloat()
 
@@ -206,7 +205,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     private fun gameOver(isVictory: Boolean) {
         createGameOverPage(isVictory)
-        App.main.endGame()
+        Context.main.application.endGame()
 
         if (!isVictory) {
             soundGameOver.play()
@@ -221,7 +220,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         val page = Page(wallpaper)
 
         val title = if (isVictory) "Well done!" else "You have died"
-        val kills = player?.kills ?: 0
+        val kills = Context.main.playerActor?.kills ?: 0
         val wavesSurvived = if (isVictory) wave else wave - 1
         val score = "You killed $kills zombies and survived $wavesSurvived/$waveFinal waves."
 
@@ -230,7 +229,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         page.add(Button(4, 9, 4, 1, "Back to main menu", Button.ACTION_BACK))
 
         page.open()
-        App.main.isPause = true
+        Context.main.application.isPause = true
     }
 
 }

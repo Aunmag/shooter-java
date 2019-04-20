@@ -10,7 +10,7 @@
     <version>0.3.113</version>
 
     <properties>
-        <main-class>aunmag.shooter.game.client.App</main-class>
+        <main-class>aunmag.shooter.game.Main</main-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>

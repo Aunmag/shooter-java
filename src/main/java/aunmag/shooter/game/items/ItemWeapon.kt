@@ -7,8 +7,7 @@ import aunmag.shooter.core.input.Input
 import aunmag.shooter.core.math.BodyCircle
 import aunmag.shooter.core.math.CollisionCC
 import aunmag.shooter.core.utilities.*
-import aunmag.shooter.game.client.App
-import aunmag.shooter.game.data.player
+import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.environment.actor.Actor
 import aunmag.shooter.game.environment.weapon.Weapon
 import org.joml.Vector4f
@@ -102,7 +101,7 @@ class ItemWeapon private constructor(
     }
 
     private fun updatePickup() {
-        val player: Actor = player ?: return
+        val player: Actor = Context.main.playerActor ?: return
         val collision = CollisionCC(body, player.hands.coverage)
 
         if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_E) && collision.isTrue) {
@@ -122,7 +121,7 @@ class ItemWeapon private constructor(
             body.render()
             text.orderRendering()
 
-            if (!App.main.isDebug) {
+            if (!Context.main.isDebug) {
                 Application.getShader().bind()
                 weapon.render()
             }

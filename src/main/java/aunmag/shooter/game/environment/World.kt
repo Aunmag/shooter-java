@@ -5,7 +5,7 @@ import aunmag.shooter.core.utilities.OperativeManager
 import aunmag.shooter.core.utilities.TimeFlow
 import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.ai.Ai
-import aunmag.shooter.game.client.App
+import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.data.soundAmbiance
 import aunmag.shooter.game.data.soundAtmosphere
 import aunmag.shooter.game.environment.actor.Actor
@@ -46,31 +46,31 @@ class World {
     fun render() {
         terrain.render()
 
-        if (!App.main.isDebug) {
+        if (!Context.main.isDebug) {
             Application.getShader().bind()
             ground.render()
         }
 
         itemsWeapon.render()
 
-        if (App.main.isDebug) {
+        if (Context.main.isDebug) {
             UtilsGraphics.drawPrepare()
         }
 
         actors.render()
 
-        if (!App.main.isDebug) {
+        if (!Context.main.isDebug) {
             UtilsGraphics.drawPrepare()
         }
 
         projectiles.render()
         GL11.glLineWidth(1f)
 
-        if (App.main.isDebug) {
+        if (Context.main.isDebug) {
             ais.render()
         }
 
-        if (!App.main.isDebug) {
+        if (!Context.main.isDebug) {
             Application.getShader().bind()
             trees.render()
         }

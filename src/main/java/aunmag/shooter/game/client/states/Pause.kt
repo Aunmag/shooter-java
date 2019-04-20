@@ -8,8 +8,8 @@ import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
-import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Constants
+import aunmag.shooter.game.client.Context
 import org.joml.Vector4f
 
 class Pause {
@@ -22,7 +22,7 @@ class Pause {
         buttonContinue.isEnabled = false
         createPageMain()
 
-        Page.STACK.setOnQuit{App.main.isPause = false}
+        Page.STACK.setOnQuit{Context.main.application.isPause = false}
     }
 
     private fun createPageMain() {
@@ -43,7 +43,7 @@ class Pause {
 
         page.add(version)
         page.add(buttonContinue)
-        page.add(Button(4, 8, 4, 1, "New game") { App.main.newGame() })
+        page.add(Button(4, 8, 4, 1, "New game") { Context.main.application.newGame() })
         page.add(Button(4, 9, 4, 1, "Help", createPageHelp()::open))
         page.add(Button(4, 10, 4, 1, "Exit", createPageExit()::open))
 

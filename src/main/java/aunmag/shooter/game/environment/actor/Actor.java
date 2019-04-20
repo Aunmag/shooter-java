@@ -9,9 +9,8 @@ import aunmag.shooter.core.utilities.FluidToggle;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.Config;
-import aunmag.shooter.game.client.App;
+import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.graphics.CameraShaker;
-import aunmag.shooter.game.data.LinksKt;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.weapon.Weapon;
 
@@ -245,7 +244,7 @@ public class Actor extends Operative {
     public void push(float force) {
         kinetics.velocityRadians += force * 8f;
 
-        if (this == LinksKt.getPlayer()) {
+        if (this == Context.main.getPlayerActor()) {
             CameraShaker.shake(force);
         }
     }
@@ -255,7 +254,7 @@ public class Actor extends Operative {
             weapon.render();
         }
 
-        if (App.main.isDebug()) {
+        if (Context.main.isDebug()) {
             body.render();
             hands.coverage.render();
         } else {

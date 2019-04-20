@@ -4,7 +4,7 @@ import aunmag.shooter.core.audio.AudioSource;
 import aunmag.shooter.core.math.BodyLine;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
-import aunmag.shooter.game.client.App;
+import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.magazine.Magazine;
 import aunmag.shooter.game.environment.projectile.Projectile;
@@ -88,7 +88,7 @@ public class Weapon extends Operative {
 
     @Override
     public void render() {
-        if (App.main.isDebug()) {
+        if (Context.main.isDebug()) {
             body.render();
         } else {
             type.texture.renderOnWorld(
