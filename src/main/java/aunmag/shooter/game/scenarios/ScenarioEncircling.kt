@@ -3,6 +3,7 @@ package aunmag.shooter.game.scenarios
 import aunmag.shooter.core.Application
 import aunmag.shooter.core.gui.Button
 import aunmag.shooter.core.gui.Label
+import aunmag.shooter.core.gui.Notification
 import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
@@ -117,10 +118,11 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
         updateZombiesTypes()
 
-        world.notifications.add(
+        world.notifications.add(Notification(
+                world.time,
                 "Wave $wave/$waveFinal",
                 "Kill $zombiesQuantityToSpawn zombies"
-        )
+        ))
     }
 
     private fun updateZombiesTypes() {

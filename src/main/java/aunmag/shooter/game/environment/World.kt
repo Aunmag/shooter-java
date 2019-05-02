@@ -1,6 +1,7 @@
 package aunmag.shooter.game.environment
 
 import aunmag.shooter.core.Application
+import aunmag.shooter.core.gui.Layer
 import aunmag.shooter.core.utilities.OperativeManager
 import aunmag.shooter.core.utilities.TimeFlow
 import aunmag.shooter.core.utilities.UtilsGraphics
@@ -13,7 +14,6 @@ import aunmag.shooter.game.environment.decorations.Decoration
 import aunmag.shooter.game.environment.projectile.Projectile
 import aunmag.shooter.game.environment.terrain.Terrain
 import aunmag.shooter.game.environment.utils.TreesGenerator
-import aunmag.shooter.game.gui.NotificationLayer
 import aunmag.shooter.game.items.ItemWeapon
 import org.lwjgl.opengl.GL11
 
@@ -25,7 +25,7 @@ class World {
     val ais = OperativeManager<Ai>()
     val actors = OperativeManager<Actor>()
     val projectiles = OperativeManager<Projectile>()
-    val notifications = NotificationLayer(time)
+    val notifications = Layer()
     val itemsWeapon = OperativeManager<ItemWeapon>()
     val trees = OperativeManager<Decoration>()
 
@@ -89,7 +89,7 @@ class World {
     }
 
     fun remove() {
-        notifications.clear()
+        notifications.remove()
         ground.remove()
         trees.remove()
         ais.remove()

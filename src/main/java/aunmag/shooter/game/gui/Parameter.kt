@@ -33,8 +33,8 @@ class Parameter(title: String, var value: Float, x: Int, y: Int) {
     fun render() {
         val width = grid.stepX * 3.0f
         val height = grid.stepY / 2.0f
-        val x = grid.stepX * (label.position.x + 2.0f)
-        val y = grid.stepY * (label.position.y + 0.3f)
+        val x = grid.stepX * (label.quad.position.x + 2.0f)
+        val y = grid.stepY * (label.quad.position.y + 0.3f)
         val a = width * value
         val b = width * (1f - value)
         val pulse = if (isPulsing) {
