@@ -1,20 +1,27 @@
 package aunmag.shooter.game.ux
 
+import aunmag.shooter.core.gui.Layer
+import aunmag.shooter.core.gui.Parameter
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.gui.font.Text
 import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.game.client.Context
-import aunmag.shooter.game.gui.Parameter
 
 class Hud {
 
+    private val layer = Layer()
     private val health = Parameter("Health", 0.0f, 30, 32)
     private val stamina = Parameter("Stamina", 0.0f, 30, 33)
     private val ammo = Parameter("Ammo", 0.0f, 30, 34)
     private val debug = Text(10f, 10f, "", FontStyle.SIMPLE)
 
+    init {
+        layer.add(health)
+        layer.add(stamina)
+        layer.add(ammo)
+    }
+
     fun update() {
-        Parameter.update()
         health.value = Context.main.playerActor?.health ?: 0f
         stamina.value = Context.main.playerActor?.stamina?.current ?: 0f
         ammo.value = Context.main.playerActor?.weapon?.magazine?.calculateVolumeRatio() ?: 0f
@@ -22,9 +29,7 @@ class Hud {
     }
 
     fun render() {
-        health.render()
-        stamina.render()
-        ammo.render()
+        layer.render()
 
         if (Context.main.application.isDebug) {
             renderDebug()
@@ -58,9 +63,7 @@ class Hud {
     }
 
     fun remove() {
-        health.remove()
-        stamina.remove()
-        ammo.remove()
+        layer.remove()
         debug.remove()
     }
 
