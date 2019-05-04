@@ -30,8 +30,8 @@ public final class UtilsGraphics {
         Vector2f b;
 
         if (isOnWorld) {
-            a = Application.getCamera().calculateViewPosition(x1, y1);
-            b = Application.getCamera().calculateViewPosition(x2, y2);
+            a = Application.getCamera().toViewPosition(x1, y1);
+            b = Application.getCamera().toViewPosition(x2, y2);
         } else {
             a = Application.getWindow().calculateViewPosition(x1, y1);
             b = Application.getWindow().calculateViewPosition(x2, y2);
@@ -81,8 +81,8 @@ public final class UtilsGraphics {
             Vector2f b;
 
             if (isOnWorld) {
-                a = Application.getCamera().calculateViewPosition(x, y);
-                b = Application.getCamera().calculateViewPosition(x + width, y + height);
+                a = Application.getCamera().toViewPosition(x, y);
+                b = Application.getCamera().toViewPosition(x + width, y + height);
             } else {
                 a = Application.getWindow().calculateViewPosition(x, y);
                 b = Application.getWindow().calculateViewPosition(x + width, y + height);
@@ -138,7 +138,7 @@ public final class UtilsGraphics {
             float fragmentY = (float) (y + radius * Math.sin(radians));
 
             if (isOnWorld) {
-                Vector2f viewPosition = Application.getCamera().calculateViewPosition(
+                Vector2f viewPosition = Application.getCamera().toViewPosition(
                         fragmentX,
                         fragmentY
                 );

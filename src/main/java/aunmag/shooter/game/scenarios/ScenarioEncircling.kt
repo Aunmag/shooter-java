@@ -1,6 +1,5 @@
 package aunmag.shooter.game.scenarios
 
-import aunmag.shooter.core.Application
 import aunmag.shooter.core.gui.Button
 import aunmag.shooter.core.gui.Label
 import aunmag.shooter.core.gui.Notification
@@ -13,6 +12,7 @@ import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.core.utilities.UtilsMath.limitNumber
 import aunmag.shooter.game.ai.Ai
 import aunmag.shooter.game.client.Context
+import aunmag.shooter.game.client.Player
 import aunmag.shooter.game.data.soundGameOver
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
@@ -159,7 +159,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
             else -> zombie
         }
 
-        val distance = Application.getCamera().distanceView / 2f
+        val distance = Player.SCALE_MAX / 2f
         val direction = UtilsMath.randomizeBetween(0f, UtilsMath.PIx2.toFloat())
 
         val centerX = Context.main.playerActor?.body?.position?.x ?: 0f

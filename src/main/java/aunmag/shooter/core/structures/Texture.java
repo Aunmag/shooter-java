@@ -185,7 +185,7 @@ public class Texture extends BaseQuad {
 
     public void renderOnWorld(float x, float y, float radians) {
         Camera camera = Application.getCamera();
-        Matrix4f projection = camera.calculateViewProjection(x, y, radians);
+        Matrix4f projection = camera.toViewProjection(x, y, radians);
         Application.getShader().setUniformProjection(projection);
         Application.getShader().setUniformColourDefault();
 

@@ -1,10 +1,10 @@
 package aunmag.shooter.game.environment.terrain
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.Configs
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.client.Context
+import aunmag.shooter.game.client.Player
 import org.lwjgl.opengl.GL11
 
 class Terrain {
@@ -16,7 +16,7 @@ class Terrain {
 
     init {
         textureQuantity = Math.ceil(
-                (Application.getCamera().distanceView + blockSize) / blockSize.toDouble()
+                (Player.SCALE_MAX + blockSize) / blockSize.toDouble()
         ).toInt()
         val size = (blockSize * textureQuantity).toFloat()
 
@@ -43,7 +43,7 @@ class Terrain {
         val offsetY = calculateAxisOffset(camera.position.y, blockSize / 2.0f)
         val x = camera.position.x + offsetX - (camera.position.x - offsetX) % blockSize
         val y = camera.position.y + offsetY - (camera.position.y - offsetY) % blockSize
-        val projection = camera.calculateViewProjection(x, y, 0.0f)
+        val projection = camera.toViewProjection(x, y, 0.0f)
 
         shader.bind()
         shader.setUniformProjection(projection)
@@ -65,8 +65,7 @@ class Terrain {
         val camera = Application.getCamera()
 
         val step = 1.0f
-        val size = camera.distanceView / camera.scaleFull * Configs.getPixelsPerMeter()
-        val center = removeRemainder(size * 1.25f, step * 2.0f) / 2.0f
+        val center = removeRemainder(camera.scale, step * 2.0f) / 2.0f
 
         val xMin = camera.position.x - center
         val xMax = camera.position.x + center

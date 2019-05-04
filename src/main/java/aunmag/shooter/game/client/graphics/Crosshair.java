@@ -20,17 +20,19 @@ public class Crosshair {
             return;
         }
 
-        float scale = Application.getCamera().getScaleFull();
+        var window = Application.getWindow();
+        var camera = Application.getCamera();
+
         float degree = shooter.isAiming.getCurrent();
         float radians = shooter.body.radians;
 
         float cos = (float) Math.cos(radians);
         float sin = (float) Math.sin(radians);
-        float distance = Application.getWindow().getCenterY() * degree / scale;
+        float distance = camera.toMeters(window.getCenterY() * degree);
         float x = shooter.body.position.x + (distance + shooter.body.radius) * cos;
         float y = shooter.body.position.y + (distance + shooter.body.radius) * sin;
 
-        float offset = size / scale;
+        float offset = camera.toMeters(size);
         float offsetX1 = offset * (float) Math.cos(radians + UtilsMath.PIx0_5);
         float offsetY1 = offset * (float) Math.sin(radians + UtilsMath.PIx0_5);
         float offsetX2 = offsetX1 * 3;

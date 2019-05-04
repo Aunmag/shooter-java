@@ -127,7 +127,7 @@ public class Projectile extends Operative {
     }
 
     public void render() {
-        GL11.glLineWidth(type.size * Application.getCamera().getScaleFull());
+        GL11.glLineWidth(Application.getCamera().toPixels(type.size));
         body.render();
     }
 

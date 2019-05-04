@@ -51,7 +51,7 @@ public class Text extends BaseQuad {
         Vector2f position;
 
         if (isOnWorldRendering) {
-            position = Application.getCamera().calculateViewPosition(x, y);
+            position = Application.getCamera().toViewPosition(x, y);
         } else {
             position = Application.getWindow().calculateViewPosition(x, y);
         }

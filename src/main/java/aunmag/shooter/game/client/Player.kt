@@ -13,12 +13,19 @@ import org.lwjgl.glfw.GLFW
 
 class Player(world: World) {
 
+    companion object {
+        const val SCALE_MIN = 5.0f
+        const val SCALE_MAX = 30.0f
+        const val SCALE_DEFAULT = 15.0f
+    }
+
     val actor = Actor(ActorType.human, world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
     private val blackout = Blackout(actor)
 
     init {
         actor.weapon = Weapon(world, WeaponType.pm)
         world.actors.all.add(actor)
+        App.getCamera().scale = SCALE_DEFAULT
         App.getCamera().mount.holder = actor.body.position
     }
 
@@ -81,15 +88,20 @@ class Player(world: World) {
 
         if (zoom != 0.0f) {
             val camera = Application.getCamera()
-            camera.scaleZoom += zoom * camera.scaleZoom * Application.time.delta.toFloat()
+            val delta = Application.time.delta.toFloat()
+
+            camera.scale = UtilsMath.limitNumber(
+                    camera.scale - zoom * camera.scale * delta,
+                    SCALE_MIN,
+                    SCALE_MAX
+            )
         }
     }
 
     fun updateCameraPosition() {
         val camera = App.getCamera()
         val window = App.getWindow()
-        val offsetMin = window.centerY / 2.0f / camera.scaleFull
-        val offset = offsetMin * (1.0f + actor.isAiming.current)
+        val offset = camera.toMeters(window.height * 0.25f * (1.0f + actor.isAiming.current))
 
         camera.radians = actor.body.radians
         camera.mount.length = offset
