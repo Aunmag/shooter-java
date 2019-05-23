@@ -321,4 +321,14 @@ public class Actor extends Operative {
         return weapon;
     }
 
+    public float getDirectionDesired() {
+        var direction = control.getTurningTo();
+
+        if (direction == null) {
+            direction = body.radians;
+        }
+
+        return direction;
+    }
+
 }

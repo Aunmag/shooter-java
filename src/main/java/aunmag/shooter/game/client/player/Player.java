@@ -22,6 +22,7 @@ public class Player {
     @Nullable private Actor actor = null;
     @Nullable private Blackout blackout = null;
     private final Crosshair crosshair = new Crosshair();
+    private float direction = 0;
     private boolean isAiming = false;
 
     public Player() {
@@ -69,7 +70,8 @@ public class Player {
             actor.getWeapon().magazine.reload();
         }
 
-        actor.body.radians += getRotation();
+        direction += getRotation();
+        actor.control.turnTo(direction);
         actor.body.correctRadians();
 
         Application.getCamera().scale = UtilsMath.limitNumber(
@@ -92,9 +94,9 @@ public class Player {
                 * (1.0f + actor.isAiming.getCurrent())
         );
 
-        camera.setRadians(actor.body.radians);
+        camera.setRadians(direction);
         camera.mount.length = offset;
-        camera.mount.radians = actor.body.radians;
+        camera.mount.radians = direction;
         camera.mount.apply();
     }
 
@@ -115,6 +117,7 @@ public class Player {
             App.getCamera().mount.holder = null;
         } else {
             blackout = new Blackout(actor);
+            direction = actor.getDirectionDesired();
             App.getCamera().mount.holder = actor.body.position;
         }
     }
