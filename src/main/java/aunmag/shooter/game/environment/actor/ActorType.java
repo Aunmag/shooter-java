@@ -1,11 +1,10 @@
 package aunmag.shooter.game.environment.actor;
 
 import aunmag.shooter.core.structures.Texture;
-import aunmag.shooter.game.Config;
 
 public class ActorType {
 
-    @Config public static final float STRENGTH_DEFAULT = 7500;
+    public static final float STRENGTH_DEFAULT = 7500;
 
     public final String name;
     public final float radius;

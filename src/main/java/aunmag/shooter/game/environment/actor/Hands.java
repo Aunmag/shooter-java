@@ -3,14 +3,13 @@ package aunmag.shooter.game.environment.actor;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Timer;
-import aunmag.shooter.game.Config;
 
 public class Hands {
 
-    @Config public static final float DISTANCE = 0.34375f;
-    @Config public static final float COVERAGE_RADIUS = 0.34f;
-    @Config public static final float RELOADING_TIME = 0.4f;
-    @Config public static final float RELOADING_TIME_DEVIATION_FACTOR = 0.125f;
+    public static final float DISTANCE = 0.34375f;
+    public static final float COVERAGE_RADIUS = 0.34f;
+    public static final float RELOADING_TIME = 0.4f;
+    public static final float RELOADING_TIME_DEVIATION_FACTOR = 0.125f;
 
     public final Actor actor;
     public final Timer attackTimer;

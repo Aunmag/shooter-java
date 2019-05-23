@@ -8,7 +8,6 @@ import aunmag.shooter.core.math.Kinetics;
 import aunmag.shooter.core.utilities.FluidToggle;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
-import aunmag.shooter.game.Config;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.environment.World;
@@ -16,16 +15,16 @@ import aunmag.shooter.game.environment.weapon.Weapon;
 
 public class Actor extends Operative {
 
-    @Config public static final float VELOCITY_FACTOR_ASIDE = 0.6f;
-    @Config public static final float VELOCITY_FACTOR_BACK = 0.8f;
-    @Config public static final float AIMING_TIME = 0.25f;
-    @Config public static final float AIMING_FLEX = 1.25f;
-    @Config public static final float AIMING_VELOCITY_AFFECT = 0.5f;
-    @Config public static final float AIMING_STAMINA_COST = 0.5f;
-    @Config public static final float WALKING_STAMINA_COST = 0.7f;
-    @Config public static final float SPRINT_STAMINA_COST = 1.8f;
-    @Config public static final float RELOADING_STAMINA_COST = 0.2f;
-    @Config public static final float PAIN_THRESHOLD = 0.005f;
+    public static final float VELOCITY_FACTOR_ASIDE = 0.6f;
+    public static final float VELOCITY_FACTOR_BACK = 0.8f;
+    public static final float AIMING_TIME = 0.25f;
+    public static final float AIMING_FLEX = 1.25f;
+    public static final float AIMING_VELOCITY_AFFECT = 0.5f;
+    public static final float AIMING_STAMINA_COST = 0.5f;
+    public static final float WALKING_STAMINA_COST = 0.7f;
+    public static final float SPRINT_STAMINA_COST = 1.8f;
+    public static final float RELOADING_STAMINA_COST = 0.2f;
+    public static final float PAIN_THRESHOLD = 0.005f;
 
     private static final int[] samples = new int[6];
 
