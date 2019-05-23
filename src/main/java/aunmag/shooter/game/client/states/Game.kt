@@ -1,23 +1,24 @@
 package aunmag.shooter.game.client.states
 
 import aunmag.shooter.core.input.Input
-import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.client.Context
-import aunmag.shooter.game.client.Player
-import aunmag.shooter.game.client.graphics.CameraShaker
-import aunmag.shooter.game.client.graphics.Crosshair
+import aunmag.shooter.game.client.player.CameraShaker
+import aunmag.shooter.game.client.player.Player
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.scenarios.ScenarioEncircling
-import aunmag.shooter.game.ux.Hud
+import aunmag.shooter.game.client.Hud
 import org.lwjgl.glfw.GLFW
 
 class Game {
 
     val world = World()
-    val player = Player(world)
+    val player = Player()
     private val scenario = ScenarioEncircling(world)
-    private val crosshair = Crosshair(player.actor) // TODO: Change implementation
     private val hud = Hud()
+
+    init {
+        player.actor = scenario.createPlayableActor()
+    }
 
     fun resume() {
         world.playSounds()
@@ -43,9 +44,7 @@ class Game {
 
     fun render() {
         world.render()
-        player.renderUx()
-        UtilsGraphics.drawPrepare()
-        crosshair.render()
+        player.render()
         scenario.render()
         hud.render()
     }

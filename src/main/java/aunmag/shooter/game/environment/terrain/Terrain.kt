@@ -4,7 +4,7 @@ import aunmag.shooter.core.Application
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.client.Context
-import aunmag.shooter.game.client.Player
+import aunmag.shooter.game.client.player.Player
 import org.lwjgl.opengl.GL11
 
 class Terrain {

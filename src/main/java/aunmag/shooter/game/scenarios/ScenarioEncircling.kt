@@ -12,7 +12,7 @@ import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.core.utilities.UtilsMath.limitNumber
 import aunmag.shooter.game.ai.Ai
 import aunmag.shooter.game.client.Context
-import aunmag.shooter.game.client.Player
+import aunmag.shooter.game.client.player.Player
 import aunmag.shooter.game.data.soundGameOver
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
@@ -42,6 +42,13 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     init {
         initializeBluffs()
         startNextWave()
+    }
+
+    override fun createPlayableActor() : Actor {
+        val actor = Actor(ActorType.human, world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
+        actor.weapon = Weapon(world, WeaponType.pm)
+        world.actors.all.add(actor)
+        return actor
     }
 
     private fun initializeBluffs() {

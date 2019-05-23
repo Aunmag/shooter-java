@@ -10,7 +10,7 @@ import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.Config;
 import aunmag.shooter.game.client.Context;
-import aunmag.shooter.game.client.graphics.CameraShaker;
+import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.weapon.Weapon;
 

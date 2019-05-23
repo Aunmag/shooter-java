@@ -1,4 +1,4 @@
-package aunmag.shooter.game.client.graphics;
+package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.Camera;

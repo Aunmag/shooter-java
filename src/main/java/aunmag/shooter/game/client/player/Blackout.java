@@ -1,4 +1,4 @@
-package aunmag.shooter.game.ux;
+package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.structures.Texture;
@@ -12,7 +12,7 @@ public class Blackout {
 
     private final Actor player;
     private final Texture texture;
-    private float healthLast = 1.0f;
+    private float healthLast;
     private final FluidValue hurt;
     private final float hurtFactor = 4.0f;
     private final float hurtTimeFadeIn = 0.06f;
@@ -23,6 +23,7 @@ public class Blackout {
 
         texture = Texture.getOrCreate("images/gui/blackout1600", Texture.Type.STRETCHED);
         hurt = new FluidValue(player.world.getTime(), hurtTimeFadeIn);
+        healthLast = player.getHealth();
     }
 
     public void render() {
@@ -53,6 +54,7 @@ public class Blackout {
         float alphaWound = (float) Math.pow(1.0f - player.getHealth(), 3);
         float alpha = alphaHurt + alphaWound - (alphaHurt * alphaWound);
         GL11.glColor4f(0f, 0f, 0f, UtilsMath.limitNumber(alpha, 0, 1));
+        UtilsGraphics.drawPrepare();
         UtilsGraphics.fillScreen();
     }
 

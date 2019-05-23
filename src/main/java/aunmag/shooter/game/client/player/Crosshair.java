@@ -1,22 +1,19 @@
-package aunmag.shooter.game.client.graphics;
+package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.core.utilities.UtilsMath;
-import aunmag.shooter.game.environment.actor.Actor;
+import aunmag.shooter.game.client.Context;
 import org.lwjgl.opengl.GL11;
 
 public class Crosshair {
 
     private static final int size = 5;
-    private Actor shooter;
-
-    public Crosshair(Actor shooter) {
-        this.shooter = shooter;
-    }
 
     public void render() {
-        if (shooter.isAiming.isCompletelyOff()) {
+        var shooter = Context.main.getPlayerActor();
+
+        if (shooter == null || shooter.isAiming.isCompletelyOff()) {
             return;
         }
 

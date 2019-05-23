@@ -1,11 +1,10 @@
-package aunmag.shooter.game.ux
+package aunmag.shooter.game.client
 
 import aunmag.shooter.core.gui.Layer
 import aunmag.shooter.core.gui.Parameter
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.gui.font.Text
 import aunmag.shooter.core.utilities.UtilsMath
-import aunmag.shooter.game.client.Context
 
 class Hud {
 
