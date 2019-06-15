@@ -21,9 +21,6 @@ class Stamina(private val actor: Actor) {
         current -= recurrenceStep * stepFactor * actor.world.time.delta.toFloat()
     }
 
-    /**
-     * ~/src/python/stamina_efficiency.py
-     */
     fun calculateEfficiency(): Float {
         return 1.0f - Math.pow(1.0 - current, 2.0).toFloat()
     }
