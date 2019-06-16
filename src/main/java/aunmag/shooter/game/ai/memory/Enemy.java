@@ -1,8 +1,9 @@
 package aunmag.shooter.game.ai.memory;
 
+import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Lazy;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.ai.Ai;
 import aunmag.shooter.game.environment.actor.Actor;
@@ -63,12 +64,12 @@ public class Enemy extends Destination {
         super.render();
 
         GL11.glColor4f(1.0f, 0.4f, 0.4f, 0.05f);
-        UtilsGraphics.drawCircle(
+        Graphics.draw.circle(
                 ai.actor.body.position.x,
                 ai.actor.body.position.y,
                 ai.getStrategy().closeDistanceToEnemy,
                 true,
-                true
+                Application.getCamera()::project
         );
     }
 

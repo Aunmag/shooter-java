@@ -1,7 +1,7 @@
 package aunmag.shooter.core.gui;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.utilities.UtilsGraphics;
+import aunmag.shooter.core.graphics.Graphics;
 import org.lwjgl.opengl.GL11;
 
 public class Grid {
@@ -24,22 +24,14 @@ public class Grid {
 
     public void render() {
         GL11.glColor4f(1f, 1f, 1f, 0.2f);
+        var window = Application.getWindow();
 
         for (var n = 0; n < slices; n++) {
             var x = n * stepX;
             var y = n * stepY;
 
-            UtilsGraphics.drawLine(
-                    x, 0,
-                    x, Application.getWindow().getHeight(),
-                    false
-            );
-
-            UtilsGraphics.drawLine(
-                    0, y,
-                    Application.getWindow().getWidth(), y,
-                    false
-            );
+            Graphics.draw.line(x, 0, x, window.getHeight(), window::project);
+            Graphics.draw.line(0, y, window.getWidth(), y, window::project);
         }
     }
 

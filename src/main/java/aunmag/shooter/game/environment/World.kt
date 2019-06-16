@@ -4,7 +4,6 @@ import aunmag.shooter.core.Application
 import aunmag.shooter.core.gui.Layer
 import aunmag.shooter.core.utilities.OperativeManager
 import aunmag.shooter.core.utilities.TimeFlow
-import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.ai.Ai
 import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.data.soundAmbiance
@@ -42,27 +41,15 @@ class World {
         notifications.update()
     }
 
-    // TODO: Optimize draw modes
     fun render() {
         terrain.render()
 
         if (!Context.main.isDebug) {
-            Application.getShader().bind()
             ground.render()
         }
 
         itemsWeapon.render()
-
-        if (Context.main.isDebug) {
-            UtilsGraphics.drawPrepare()
-        }
-
         actors.render()
-
-        if (!Context.main.isDebug) {
-            UtilsGraphics.drawPrepare()
-        }
-
         projectiles.render()
         GL11.glLineWidth(1f)
 

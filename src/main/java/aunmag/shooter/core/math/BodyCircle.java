@@ -1,6 +1,7 @@
 package aunmag.shooter.core.math;
 
-import aunmag.shooter.core.utilities.UtilsGraphics;
+import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 
 public class BodyCircle extends BodyPoint {
 
@@ -14,7 +15,13 @@ public class BodyCircle extends BodyPoint {
     @Override
     public void render() {
         super.render();
-        UtilsGraphics.drawCircle(position.x, position.y, radius, true, true);
+        Graphics.draw.circle(
+                position.x,
+                position.y,
+                radius,
+                true,
+                Application.getCamera()::project
+        );
     }
 
 }

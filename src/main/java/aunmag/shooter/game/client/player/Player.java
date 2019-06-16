@@ -2,7 +2,6 @@ package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.input.Input;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.App;
 import aunmag.shooter.game.environment.actor.Actor;
@@ -105,7 +104,6 @@ public class Player {
             blackout.render();
         }
 
-        UtilsGraphics.drawPrepare();
         crosshair.render();
     }
 

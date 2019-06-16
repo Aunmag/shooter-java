@@ -39,9 +39,9 @@ public class Camera extends BaseObject {
         );
     }
 
-    public Vector2f toViewPosition(float x, float y) {
-        var viewPosition = new Vector3f(x, y, 0).mulPosition(viewMatrix);
-        return new Vector2f(viewPosition.x, viewPosition.y);
+    public Vector2f project(float x, float y) {
+        var projected = new Vector3f(x, y, 0).mulPosition(viewMatrix);
+        return new Vector2f(projected.x, projected.y);
     }
 
     public Matrix4f toViewProjection(float x, float y, float angle) {

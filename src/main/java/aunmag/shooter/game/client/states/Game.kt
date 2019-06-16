@@ -2,11 +2,11 @@ package aunmag.shooter.game.client.states
 
 import aunmag.shooter.core.input.Input
 import aunmag.shooter.game.client.Context
+import aunmag.shooter.game.client.Hud
 import aunmag.shooter.game.client.player.CameraShaker
 import aunmag.shooter.game.client.player.Player
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.scenarios.ScenarioEncircling
-import aunmag.shooter.game.client.Hud
 import org.lwjgl.glfw.GLFW
 
 class Game {

@@ -1,9 +1,9 @@
 package aunmag.shooter.core.gui;
 
 import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.utilities.Pulse;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
@@ -27,6 +27,7 @@ public class Parameter extends Component {
     @Override
     public void render() {
         var pulse = getPulse();
+        var window = Application.getWindow();
 
         var x = GRID.getStepX() * (label.quad.getPosition().x + 2.0f);
         var y = GRID.getStepY() * (label.quad.getPosition().y + 0.3f);
@@ -37,9 +38,9 @@ public class Parameter extends Component {
         var b = sizeX * (1 - value);
 
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.75f * pulse);
-        UtilsGraphics.drawQuad(x + 0, y, a, sizeY, true, false);
+        Graphics.draw.quad(x + 0, y, x + 0 + a, y + sizeY, true, window::project);
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.25f * pulse);
-        UtilsGraphics.drawQuad(x + a, y, b, sizeY, true, false);
+        Graphics.draw.quad(x + a, y, x + a + b, y + sizeY, true, window::project);
 
         label.render();
     }

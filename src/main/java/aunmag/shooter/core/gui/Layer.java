@@ -1,9 +1,9 @@
 package aunmag.shooter.core.gui;
 
 import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.OperativeManager;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 
@@ -26,9 +26,8 @@ public class Layer extends OperativeManager<Component> {
         }
 
         if (background != null) {
-            UtilsGraphics.setDrawColor(background);
-            UtilsGraphics.drawPrepare();
-            UtilsGraphics.fillScreen();
+            Graphics.draw.withColor(background);
+            Graphics.draw.fill();
         }
 
         super.render();

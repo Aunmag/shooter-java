@@ -1,5 +1,7 @@
 package aunmag.shooter.game.scenarios
 
+import aunmag.shooter.core.Application
+import aunmag.shooter.core.graphics.Graphics
 import aunmag.shooter.core.gui.Button
 import aunmag.shooter.core.gui.Label
 import aunmag.shooter.core.gui.Notification
@@ -7,7 +9,6 @@ import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.Timer
-import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.core.utilities.UtilsMath.limitNumber
 import aunmag.shooter.game.ai.Ai
@@ -103,13 +104,14 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     private fun renderBorders() {
+        val projector = Application.getCamera()::project
         val n = bordersDistance
         GL11.glLineWidth(2f)
         GL11.glColor3f(1f, 0f, 0f)
-        UtilsGraphics.drawLine(-n, -n, +n, -n, true)
-        UtilsGraphics.drawLine(+n, -n, +n, +n, true)
-        UtilsGraphics.drawLine(+n, +n, -n, +n, true)
-        UtilsGraphics.drawLine(-n, +n, -n, -n, true)
+        Graphics.draw.line(-n, -n, +n, -n, projector)
+        Graphics.draw.line(+n, -n, +n, +n, projector)
+        Graphics.draw.line(+n, +n, -n, +n, projector)
+        Graphics.draw.line(-n, +n, -n, -n, projector)
         GL11.glLineWidth(1f)
     }
 

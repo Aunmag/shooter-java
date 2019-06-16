@@ -1,7 +1,8 @@
 package aunmag.shooter.game.ai.memory;
 
+import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.Lazy;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.ai.Ai;
 import org.joml.Vector2f;
@@ -50,7 +51,7 @@ public class Destination extends Record {
         GL11.glColor4f(1.0f, 0.4f, 0.4f, 0.4f);
         GL11.glLineStipple(5, (short) 0xAAAA);
         GL11.glEnable(GL11.GL_LINE_STIPPLE);
-        UtilsGraphics.drawLine(a.x, a.y, b.x, b.y, true);
+        Graphics.draw.line(a.x, a.y, b.x, b.y, Application.getCamera()::project);
         GL11.glDisable(GL11.GL_LINE_STIPPLE);
     }
 

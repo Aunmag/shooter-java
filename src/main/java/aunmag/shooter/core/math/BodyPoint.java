@@ -1,6 +1,6 @@
 package aunmag.shooter.core.math;
 
-import aunmag.shooter.core.utilities.UtilsGraphics;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -21,7 +21,7 @@ public class BodyPoint {
     }
 
     public void render() {
-        UtilsGraphics.setDrawColor(color);
+        Graphics.draw.withColor(color);
     }
 
 }

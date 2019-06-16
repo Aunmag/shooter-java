@@ -1,7 +1,7 @@
 package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.utilities.UtilsGraphics;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.Context;
 import org.lwjgl.opengl.GL11;
@@ -38,27 +38,27 @@ public class Crosshair {
         float alpha = UtilsMath.limitNumber(distance, 0, 1);
         GL11.glColor4f(1f, 1f, 1f, alpha);
 
-        UtilsGraphics.drawLine(
+        Graphics.draw.line(
                 x + offsetX1,
                 y + offsetY1,
                 x + offsetX2,
                 y + offsetY2,
-                true
+                camera::project
         );
 
-        UtilsGraphics.drawLine(
+        Graphics.draw.line(
                 x - offsetX1,
                 y - offsetY1,
                 x - offsetX2,
                 y - offsetY2,
-                true
+                camera::project
         );
 
         GL11.glLineStipple(size, (short) 0xAAAA);
         GL11.glEnable(GL11.GL_LINE_STIPPLE);
         float x2 = x - distance * cos;
         float y2 = y - distance * sin;
-        UtilsGraphics.drawLine(x, y, x2, y2, true);
+        Graphics.draw.line(x, y, x2, y2, camera::project);
         GL11.glDisable(GL11.GL_LINE_STIPPLE);
     }
 

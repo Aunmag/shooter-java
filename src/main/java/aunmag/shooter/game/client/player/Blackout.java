@@ -1,9 +1,9 @@
 package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.FluidValue;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.lwjgl.opengl.GL11;
@@ -54,8 +54,7 @@ public class Blackout {
         float alphaWound = (float) Math.pow(1.0f - player.getHealth(), 3);
         float alpha = alphaHurt + alphaWound - (alphaHurt * alphaWound);
         GL11.glColor4f(0f, 0f, 0f, UtilsMath.limitNumber(alpha, 0, 1));
-        UtilsGraphics.drawPrepare();
-        UtilsGraphics.fillScreen();
+        Graphics.draw.fill();
     }
 
     private void renderBoundaries() {

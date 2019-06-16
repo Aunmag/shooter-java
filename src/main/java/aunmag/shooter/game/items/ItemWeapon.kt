@@ -6,7 +6,10 @@ import aunmag.shooter.core.gui.font.Text
 import aunmag.shooter.core.input.Input
 import aunmag.shooter.core.math.BodyCircle
 import aunmag.shooter.core.math.CollisionCC
-import aunmag.shooter.core.utilities.*
+import aunmag.shooter.core.utilities.FluidValue
+import aunmag.shooter.core.utilities.Operative
+import aunmag.shooter.core.utilities.Timer
+import aunmag.shooter.core.utilities.UtilsMath
 import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.environment.actor.Actor
 import aunmag.shooter.game.environment.weapon.Weapon
@@ -117,7 +120,6 @@ class ItemWeapon private constructor(
 
     override fun render() {
         if (giver == null) {
-            UtilsGraphics.drawPrepare()
             body.render()
             text.orderRendering()
 

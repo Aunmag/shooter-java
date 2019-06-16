@@ -2,7 +2,7 @@ package aunmag.shooter.core.gui.font;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.basics.BaseQuad;
-import aunmag.shooter.core.utilities.UtilsGraphics;
+import aunmag.shooter.core.graphics.Graphics;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -17,7 +17,7 @@ public class Text extends BaseQuad {
     public final FontStyle style;
     @Nullable
     private TextVao vao = null;
-    private Vector4f colour = UtilsGraphics.COLOR_WHITE;
+    private Vector4f colour = Graphics.COLOR_WHITE;
     private Matrix4f projection;
     private boolean isRenderingOrdered = false;
     private boolean isOnWorldRendering = false;
@@ -51,9 +51,9 @@ public class Text extends BaseQuad {
         Vector2f position;
 
         if (isOnWorldRendering) {
-            position = Application.getCamera().toViewPosition(x, y);
+            position = Application.getCamera().project(x, y);
         } else {
-            position = Application.getWindow().calculateViewPosition(x, y);
+            position = Application.getWindow().project(x, y);
         }
 
         projection = new Matrix4f().translate(position.x(), position.y(), 0);

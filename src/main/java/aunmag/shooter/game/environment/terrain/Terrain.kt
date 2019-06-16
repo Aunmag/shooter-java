@@ -1,8 +1,8 @@
 package aunmag.shooter.game.environment.terrain
 
 import aunmag.shooter.core.Application
+import aunmag.shooter.core.graphics.Graphics
 import aunmag.shooter.core.structures.Texture
-import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.client.player.Player
 import org.lwjgl.opengl.GL11
@@ -50,7 +50,7 @@ class Terrain {
         shader.setUniformQuantity(textureQuantity)
         texture.bind()
         texture.render()
-        shader.setUniformQuantity(1)
+        Application.getShader().bind()
     }
 
     private fun calculateAxisOffset(value: Float, offset: Float): Float {
@@ -74,7 +74,6 @@ class Terrain {
         val gridX = removeRemainder(camera.position.x, step)
         val gridY = removeRemainder(camera.position.y, step)
 
-        UtilsGraphics.drawPrepare()
         updateColor(0)
 
         var counter = -center + step
@@ -84,12 +83,12 @@ class Terrain {
 
             val isCenterByX = x == 0.0f
             if (isCenterByX) updateColor(1)
-            UtilsGraphics.drawLine(x, yMin, x, yMax, true)
+            Graphics.draw.line(x, yMin, x, yMax, camera::project)
             if (isCenterByX) updateColor(0)
 
             val isCenterByY = y == 0.0f
             if (isCenterByY) updateColor(-1)
-            UtilsGraphics.drawLine(xMin, y, xMax, y, true)
+            Graphics.draw.line(xMin, y, xMax, y, camera::project)
             if (isCenterByY) updateColor(0)
 
             counter += step

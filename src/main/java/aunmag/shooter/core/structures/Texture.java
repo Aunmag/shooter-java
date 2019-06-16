@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
 
 import javax.imageio.ImageIO;
@@ -141,7 +140,8 @@ public class Texture extends BaseQuad {
         pixelsBuffer.flip();
 
         id = GL11.glGenTextures();
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+        bind();
+
         GL11.glTexParameterf(
                 GL11.GL_TEXTURE_2D,
                 GL11.GL_TEXTURE_MIN_FILTER,
@@ -175,7 +175,6 @@ public class Texture extends BaseQuad {
     }
 
     public void bind() {
-        GL13.glActiveTexture(GL13.GL_TEXTURE0); // TODO: Do I need this?
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
     }
 

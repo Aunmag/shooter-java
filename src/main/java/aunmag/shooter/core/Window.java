@@ -62,7 +62,7 @@ public class Window extends BaseQuad {
         isInitialized = true;
     }
 
-    public Vector2f calculateViewPosition(float x, float y) {
+    public Vector2f project(float x, float y) {
         x = (x - getCenterX() + 1) / getCenterX();
         y = (getCenterY() - y - 1) / getCenterY();
         return new Vector2f(x, y);
