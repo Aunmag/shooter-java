@@ -48,7 +48,7 @@ public class Weapon extends Operative {
 
     private void makeShot() {
         audioSource.play();
-        trigger.getShooter().push(calculateRandomRecoil());
+        trigger.getShooter().shake(calculateRandomRecoil(), true);
 
         for (int bullet = 0; bullet < magazine.type.getProjectile().shot; bullet++) {
             makeBullet(body.position.x, body.position.y);
@@ -69,13 +69,7 @@ public class Weapon extends Operative {
     }
 
     private float calculateRandomRecoil() {
-        float recoil = UtilsMath.randomizeFlexibly(type.recoil, type.recoilDeflection);
-
-        if (UtilsMath.random.nextBoolean()) {
-            recoil = -recoil;
-        }
-
-        return recoil;
+        return UtilsMath.randomizeFlexibly(type.recoil, type.recoilDeflection);
     }
 
     private float calculateRandomRadians() {

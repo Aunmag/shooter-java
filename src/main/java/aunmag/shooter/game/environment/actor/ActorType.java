@@ -8,7 +8,7 @@ public class ActorType {
 
     public final String name;
     public final float radius;
-    public final float weight;
+    public final float mass;
     public final float strength;
     public final float velocity;
     public final float velocityFactorSprint;
@@ -20,7 +20,7 @@ public class ActorType {
     public ActorType(
             String name,
             float radius,
-            float weight,
+            float mass,
             float strength,
             float velocity,
             float velocityFactorSprint,
@@ -30,7 +30,7 @@ public class ActorType {
     ) {
         this.name = name;
         this.radius = radius;
-        this.weight = weight;
+        this.mass = mass;
         this.strength = strength;
         this.velocity = velocity;
         this.velocityFactorSprint = velocityFactorSprint;

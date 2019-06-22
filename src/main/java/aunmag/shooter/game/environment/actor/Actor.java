@@ -12,6 +12,7 @@ import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.weapon.Weapon;
+import org.jetbrains.annotations.Nullable;
 
 public class Actor extends Operative {
 
@@ -58,7 +59,7 @@ public class Actor extends Operative {
         isAiming = new FluidToggle(world.getTime(), AIMING_TIME);
         isAiming.setFlexDegree(AIMING_FLEX);
 
-        kinetics = new Kinetics(type.weight);
+        kinetics = new Kinetics(type.mass);
 
         audioSource.setVolume(5);
     }
@@ -107,7 +108,7 @@ public class Actor extends Operative {
         float velocityX = kinetics.velocity.x * timeDelta;
         float velocityY = kinetics.velocity.y * timeDelta;
         body.position.add(velocityX, velocityY);
-        body.radians += kinetics.velocityRadians * timeDelta;
+        body.radians += kinetics.spin * timeDelta;
     }
 
     private void updateCollision() {
@@ -116,7 +117,12 @@ public class Actor extends Operative {
                 CollisionCC collision = new CollisionCC(body, opponent.body);
 
                 if (collision.isTrue()) {
-                    Kinetics.interact(kinetics, opponent.kinetics);
+                    Kinetics.interact(
+                            kinetics,
+                            opponent.kinetics,
+                            body.position,
+                            opponent.body.position
+                    );
                     collision.resolve();
                 }
             }
@@ -199,9 +205,9 @@ public class Actor extends Operative {
             velocity = -velocity;
         }
 
-        var velocityCurrent = kinetics.velocityRadians;
+        var velocityCurrent = kinetics.spin;
         var velocityFuture = velocity + velocityCurrent;
-        var distanceFuture = velocityFuture / kinetics.radiansRestrictionFactor;
+        var distanceFuture = velocityFuture / kinetics.restrictionFactorSpin;
         var distanceExcess = distanceFuture / distance;
 
         if (distanceExcess > 1) {
@@ -226,25 +232,25 @@ public class Actor extends Operative {
         kinetics.addEnergy(moveX, moveY, 0, timeDelta);
     }
 
-    public void hit(float damage, Actor attacker) {
-        damage /= type.strength;
+    public void hit(float damage, @Nullable Actor attacker) {
+        if (isAlive()) {
+            addHealth(-damage / type.strength);
 
-        boolean wasAlive = isAlive();
-
-        addHealth(-damage);
-
-        if (wasAlive && !isAlive() && attacker != null) {
-            attacker.increaseKills();
+            if (attacker != null && !isAlive()) {
+                attacker.increaseKills();
+            }
         }
-
-        push(UtilsMath.random.nextBoolean() ? damage : -damage);
     }
 
-    public void push(float force) {
-        kinetics.velocityRadians += force * 8f;
+    public void shake(float force, boolean randomizeDirection) {
+        if (randomizeDirection && UtilsMath.random.nextBoolean()) {
+            force = -force;
+        }
+
+        kinetics.push(0, 0, force);
 
         if (this == Context.main.getPlayerActor()) {
-            CameraShaker.shake(force);
+            CameraShaker.shake(kinetics.compensateMomentum(force));
         }
     }
 

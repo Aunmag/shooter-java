@@ -145,7 +145,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         return ActorType(
                 type.name,
                 type.radius,
-                type.weight,
+                type.mass,
                 skillFactor * type.strength,
                 skillFactor * type.velocity,
                 type.velocityFactorSprint,
