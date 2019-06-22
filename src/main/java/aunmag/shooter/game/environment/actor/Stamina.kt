@@ -6,7 +6,7 @@ class Stamina(private val actor: Actor) {
 
     var current = 1.0f
         private set(value) {
-            field = UtilsMath.limitNumber(value, reserve, 1.0f)
+            field = UtilsMath.limit(value, reserve, 1.0f)
         }
     private val reserve = 0.01f
     private val recurrenceStep = 0.07f

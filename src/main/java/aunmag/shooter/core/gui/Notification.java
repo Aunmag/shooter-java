@@ -63,7 +63,7 @@ public class Notification extends Component {
             fade = (float) left / TIME_FADE_OUT;
         }
 
-        return UtilsMath.limitNumber(fade, 0, 1);
+        return UtilsMath.limit(fade, 0, 1);
     }
 
 }

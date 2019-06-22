@@ -292,7 +292,7 @@ public class Actor extends Operative {
     /* Setters */
 
     private void addHealth(float addHealth) {
-        health = UtilsMath.limitNumber(health + addHealth, 0, 1);
+        health = UtilsMath.limit(health + addHealth, 0, 1);
 
         if (!isAlive()) {
             remove();

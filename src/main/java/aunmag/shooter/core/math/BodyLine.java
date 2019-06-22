@@ -24,7 +24,7 @@ public class BodyLine extends BodyPoint {
     }
 
     public void updateRadians() {
-        radians = UtilsMath.calculateRadiansBetween(position, positionTail);
+        radians = UtilsMath.angle(position, positionTail);
     }
 
     @Override

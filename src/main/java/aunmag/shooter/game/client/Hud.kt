@@ -43,9 +43,9 @@ class Hud {
         var timeSpentRender = 0f // TODO: Invoke data
         var timeSpentTotal = timeSpentUpdate + timeSpentRender
         val round = 100f
-        timeSpentUpdate = UtilsMath.calculateRoundValue(timeSpentUpdate, round)
-        timeSpentRender = UtilsMath.calculateRoundValue(timeSpentRender, round)
-        timeSpentTotal = UtilsMath.calculateRoundValue(timeSpentTotal, round)
+        timeSpentUpdate = UtilsMath.round(timeSpentUpdate, round)
+        timeSpentRender = UtilsMath.round(timeSpentRender, round)
+        timeSpentTotal = UtilsMath.round(timeSpentTotal, round)
 
         var message = ""
         message += String.format("Spent time on updating: %s ms\n", timeSpentUpdate)

@@ -10,7 +10,7 @@ import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.Timer
 import aunmag.shooter.core.utilities.UtilsMath
-import aunmag.shooter.core.utilities.UtilsMath.limitNumber
+import aunmag.shooter.core.utilities.UtilsMath.limit
 import aunmag.shooter.game.ai.Ai
 import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.client.player.Player
@@ -157,8 +157,8 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     private fun confinePlayerPosition() {
         val position = Context.main.playerActor?.body?.position ?: return
-        position.x = limitNumber(position.x, -bordersDistance, bordersDistance)
-        position.y = limitNumber(position.y, -bordersDistance, bordersDistance)
+        position.x = limit(position.x, -bordersDistance, bordersDistance)
+        position.y = limit(position.y, -bordersDistance, bordersDistance)
     }
 
     private fun spawnZombie() {

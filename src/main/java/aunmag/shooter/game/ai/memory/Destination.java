@@ -36,12 +36,7 @@ public class Destination extends Record {
     }
 
     protected float computeDirection() {
-        return UtilsMath.calculateRadiansBetween(
-                position.get().x,
-                position.get().y,
-                ai.actor.body.position.x,
-                ai.actor.body.position.y
-        );
+        return UtilsMath.angle(position.get(), ai.actor.body.position);
     }
 
     public void render() {

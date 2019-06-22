@@ -73,7 +73,7 @@ class ItemWeapon private constructor(
     }
 
     private fun updateColor() {
-        val alpha = UtilsMath.limitNumber(
+        val alpha = UtilsMath.limit(
                 4.0f * (1.0 - timer.calculateIsDoneRatio()).toFloat(),
                 0.0f,
                 0.8f

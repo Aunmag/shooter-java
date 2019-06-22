@@ -73,7 +73,7 @@ public class Player {
         actor.control.turnTo(direction);
         actor.body.correctRadians();
 
-        Application.getCamera().scale = UtilsMath.limitNumber(
+        Application.getCamera().scale = UtilsMath.limit(
                 Application.getCamera().scale - getZooming(),
                 SCALE_MIN,
                 SCALE_MAX

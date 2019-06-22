@@ -6,10 +6,10 @@ import static aunmag.shooter.TestData.PRECISION;
 import static aunmag.shooter.core.utilities.UtilsMath.PIx0_5;
 import static aunmag.shooter.core.utilities.UtilsMath.PIx1_5;
 import static aunmag.shooter.core.utilities.UtilsMath.PIx2;
-import static aunmag.shooter.core.utilities.UtilsMath.calculateDistanceBetween;
-import static aunmag.shooter.core.utilities.UtilsMath.calculateIsNumberInsideRange;
+import static aunmag.shooter.core.utilities.UtilsMath.distance;
+import static aunmag.shooter.core.utilities.UtilsMath.inRange;
 import static aunmag.shooter.core.utilities.UtilsMath.correctRadians;
-import static aunmag.shooter.core.utilities.UtilsMath.limitNumber;
+import static aunmag.shooter.core.utilities.UtilsMath.limit;
 import static aunmag.shooter.core.utilities.UtilsMath.radiansDifference;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -42,44 +42,44 @@ class UtilsMathTest {
     }
 
     @Test
-    void testCalculateDistanceBetween() {
-        assertEquals(0, calculateDistanceBetween(0, 0, 0, 0));
+    void testDistance() {
+        assertEquals(0, distance(0, 0, 0, 0));
 
         float n = 312346.848729800778264f;
-        assertEquals(n, calculateDistanceBetween(n, 0, 0, 0));
-        assertEquals(n, calculateDistanceBetween(0, n, 0, 0));
-        assertEquals(n, calculateDistanceBetween(0, 0, n, 0));
-        assertEquals(n, calculateDistanceBetween(0, 0, 0, n));
-        assertEquals(n, calculateDistanceBetween(0, 0, 0, -n));
-        assertEquals(n * 2, calculateDistanceBetween(0, n, 0, -n), PRECISION);
+        assertEquals(n, distance(n, 0, 0, 0));
+        assertEquals(n, distance(0, n, 0, 0));
+        assertEquals(n, distance(0, 0, n, 0));
+        assertEquals(n, distance(0, 0, 0, n));
+        assertEquals(n, distance(0, 0, 0, -n));
+        assertEquals(n * 2, distance(0, n, 0, -n), PRECISION);
 
         assertEquals(
                 33.203915431767984,
-                calculateDistanceBetween(548.25f, -1.5f, 537.75f, 30),
+                distance(548.25f, -1.5f, 537.75f, 30),
                 PRECISION
         );
     }
 
     @Test
-    void testCalculateIsNumberInsideRange() {
-        assertTrue(calculateIsNumberInsideRange(0, 0, 0));
-        assertTrue(calculateIsNumberInsideRange(1, 1, 1));
-        assertTrue(calculateIsNumberInsideRange(1, -1, 1));
-        assertTrue(calculateIsNumberInsideRange(-1, -1, 1));
-        assertTrue(calculateIsNumberInsideRange(0.5f, 0, 1));
+    void testInRange() {
+        assertTrue(inRange(0, 0, 0));
+        assertTrue(inRange(1, 1, 1));
+        assertTrue(inRange(1, -1, 1));
+        assertTrue(inRange(-1, -1, 1));
+        assertTrue(inRange(0.5f, 0, 1));
 
-        assertFalse(calculateIsNumberInsideRange(1, 0, 0));
-        assertFalse(calculateIsNumberInsideRange(1, -1, 0));
-        assertFalse(calculateIsNumberInsideRange(0.5f, -1, 0));
+        assertFalse(inRange(1, 0, 0));
+        assertFalse(inRange(1, -1, 0));
+        assertFalse(inRange(0.5f, -1, 0));
     }
 
     @Test
-    void testLimitNumber() {
-        assertEquals(0, limitNumber(0, 0, 0));
-        assertEquals(0, limitNumber(0, 0, 1));
-        assertEquals(1, limitNumber(0, 1, 1));
-        assertEquals(-1, limitNumber(-1.5f, -1, 1));
-        assertEquals(+1, limitNumber(+1.5f, -1, 1));
+    void testLimit() {
+        assertEquals(0, limit(0, 0, 0));
+        assertEquals(0, limit(0, 0, 1));
+        assertEquals(1, limit(0, 1, 1));
+        assertEquals(-1, limit(-1.5f, -1, 1));
+        assertEquals(+1, limit(+1.5f, -1, 1));
     }
 
 }

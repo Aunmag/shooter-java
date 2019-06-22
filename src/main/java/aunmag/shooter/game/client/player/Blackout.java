@@ -53,7 +53,7 @@ public class Blackout {
         float alphaHurt = hurt.getCurrent();
         float alphaWound = (float) Math.pow(1.0f - player.getHealth(), 3);
         float alpha = alphaHurt + alphaWound - (alphaHurt * alphaWound);
-        GL11.glColor4f(0f, 0f, 0f, UtilsMath.limitNumber(alpha, 0, 1));
+        GL11.glColor4f(0f, 0f, 0f, UtilsMath.limit(alpha, 0, 1));
         Graphics.draw.fill();
     }
 
