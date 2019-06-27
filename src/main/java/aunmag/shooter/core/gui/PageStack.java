@@ -39,10 +39,8 @@ public class PageStack {
         }
     }
 
-    public void removeLast(int count) {
-        while (count-- > 0 && getCurrentIndex() >= 0) {
-            pages.remove(getCurrentIndex());
-        }
+    public void remove(int index) {
+        pages.remove(index);
     }
 
     /* Setters */
@@ -53,7 +51,7 @@ public class PageStack {
 
     /* Getters */
 
-    private int getCurrentIndex() {
+    public int getCurrentIndex() {
         return pages.size() - 1;
     }
 

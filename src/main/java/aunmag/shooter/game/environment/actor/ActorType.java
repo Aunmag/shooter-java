@@ -9,6 +9,7 @@ public class ActorType {
     @Config public static final float STRENGTH_DEFAULT = 7500;
 
     public final String name;
+    public final Genus genus;
     public final float radius;
     public final float weight;
     public final float strength;
@@ -22,6 +23,7 @@ public class ActorType {
 
     public ActorType(
             String name,
+            Genus genus,
             float radius,
             float weight,
             float strength,
@@ -33,6 +35,7 @@ public class ActorType {
             WeaponType primaryWeaponType
     ) {
         this.name = name;
+        this.genus = genus;
         this.radius = radius;
         this.weight = weight;
         this.strength = strength;
@@ -50,6 +53,7 @@ public class ActorType {
 
     public static final ActorType human = new ActorType(
             "human",
+            Genus.Human,
             0.225f,
             80_000,
             STRENGTH_DEFAULT,
@@ -63,6 +67,7 @@ public class ActorType {
 
     public static final ActorType humanCowboy = new ActorType(
             "human cowboy",
+            Genus.Human,
             human.radius,
             0.9f * human.weight,
             0.8f * human.strength,
@@ -76,6 +81,7 @@ public class ActorType {
 
     public static final ActorType zombie = new ActorType(
             "zombie",
+            Genus.Zombie,
             human.radius,
             70_000,
             0.4f * human.strength,
@@ -89,6 +95,7 @@ public class ActorType {
 
     public static final ActorType zombieAgile = new ActorType(
             "zombie agile",
+            Genus.Zombie,
             0.8f * zombie.radius,
             40_000,
             0.6f * zombie.strength,
@@ -102,6 +109,7 @@ public class ActorType {
 
     public static final ActorType zombieHeavy = new ActorType(
             "zombie heavy",
+            Genus.Zombie,
             1.2f * zombie.radius,
             120_000,
             2.0f * zombie.strength,
@@ -113,9 +121,9 @@ public class ActorType {
             null
     );
 
-    // Types, player can use
-    public static final ActorType[] playableTypes = {
-        human,
-        humanCowboy,
-    };
+
+    public enum Genus {
+        Human,
+        Zombie
+    }
 }

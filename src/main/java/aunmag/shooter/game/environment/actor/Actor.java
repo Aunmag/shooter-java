@@ -11,7 +11,6 @@ import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.Config;
 import aunmag.shooter.game.client.App;
 import aunmag.shooter.game.client.graphics.CameraShaker;
-import aunmag.shooter.game.client.states.ScenarioStatus;
 import aunmag.shooter.game.data.LinksKt;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.weapon.Weapon;
@@ -43,8 +42,6 @@ public class Actor extends Operative {
     private AudioSource audioSource = new AudioSource();
     public final Control control = new Control();
     public final FluidToggle isAiming;
-    public boolean currentIsPressAiming;
-    public boolean currentIsHoldAiming;
 
     static {
         for (int i = 0; i < samples.length; i++) {
@@ -63,9 +60,6 @@ public class Actor extends Operative {
         isAiming = new FluidToggle(world.getTime(), AIMING_TIME);
         isAiming.setFlexDegree(AIMING_FLEX);
 
-        currentIsPressAiming = false;
-        currentIsHoldAiming = false;
-
         kinetics = new Kinetics(type.weight);
 
         audioSource.setVolume(5);
@@ -82,8 +76,7 @@ public class Actor extends Operative {
             updateWeapon();
             updateAudioSource();
             if (
-                    type != ActorType.human
-                    && type != ActorType.humanCowboy
+                    type.genus != ActorType.Genus.Human
                     && health < 0.15f
             ) {
                 health -= 0.00005f;
@@ -168,22 +161,10 @@ public class Actor extends Operative {
     }
 
     private void updateAiming() {
-        if (ScenarioStatus.crosshairControl == ScenarioStatus.CrosshairControl.PRESS) {
-            if (control.isPressAiming() && !currentIsPressAiming) {
-                isAiming.on();
-                currentIsPressAiming = true;
-            } else if (!control.isPressAiming() && currentIsPressAiming) {
-                isAiming.off();
-                currentIsPressAiming = false;
-            }
+        if (control.isAiming()) {
+            isAiming.on();
         } else {
-            if (control.isHoldAiming() && !currentIsHoldAiming) {
-                isAiming.on();
-                currentIsHoldAiming = true;
-            } else if (!control.isHoldAiming() && currentIsHoldAiming) {
-                isAiming.off();
-                currentIsHoldAiming = false;
-            }
+            isAiming.off();
         }
 
         isAiming.update();

@@ -10,8 +10,6 @@ import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
 import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Constants
-import aunmag.shooter.game.scenarios.Scenario
-import aunmag.shooter.game.client.states.ScenarioStatus
 import aunmag.shooter.game.environment.actor.ActorType
 import org.joml.Vector4f
 
@@ -19,8 +17,6 @@ class Pause {
 
     val buttonContinue = Button(4, 6, 4, 1, "Continue", Button.ACTION_BACK)
     private val theme = UtilsAudio.getOrCreateSoundOgg("sounds/music/menu")
-
-    val settingsPage: SettingsPage = SettingsPage()
 
     init {
         theme.setIsLooped(true)
@@ -49,12 +45,10 @@ class Pause {
         page.add(version)
         page.add(buttonContinue)
         page.add(Button(4, 7, 4, 1, "New game",
-                        createCharacterSelectionPage(ScenarioStatus.scenarioEncircling)
+                        createCharacterSelectionPage()
                         ::open))
-        page.add(Button(4, 8, 4, 1, "Settings",
-                           settingsPage.createPageSettings()::open))
-        page.add(Button(4, 9, 4, 1, "Help", createPageHelp()::open))
-        page.add(Button(4, 10, 4, 1, "Exit", createPageExit()::open))
+        page.add(Button(4, 8, 4, 1, "Help", createPageHelp()::open))
+        page.add(Button(4, 9, 4, 1, "Exit", createPageExit()::open))
 
         page.open()
     }
@@ -84,7 +78,7 @@ class Pause {
         return page
     }
 
-    private fun createCharacterSelectionPage(scenarioStatus: ScenarioStatus): Page {
+    private fun createCharacterSelectionPage(): Page {
         val wallpaper = Texture.getOrCreate(
                 "images/wallpapers/main_menu", Texture.Type.WALLPAPER
         )
@@ -93,14 +87,14 @@ class Pause {
 
         page.add(Label(3, 3, 6, 1, "Select your character"))
         page.add(Button(4, 7, 4, 1, "Classic") {
-            scenarioStatus.actorType = ActorType.human
+            // scenarioStatus.actorType = ActorType.human
             App.main.newGame()
-            Page.STACK.removeLast(1)
+            Page.STACK.remove(Page.STACK.getCurrentIndex())
         })
         page.add(Button(4, 8, 4, 1, "Cowboy") {
-            scenarioStatus.actorType = ActorType.humanCowboy
+            // scenarioStatus.actorType = ActorType.humanCowboy
             App.main.newGame()
-            Page.STACK.removeLast(1)
+            Page.STACK.remove(Page.STACK.getCurrentIndex())
         })
 
         return page

@@ -67,9 +67,7 @@ public class Ai extends Operative {
         memoryTarget.forget();
 
         for (Actor actor: subject.world.getActors().all) {
-            if (actor.isAlive()
-                    && (actor.type == ActorType.human
-                        || actor.type == ActorType.humanCowboy)) {
+            if (actor.isAlive() && actor.type.genus == ActorType.Genus.Human) {
                 memoryTarget.setActor(actor);
                 break;
             }

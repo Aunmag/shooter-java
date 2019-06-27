@@ -134,6 +134,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     private fun createZombieType(type: ActorType, skillFactor: Float): ActorType {
         return ActorType(
                 type.name,
+                type.genus,
                 type.radius,
                 type.weight,
                 skillFactor * type.strength,
