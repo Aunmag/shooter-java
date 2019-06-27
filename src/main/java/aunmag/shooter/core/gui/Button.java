@@ -1,8 +1,9 @@
 package aunmag.shooter.core.gui;
 
+import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.input.Input;
-import aunmag.shooter.core.utilities.UtilsGraphics;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -52,9 +53,15 @@ public class Button extends Label {
     public void render() {
         setTextColour(isEnabled() ? COLOR_FONT : COLOR_FONT_LIGHT);
 
-        UtilsGraphics.setDrawColor(isTouched() ? COLOR_TOUCHED : COLOR_DEFAULT);
-        UtilsGraphics.drawPrepare();
-        UtilsGraphics.drawQuad(screenQuad, true, false);
+        Graphics.draw.withColor(isTouched() ? COLOR_TOUCHED : COLOR_DEFAULT);
+        Graphics.draw.quad(
+                screenQuad.getPosition().x,
+                screenQuad.getPosition().y,
+                screenQuad.getPosition().x + screenQuad.getWidth(),
+                screenQuad.getPosition().y + screenQuad.getHeight(),
+                true,
+                Application.getWindow()::project
+        );
 
         super.render();
     }

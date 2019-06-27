@@ -1,6 +1,7 @@
 package aunmag.shooter.core.math;
 
-import aunmag.shooter.core.utilities.UtilsGraphics;
+import aunmag.shooter.core.Application;
+import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import org.joml.Vector2f;
 
@@ -23,18 +24,18 @@ public class BodyLine extends BodyPoint {
     }
 
     public void updateRadians() {
-        radians = UtilsMath.calculateRadiansBetween(position, positionTail);
+        radians = UtilsMath.angle(position, positionTail);
     }
 
     @Override
     public void render() {
         super.render();
-        UtilsGraphics.drawLine(
+        Graphics.draw.line(
                 position.x,
                 position.y,
                 positionTail.x,
                 positionTail.y,
-                true
+                Application.getCamera()::project
         );
     }
 

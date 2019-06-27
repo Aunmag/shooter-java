@@ -71,7 +71,7 @@ public class WeaponType {
             SEMI_AUTO_SHOTS_PER_MINUTE,
             315,
             0.05f,
-            0.01f,
+            6_500,
             false,
             new MagazineType(ProjectileType._9x18mm_pm, true, 8, 2f),
             GRIP_OFFSET_SHORT
@@ -82,7 +82,7 @@ public class WeaponType {
             SEMI_AUTO_SHOTS_PER_MINUTE,
             430,
             0.05f,
-            0.012f,
+            7_500,
             false,
             new MagazineType(ProjectileType._7_62x25mm_tt, true, 8, 2f),
             GRIP_OFFSET_SHORT
@@ -93,7 +93,7 @@ public class WeaponType {
             SEMI_AUTO_SHOTS_PER_MINUTE,
             260,
             0.08f,
-            0.07f,
+            45_000,
             false,
             new MagazineType(ProjectileType._12_76_magnum, false, 2, 0.5f),
             GRIP_OFFSET_STEP * 4
@@ -104,7 +104,7 @@ public class WeaponType {
             SEMI_AUTO_SHOTS_PER_MINUTE,
             410,
             0.06f,
-            0.06f,
+            38_000,
             false,
             new MagazineType(ProjectileType._12_76_magnum, false, 2, 0.5f),
             GRIP_OFFSET_EXTENDED
@@ -115,7 +115,7 @@ public class WeaponType {
             900,
             310,
             0.04f,
-            0.011f,
+            7_000,
             true,
             new MagazineType(ProjectileType._9x18mm_pm, true, 20, 1.8f),
             GRIP_OFFSET_COMMON
@@ -126,7 +126,7 @@ public class WeaponType {
             680,
             330,
             0.03f,
-            0.012f,
+            7_500,
             true,
             new MagazineType(ProjectileType._9x18mm_pm, true, 64, 1.5f),
             GRIP_OFFSET_COMMON
@@ -137,7 +137,7 @@ public class WeaponType {
             675,
             735,
             0.03f,
-            0.02f,
+            12_000,
             true,
             new MagazineType(ProjectileType._5_45x39mm, true, 30, 2f),
             GRIP_OFFSET_COMMON
@@ -148,7 +148,7 @@ public class WeaponType {
             600,
             910,
             0.028f,
-            0.022f,
+            14_000,
             true,
             new MagazineType(ProjectileType._5_45x39mm, true, 30, 2f),
             GRIP_OFFSET_COMMON
@@ -159,7 +159,7 @@ public class WeaponType {
             600,
             960,
             0.025f,
-            0.03f,
+            19_000,
             true,
             new MagazineType(ProjectileType._5_45x39mm, true, 45, 2f),
             GRIP_OFFSET_COMMON
@@ -170,7 +170,7 @@ public class WeaponType {
             SEMI_AUTO_SHOTS_PER_MINUTE,
             410,
             0.07f,
-            0.05f,
+            32_000,
             false,
             new MagazineType(ProjectileType._12_76_magnum, true, 8, 2f),
             GRIP_OFFSET_COMMON
@@ -181,7 +181,7 @@ public class WeaponType {
             650,
             825,
             0.021f,
-            0.035f,
+            22_000,
             true,
             new MagazineType(ProjectileType._7_62x54mmR, true, 100, 8f),
             GRIP_OFFSET_EXTENDED
@@ -192,7 +192,7 @@ public class WeaponType {
             650,
             825,
             0.02f,
-            0.035f,
+            22_000,
             true,
             new MagazineType(ProjectileType._7_62x54mmR, true, 100, 8f),
             GRIP_OFFSET_EXTENDED

@@ -9,7 +9,7 @@ public final class UtilsLanguage {
 
     private UtilsLanguage() {}
 
-    public static float[] listToArray(List<Float> list) {
+    public static float[] toArray(List<Float> list) {
         float[] array = new float[list.size()];
 
         for (int i = 0; i < array.length; i++) {
@@ -19,7 +19,7 @@ public final class UtilsLanguage {
         return array;
     }
 
-    public static Vector4f colorToVector(Color color) {
+    public static Vector4f toVector(Color color) {
         Vector4f vector = new Vector4f(
                 1f + color.getRed(),
                 1f + color.getGreen(),

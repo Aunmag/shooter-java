@@ -10,13 +10,12 @@ import aunmag.shooter.game.environment.actor.Actor;
 import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 
-/**
- * TODO: It changed. Complete it
- */
 public class Projectile extends Operative {
 
     private static final float VELOCITY_MIN = 0.5f;
     private static final float VELOCITY_FACTOR = 1f / 5f;
+    private static final float PUSH_FACTOR = 30;
+    private static final float PUSH_FACTOR_SPIN = 8;
 
     public final BodyLine body;
     public final Kinetics kinetics;
@@ -41,12 +40,12 @@ public class Projectile extends Operative {
         this.shooter = shooter;
 
         kinetics = new Kinetics(
-                type.weight,
+                type.mass,
                 velocity * (float) Math.cos(radians),
                 velocity * (float) Math.sin(radians)
         );
         kinetics.restrictionFactor = type.velocityRecessionFactor;
-        kinetics.restitutionFactor = 1f;
+        kinetics.restitution = 0f;
     }
 
     public void update() {
@@ -93,23 +92,13 @@ public class Projectile extends Operative {
         }
 
         if (actor != null) {
-            float energy = kinetics.velocity.length() * type.weight;
-            actor.hit(energy, shooter);
             collision.resolveLineLength();
+            actor.hit(kinetics.getMomentum(), shooter);
 
-            float bulletPushFactor = 20f;
-
-            float deviation = collision.provideDetails().deviation;
-            float spinFactor = bulletPushFactor * bulletPushFactor;
-            actor.kinetics.velocityRadians += deviation
-                    * (energy / actor.type.weight)
-                    * spinFactor;
-
-            float initialWeight = kinetics.weight;
-            kinetics.weight = initialWeight * bulletPushFactor;
+            var deviation = collision.provideDetails().deviation;
+            kinetics.velocity.mul(PUSH_FACTOR);
+            actor.shake(kinetics.getMomentum() * deviation * PUSH_FACTOR_SPIN, false);
             Kinetics.interact(kinetics, actor.kinetics);
-            kinetics.weight = initialWeight;
-
             stop();
         }
     }
@@ -127,7 +116,7 @@ public class Projectile extends Operative {
     }
 
     public void render() {
-        GL11.glLineWidth(type.size * Application.getCamera().getScaleFull());
+        GL11.glLineWidth(Application.getCamera().toPixels(type.size));
         body.render();
     }
 

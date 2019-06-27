@@ -29,8 +29,8 @@ public class BaseQuad extends BaseObject {
         float x = getPosition().x();
         float y = getPosition().y();
 
-        return UtilsMath.calculateIsNumberInsideRange(testX, x, x + width)
-                && UtilsMath.calculateIsNumberInsideRange(testY, y, y + height);
+        return UtilsMath.inRange(testX, x, x + width)
+            && UtilsMath.inRange(testY, y, y + height);
     }
 
     /* Setters */

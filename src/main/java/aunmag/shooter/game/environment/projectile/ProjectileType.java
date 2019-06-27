@@ -8,18 +8,18 @@ public class ProjectileType {
     public static final Vector4fc color = new Vector4f(1.0f, 0.8f, 0.2f, 1.0f);
 
     public final int shot;
-    public final float weight;
+    public final float mass;
     public final float velocityRecessionFactor;
     public final float size;
 
     protected ProjectileType(
             int shot,
-            float weight,
+            float mass,
             float velocityRecessionFactor,
             float size
     ) {
         this.shot = shot;
-        this.weight = weight / (float) shot;
+        this.mass = mass / (float) shot;
         this.velocityRecessionFactor = velocityRecessionFactor;
         this.size = size;
     }

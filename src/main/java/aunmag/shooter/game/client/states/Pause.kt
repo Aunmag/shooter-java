@@ -8,14 +8,13 @@ import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
-import aunmag.shooter.game.client.App
 import aunmag.shooter.game.client.Constants
-import aunmag.shooter.game.environment.actor.ActorType
+import aunmag.shooter.game.client.Context
 import org.joml.Vector4f
 
 class Pause {
 
-    val buttonContinue = Button(4, 6, 4, 1, "Continue", Button.ACTION_BACK)
+    val buttonContinue = Button(4, 7, 4, 1, "Continue", Button.ACTION_BACK)
     private val theme = UtilsAudio.getOrCreateSoundOgg("sounds/music/menu")
 
     init {
@@ -23,7 +22,7 @@ class Pause {
         buttonContinue.isEnabled = false
         createPageMain()
 
-        Page.STACK.setOnQuit{App.main.isPause = false}
+        Page.STACK.setOnQuit{Context.main.application.isPause = false}
     }
 
     private fun createPageMain() {
@@ -44,11 +43,11 @@ class Pause {
 
         page.add(version)
         page.add(buttonContinue)
-        page.add(Button(4, 7, 4, 1, "New game",
+        page.add(Button(4, 8, 4, 1, "New game",
                         createCharacterSelectionPage()
                         ::open))
-        page.add(Button(4, 8, 4, 1, "Help", createPageHelp()::open))
-        page.add(Button(4, 9, 4, 1, "Exit", createPageExit()::open))
+        page.add(Button(4, 9, 4, 1, "Help", createPageHelp()::open))
+        page.add(Button(4, 10, 4, 1, "Exit", createPageExit()::open))
 
         page.open()
     }
@@ -87,13 +86,13 @@ class Pause {
 
         page.add(Label(3, 3, 6, 1, "Select your character"))
         page.add(Button(4, 7, 4, 1, "Classic") {
-            // scenarioStatus.actorType = ActorType.human
-            App.main.newGame()
+            // TODO: Set actor
+            Context.main.application.newGame()
             Page.STACK.remove(Page.STACK.getCurrentIndex())
         })
         page.add(Button(4, 8, 4, 1, "Cowboy") {
-            // scenarioStatus.actorType = ActorType.humanCowboy
-            App.main.newGame()
+            // TODO: Set actor
+            Context.main.application.newGame()
             Page.STACK.remove(Page.STACK.getCurrentIndex())
         })
 

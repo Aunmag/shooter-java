@@ -1,11 +1,11 @@
 package aunmag.shooter.game.environment
 
 import aunmag.shooter.core.Application
+import aunmag.shooter.core.gui.Layer
 import aunmag.shooter.core.utilities.OperativeManager
 import aunmag.shooter.core.utilities.TimeFlow
-import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.game.ai.Ai
-import aunmag.shooter.game.client.App
+import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.data.soundAmbiance
 import aunmag.shooter.game.data.soundAtmosphere
 import aunmag.shooter.game.environment.actor.Actor
@@ -13,7 +13,6 @@ import aunmag.shooter.game.environment.decorations.Decoration
 import aunmag.shooter.game.environment.projectile.Projectile
 import aunmag.shooter.game.environment.terrain.Terrain
 import aunmag.shooter.game.environment.utils.TreesGenerator
-import aunmag.shooter.game.gui.NotificationLayer
 import aunmag.shooter.game.items.ItemWeapon
 import org.lwjgl.opengl.GL11
 
@@ -25,7 +24,7 @@ class World {
     val ais = OperativeManager<Ai>()
     val actors = OperativeManager<Actor>()
     val projectiles = OperativeManager<Projectile>()
-    val notifications = NotificationLayer(time)
+    val notifications = Layer()
     val itemsWeapon = OperativeManager<ItemWeapon>()
     val trees = OperativeManager<Decoration>()
 
@@ -42,31 +41,23 @@ class World {
         notifications.update()
     }
 
-    // TODO: Optimize draw modes
     fun render() {
         terrain.render()
 
-        if (!App.main.isDebug) {
-            Application.getShader().bind()
+        if (!Context.main.isDebug) {
             ground.render()
         }
 
         itemsWeapon.render()
-
-        if (App.main.isDebug) {
-            UtilsGraphics.drawPrepare()
-        }
-
         actors.render()
-
-        if (!App.main.isDebug) {
-            UtilsGraphics.drawPrepare()
-        }
-
         projectiles.render()
         GL11.glLineWidth(1f)
 
-        if (!App.main.isDebug) {
+        if (Context.main.isDebug) {
+            ais.render()
+        }
+
+        if (!Context.main.isDebug) {
             Application.getShader().bind()
             trees.render()
         }
@@ -85,7 +76,7 @@ class World {
     }
 
     fun remove() {
-        notifications.clear()
+        notifications.remove()
         ground.remove()
         trees.remove()
         ais.remove()

@@ -5,11 +5,12 @@ import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.gui.font.Text;
 import org.joml.Vector4f;
 
-public class Label extends BaseQuad {
+public class Label extends Component {
 
     private static final int PADDING = 2;
     private Text text;
-    protected BaseQuad screenQuad;
+    public final BaseQuad quad;
+    public final BaseQuad screenQuad;
 
     public Label(int x, int y, int width, int height, String message) {
         this(Grid.GRID_12, x, y, width, height, message, FontStyle.LABEL);
@@ -35,13 +36,13 @@ public class Label extends BaseQuad {
             String message,
             FontStyle style
     ) {
-        super(x, y, width, height);
+        quad = new BaseQuad(x, y, width, height);
 
         screenQuad = new BaseQuad(
-                getPosition().x() * grid.getStepX() + PADDING,
-                getPosition().y() * grid.getStepY() + PADDING,
-                getWidth() * grid.getStepX() - PADDING * 2,
-                getHeight() * grid.getStepY() - PADDING * 2
+                quad.getPosition().x() * grid.getStepX() + PADDING,
+                quad.getPosition().y() * grid.getStepY() + PADDING,
+                quad.getWidth() * grid.getStepX() - PADDING * 2,
+                quad.getHeight() * grid.getStepY() - PADDING * 2
         );
 
         text = new Text(0, 0, message, style);

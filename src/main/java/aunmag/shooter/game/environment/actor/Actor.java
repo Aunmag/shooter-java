@@ -8,25 +8,24 @@ import aunmag.shooter.core.math.Kinetics;
 import aunmag.shooter.core.utilities.FluidToggle;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
-import aunmag.shooter.game.Config;
-import aunmag.shooter.game.client.App;
-import aunmag.shooter.game.client.graphics.CameraShaker;
-import aunmag.shooter.game.data.LinksKt;
+import aunmag.shooter.game.client.Context;
+import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.weapon.Weapon;
+import org.jetbrains.annotations.Nullable;
 
 public class Actor extends Operative {
 
-    @Config public static final float VELOCITY_FACTOR_ASIDE = 0.6f;
-    @Config public static final float VELOCITY_FACTOR_BACK = 0.8f;
-    @Config public static final float AIMING_TIME = 0.25f;
-    @Config public static final float AIMING_FLEX = 1.25f;
-    @Config public static final float AIMING_VELOCITY_AFFECT = 0.5f;
-    @Config public static final float AIMING_STAMINA_COST = 0.5f;
-    @Config public static final float WALKING_STAMINA_COST = 0.7f;
-    @Config public static final float SPRINT_STAMINA_COST = 1.8f;
-    @Config public static final float RELOADING_STAMINA_COST = 0.2f;
-    @Config public static final float PAIN_THRESHOLD = 0.005f;
+    public static final float VELOCITY_FACTOR_ASIDE = 0.6f;
+    public static final float VELOCITY_FACTOR_BACK = 0.8f;
+    public static final float AIMING_TIME = 0.25f;
+    public static final float AIMING_FLEX = 1.25f;
+    public static final float AIMING_VELOCITY_AFFECT = 0.5f;
+    public static final float AIMING_STAMINA_COST = 0.5f;
+    public static final float WALKING_STAMINA_COST = 0.7f;
+    public static final float SPRINT_STAMINA_COST = 1.8f;
+    public static final float RELOADING_STAMINA_COST = 0.2f;
+    public static final float PAIN_THRESHOLD = 0.005f;
 
     private static final int[] samples = new int[6];
 
@@ -60,7 +59,7 @@ public class Actor extends Operative {
         isAiming = new FluidToggle(world.getTime(), AIMING_TIME);
         isAiming.setFlexDegree(AIMING_FLEX);
 
-        kinetics = new Kinetics(type.weight);
+        kinetics = new Kinetics(type.mass);
 
         audioSource.setVolume(5);
     }
@@ -115,7 +114,7 @@ public class Actor extends Operative {
         float velocityX = kinetics.velocity.x * timeDelta;
         float velocityY = kinetics.velocity.y * timeDelta;
         body.position.add(velocityX, velocityY);
-        body.radians += kinetics.velocityRadians * timeDelta;
+        body.radians += kinetics.spin * timeDelta;
     }
 
     private void updateCollision() {
@@ -124,7 +123,12 @@ public class Actor extends Operative {
                 CollisionCC collision = new CollisionCC(body, opponent.body);
 
                 if (collision.isTrue()) {
-                    Kinetics.interact(kinetics, opponent.kinetics);
+                    Kinetics.interact(
+                            kinetics,
+                            opponent.kinetics,
+                            body.position,
+                            opponent.body.position
+                    );
                     collision.resolve();
                 }
             }
@@ -207,9 +211,9 @@ public class Actor extends Operative {
             velocity = -velocity;
         }
 
-        var velocityCurrent = kinetics.velocityRadians;
+        var velocityCurrent = kinetics.spin;
         var velocityFuture = velocity + velocityCurrent;
-        var distanceFuture = velocityFuture / kinetics.radiansRestrictionFactor;
+        var distanceFuture = velocityFuture / kinetics.restrictionFactorSpin;
         var distanceExcess = distanceFuture / distance;
 
         if (distanceExcess > 1) {
@@ -237,25 +241,25 @@ public class Actor extends Operative {
         kinetics.addEnergy(moveX, moveY, 0, timeDelta);
     }
 
-    public void hit(float damage, Actor attacker) {
-        damage /= type.strength;
+    public void hit(float damage, @Nullable Actor attacker) {
+        if (isAlive()) {
+            addHealth(-damage / type.strength);
 
-        boolean wasAlive = isAlive();
-
-        addHealth(-damage);
-
-        if (wasAlive && !isAlive() && attacker != null) {
-            attacker.increaseKills();
+            if (attacker != null && !isAlive()) {
+                attacker.increaseKills();
+            }
         }
-
-        push(UtilsMath.random.nextBoolean() ? damage : -damage);
     }
 
-    public void push(float force) {
-        kinetics.velocityRadians += force * 8f;
+    public void shake(float force, boolean randomizeDirection) {
+        if (randomizeDirection && UtilsMath.random.nextBoolean()) {
+            force = -force;
+        }
 
-        if (this == LinksKt.getPlayer()) {
-            CameraShaker.shake(force);
+        kinetics.push(0, 0, force);
+
+        if (this == Context.main.getPlayerActor()) {
+            CameraShaker.shake(kinetics.compensateMomentum(force));
         }
     }
 
@@ -264,7 +268,7 @@ public class Actor extends Operative {
             weapon.render();
         }
 
-        if (App.main.isDebug()) {
+        if (Context.main.isDebug()) {
             body.render();
             hands.coverage.render();
         } else {
@@ -297,7 +301,7 @@ public class Actor extends Operative {
     /* Setters */
 
     private void addHealth(float addHealth) {
-        health = UtilsMath.limitNumber(health + addHealth, 0, 1);
+        health = UtilsMath.limit(health + addHealth, 0, 1);
 
         if (!isAlive()) {
             remove();
@@ -334,6 +338,16 @@ public class Actor extends Operative {
 
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    public float getDirectionDesired() {
+        var direction = control.getTurningTo();
+
+        if (direction == null) {
+            direction = body.radians;
+        }
+
+        return direction;
     }
 
 }

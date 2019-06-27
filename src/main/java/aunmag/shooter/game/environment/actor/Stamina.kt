@@ -6,7 +6,7 @@ class Stamina(private val actor: Actor) {
 
     var current = 1.0f
         private set(value) {
-            field = UtilsMath.limitNumber(value, reserve, 1.0f)
+            field = UtilsMath.limit(value, reserve, 1.0f)
         }
     private val reserve = 0.01f
     private val recurrenceStep = 0.07f
@@ -21,9 +21,6 @@ class Stamina(private val actor: Actor) {
         current -= recurrenceStep * stepFactor * actor.world.time.delta.toFloat()
     }
 
-    /**
-     * ~/src/python/stamina_efficiency.py
-     */
     fun calculateEfficiency(): Float {
         return 1.0f - Math.pow(1.0 - current, 2.0).toFloat()
     }

@@ -2,42 +2,42 @@ package aunmag.shooter.game.environment.actor;
 
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.game.environment.weapon.WeaponType;
-import aunmag.shooter.game.Config;
+import org.jetbrains.annotations.Nullable;
 
 public class ActorType {
 
-    @Config public static final float STRENGTH_DEFAULT = 7500;
+    public static final float STRENGTH_DEFAULT = 7500;
 
     public final String name;
     public final Genus genus;
     public final float radius;
-    public final float weight;
+    public final float mass;
     public final float strength;
     public final float velocity;
     public final float velocityFactorSprint;
     public final float velocityRotation;
     public final float damage;
     public final float reaction;
-    public final WeaponType primaryWeaponType;
+    @Nullable public final WeaponType primaryWeaponType;
     public final Texture texture;
 
     public ActorType(
             String name,
             Genus genus,
             float radius,
-            float weight,
+            float mass,
             float strength,
             float velocity,
             float velocityFactorSprint,
             float velocityRotation,
             float damage,
             float reaction,
-            WeaponType primaryWeaponType
+            @Nullable WeaponType primaryWeaponType
     ) {
         this.name = name;
         this.genus = genus;
         this.radius = radius;
-        this.weight = weight;
+        this.mass = mass;
         this.strength = strength;
         this.velocity = velocity;
         this.velocityFactorSprint = velocityFactorSprint;
@@ -69,7 +69,7 @@ public class ActorType {
             "human cowboy",
             Genus.Human,
             human.radius,
-            0.9f * human.weight,
+            0.9f * human.mass,
             0.8f * human.strength,
             1.1f * human.velocity,
             1.2f * human.velocityFactorSprint,
@@ -89,7 +89,7 @@ public class ActorType {
             0.4f * human.velocityFactorSprint,
             0.4f * human.velocityRotation,
             human.strength / 8f,
-            0.3f,
+            0.2f,
             null
     );
 
@@ -117,7 +117,7 @@ public class ActorType {
             zombie.velocityFactorSprint,
             0.7f * zombie.velocityRotation,
             1.8f * zombie.damage,
-            0.4f,
+            0.3f,
             null
     );
 

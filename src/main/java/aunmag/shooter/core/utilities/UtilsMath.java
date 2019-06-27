@@ -1,6 +1,5 @@
 package aunmag.shooter.core.utilities;
 
-import aunmag.shooter.core.basics.BaseObject;
 import org.joml.Vector2f;
 
 import java.util.Random;
@@ -14,14 +13,14 @@ public final class UtilsMath {
 
     private UtilsMath() {}
 
-    public static float correctRadians(double value) {
-        return (float) (value % PIx2);
+    public static float correctRadians(double radians) {
+        return (float) (radians % PIx2);
     }
 
     public static float radiansDifference(double a, double b) {
         a = correctRadians(a);
         b = correctRadians(b);
-        double difference = b - a;
+        var difference = b - a;
 
         if (Math.abs(difference) > Math.PI) {
             if (a < b) {
@@ -50,8 +49,7 @@ public final class UtilsMath {
             max = a;
         }
 
-        int difference = max - min;
-        return random.nextInt(difference + 1) + min;
+        return random.nextInt((max - min) + 1) + min;
     }
 
     public static float randomizeBetween(float a, float b) {
@@ -70,64 +68,48 @@ public final class UtilsMath {
             max = a;
         }
 
-        float difference = max - min;
-        return random.nextFloat() * difference + min;
+        return random.nextFloat() * (max - min) + min;
     }
 
     public static float randomizeFlexibly(float middle, float offset) {
-        if (offset == 0f) {
+        if (offset == 0) {
             return middle;
         }
 
-        float flex = 0.5f;
-        float offsetMin = offset * randomizeBetween(0, flex);
-        float offsetMax = offset * randomizeBetween(flex, 1);
-        float offsetRandom = randomizeBetween(offsetMin, offsetMax);
+        var flex = 0.5f;
+        var offsetMin = offset * randomizeBetween(0, flex);
+        var offsetMax = offset * randomizeBetween(flex, 1);
+        var offsetRandom = randomizeBetween(offsetMin, offsetMax);
 
-        float resultMin = middle - offsetRandom;
-        float resultMax = middle + offsetRandom;
+        var resultMin = middle - offsetRandom;
+        var resultMax = middle + offsetRandom;
 
         return randomizeBetween(resultMin, resultMax);
     }
 
-    public static float calculateDistanceBetween(float x1, float y1, float x2, float y2) {
-        double powX = Math.pow(x1 - x2, 2);
-        double powY = Math.pow(y1 - y2, 2);
+    public static float distance(float x1, float y1, float x2, float y2) {
+        var powX = Math.pow(x1 - x2, 2);
+        var powY = Math.pow(y1 - y2, 2);
         return (float) Math.sqrt(powX + powY);
     }
 
-    public static float calculateRadiansBetween(BaseObject a, BaseObject b) {
-        return calculateRadiansBetween(
-                a.getPosition().x(),
-                a.getPosition().y(),
-                b.getPosition().x(),
-                b.getPosition().y()
-        );
+    public static float angle(Vector2f a, Vector2f b) {
+        return angle(a.x, a.y, b.x, b.y);
     }
 
-    public static float calculateRadiansBetween(Vector2f a, Vector2f b) {
-        return calculateRadiansBetween(a.x(), a.y(), b.x(), b.y());
+    public static float angle(float x1, float y1, float x2, float y2) {
+        return (float) Math.atan2(y1 - y2, x1 - x2);
     }
 
-    public static float calculateRadiansBetween(float x1, float y1, float x2, float y2) {
-        float differenceX = x1 - x2;
-        float differenceY = y1 - y2;
-        return (float) Math.atan2(differenceY, differenceX);
-    }
-
-    public static float calculateRoundValue(float value, float round) {
+    public static float round(float value, float round) {
         return Math.round(value * round) / round;
     }
 
-    public static boolean calculateIsNumberInsideRange(
-            float number,
-            float min,
-            float max
-    ) {
+    public static boolean inRange(float number, float min, float max) {
         return min <= number && number <= max;
     }
 
-    public static float limitNumber(float number, float min, float max) {
+    public static float limit(float number, float min, float max) {
         if (number < min) {
             number = min;
         } else if (number > max) {
@@ -135,6 +117,31 @@ public final class UtilsMath {
         }
 
         return number;
+    }
+
+    /**
+     * Predicts the meet point of two moving objects.
+     */
+    public static Vector2f lead(
+            Vector2f sourcePosition,
+            Vector2f sourceVelocity,
+            Vector2f targetPosition,
+            Vector2f targetVelocity
+    ) {
+        if (targetVelocity.x == 0 || targetVelocity.y == 0) {
+            return targetPosition;
+        }
+
+        var distance = targetPosition.distance(sourcePosition);
+        var advance = distance / new Vector2f()
+                .add(targetVelocity)
+                .sub(sourceVelocity)
+                .length();
+
+        return new Vector2f()
+                .add(targetVelocity)
+                .mul(advance)
+                .add(targetPosition);
     }
 
 }

@@ -1,7 +1,6 @@
 package aunmag.shooter.game.client;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.Configs;
 import aunmag.shooter.core.input.Input;
 import aunmag.shooter.game.client.states.Game;
 import aunmag.shooter.game.client.states.Pause;
@@ -10,23 +9,10 @@ import org.lwjgl.glfw.GLFW;
 
 public final class App extends Application {
 
-    public static final App main;
-
-    static {
-        Configs.setFullscreen(true);
-        main = new App();
-    }
-
-    public static void main(String[] args) {
-        main.run();
-    }
-
     private boolean isDebug = false;
     private boolean isPause = true;
     public final Pause pause = new Pause();
     private Game game;
-
-    private App() {}
 
     public void endGame() {
         if (game != null) {

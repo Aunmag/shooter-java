@@ -4,7 +4,7 @@ import aunmag.shooter.core.audio.AudioSource;
 import aunmag.shooter.core.math.BodyLine;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
-import aunmag.shooter.game.client.App;
+import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.magazine.Magazine;
 import aunmag.shooter.game.environment.projectile.Projectile;
@@ -48,7 +48,7 @@ public class Weapon extends Operative {
 
     private void makeShot() {
         audioSource.play();
-        trigger.getShooter().push(calculateRandomRecoil());
+        trigger.getShooter().shake(calculateRandomRecoil(), true);
 
         for (int bullet = 0; bullet < magazine.type.getProjectile().shot; bullet++) {
             makeBullet(body.position.x, body.position.y);
@@ -69,13 +69,7 @@ public class Weapon extends Operative {
     }
 
     private float calculateRandomRecoil() {
-        float recoil = UtilsMath.randomizeFlexibly(type.recoil, type.recoilDeflection);
-
-        if (UtilsMath.random.nextBoolean()) {
-            recoil = -recoil;
-        }
-
-        return recoil;
+        return UtilsMath.randomizeFlexibly(type.recoil, type.recoilDeflection);
     }
 
     private float calculateRandomRadians() {
@@ -88,7 +82,7 @@ public class Weapon extends Operative {
 
     @Override
     public void render() {
-        if (App.main.isDebug()) {
+        if (Context.main.isDebug()) {
             body.render();
         } else {
             type.texture.renderOnWorld(

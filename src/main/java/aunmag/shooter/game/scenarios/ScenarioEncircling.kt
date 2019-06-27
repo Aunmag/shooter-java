@@ -1,18 +1,19 @@
 package aunmag.shooter.game.scenarios
 
 import aunmag.shooter.core.Application
+import aunmag.shooter.core.graphics.Graphics
 import aunmag.shooter.core.gui.Button
 import aunmag.shooter.core.gui.Label
+import aunmag.shooter.core.gui.Notification
 import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.Timer
-import aunmag.shooter.core.utilities.UtilsGraphics
 import aunmag.shooter.core.utilities.UtilsMath
-import aunmag.shooter.core.utilities.UtilsMath.limitNumber
+import aunmag.shooter.core.utilities.UtilsMath.limit
 import aunmag.shooter.game.ai.Ai
-import aunmag.shooter.game.client.App
-import aunmag.shooter.game.data.player
+import aunmag.shooter.game.client.Context
+import aunmag.shooter.game.client.player.Player
 import aunmag.shooter.game.data.soundGameOver
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
@@ -44,6 +45,13 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         startNextWave()
     }
 
+    override fun createPlayableActor() : Actor {
+        val actor = Actor(ActorType.human, world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
+        actor.weapon = Weapon(world, WeaponType.pm)
+        world.actors.all.add(actor)
+        return actor
+    }
+
     private fun initializeBluffs() {
         val ground = world.ground.all
         val quantity = bordersDistance / 2 + 1
@@ -73,7 +81,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     override fun update() {
-        if (player?.isAlive != true) {
+        if (Context.main.playerActor?.isAlive != true) {
             gameOver(false)
             return
         }
@@ -90,19 +98,20 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     override fun render() {
-        if (App.main.isDebug) {
+        if (Context.main.isDebug) {
             renderBorders()
         }
     }
 
     private fun renderBorders() {
+        val projector = Application.getCamera()::project
         val n = bordersDistance
         GL11.glLineWidth(2f)
         GL11.glColor3f(1f, 0f, 0f)
-        UtilsGraphics.drawLine(-n, -n, +n, -n, true)
-        UtilsGraphics.drawLine(+n, -n, +n, +n, true)
-        UtilsGraphics.drawLine(+n, +n, -n, +n, true)
-        UtilsGraphics.drawLine(-n, +n, -n, -n, true)
+        Graphics.draw.line(-n, -n, +n, -n, projector)
+        Graphics.draw.line(+n, -n, +n, +n, projector)
+        Graphics.draw.line(+n, +n, -n, +n, projector)
+        Graphics.draw.line(-n, +n, -n, -n, projector)
         GL11.glLineWidth(1f)
     }
 
@@ -118,10 +127,11 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
         updateZombiesTypes()
 
-        world.notifications.add(
+        world.notifications.add(Notification(
+                world.time,
                 "Wave $wave/$waveFinal",
                 "Kill $zombiesQuantityToSpawn zombies"
-        )
+        ))
     }
 
     private fun updateZombiesTypes() {
@@ -136,7 +146,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
                 type.name,
                 type.genus,
                 type.radius,
-                type.weight,
+                type.mass,
                 skillFactor * type.strength,
                 skillFactor * type.velocity,
                 type.velocityFactorSprint,
@@ -148,9 +158,9 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     private fun confinePlayerPosition() {
-        val position = player?.body?.position ?: return
-        position.x = limitNumber(position.x, -bordersDistance, bordersDistance)
-        position.y = limitNumber(position.y, -bordersDistance, bordersDistance)
+        val position = Context.main.playerActor?.body?.position ?: return
+        position.x = limit(position.x, -bordersDistance, bordersDistance)
+        position.y = limit(position.y, -bordersDistance, bordersDistance)
     }
 
     private fun spawnZombie() {
@@ -160,11 +170,11 @@ class ScenarioEncircling(world: World) : Scenario(world) {
             else -> zombie
         }
 
-        val distance = Application.getCamera().distanceView / 2f
+        val distance = Player.SCALE_MAX / 2f
         val direction = UtilsMath.randomizeBetween(0f, UtilsMath.PIx2.toFloat())
 
-        val centerX = player?.body?.position?.x ?: 0f
-        val centerY = player?.body?.position?.y ?: 0f
+        val centerX = Context.main.playerActor?.body?.position?.x ?: 0f
+        val centerY = Context.main.playerActor?.body?.position?.y ?: 0f
         val x = centerX - distance * Math.cos(direction.toDouble()).toFloat()
         val y = centerY - distance * Math.sin(direction.toDouble()).toFloat()
 
@@ -209,7 +219,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     private fun gameOver(isVictory: Boolean) {
         createGameOverPage(isVictory)
-        App.main.endGame()
+        Context.main.application.endGame()
 
         if (!isVictory) {
             soundGameOver.play()
@@ -224,7 +234,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         val page = Page(wallpaper)
 
         val title = if (isVictory) "Well done!" else "You have died"
-        val kills = player?.kills ?: 0
+        val kills = Context.main.playerActor?.kills ?: 0
         val wavesSurvived = if (isVictory) wave else wave - 1
         val score = "You killed $kills zombies and survived $wavesSurvived/$waveFinal waves."
 
@@ -233,7 +243,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         page.add(Button(4, 9, 4, 1, "Back to main menu", Button.ACTION_BACK))
 
         page.open()
-        App.main.isPause = true
+        Context.main.application.isPause = true
     }
 
 }

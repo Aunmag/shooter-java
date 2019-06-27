@@ -1,4 +1,4 @@
-package aunmag.shooter.game.client.graphics;
+package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.Camera;
@@ -7,6 +7,7 @@ import aunmag.shooter.core.utilities.UtilsMath;
 
 public final class CameraShaker {
 
+    private static final float FACTOR = 0.125f;
     private static FluidValue radians;
     private static final float timeUp = 0.04f;
     private static final float timeDown = timeUp * 8;
@@ -21,7 +22,7 @@ public final class CameraShaker {
 
     public static void shake(float force) {
         radians.timer.setDuration(timeUp);
-        radians.setTarget(force);
+        radians.setTarget(force * FACTOR);
     }
 
     public static void update() {

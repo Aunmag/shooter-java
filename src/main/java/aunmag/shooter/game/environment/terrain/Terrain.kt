@@ -1,10 +1,10 @@
 package aunmag.shooter.game.environment.terrain
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.Configs
+import aunmag.shooter.core.graphics.Graphics
 import aunmag.shooter.core.structures.Texture
-import aunmag.shooter.core.utilities.UtilsGraphics
-import aunmag.shooter.game.client.App
+import aunmag.shooter.game.client.Context
+import aunmag.shooter.game.client.player.Player
 import org.lwjgl.opengl.GL11
 
 class Terrain {
@@ -16,7 +16,7 @@ class Terrain {
 
     init {
         textureQuantity = Math.ceil(
-                (Application.getCamera().distanceView + blockSize) / blockSize.toDouble()
+                (Player.SCALE_MAX + blockSize) / blockSize.toDouble()
         ).toInt()
         val size = (blockSize * textureQuantity).toFloat()
 
@@ -29,7 +29,7 @@ class Terrain {
     }
 
     fun render() {
-        if (App.main.isDebug) {
+        if (Context.main.isDebug) {
             renderGrid()
         } else {
             renderTexture()
@@ -43,14 +43,14 @@ class Terrain {
         val offsetY = calculateAxisOffset(camera.position.y, blockSize / 2.0f)
         val x = camera.position.x + offsetX - (camera.position.x - offsetX) % blockSize
         val y = camera.position.y + offsetY - (camera.position.y - offsetY) % blockSize
-        val projection = camera.calculateViewProjection(x, y, 0.0f)
+        val projection = camera.toViewProjection(x, y, 0.0f)
 
         shader.bind()
         shader.setUniformProjection(projection)
         shader.setUniformQuantity(textureQuantity)
         texture.bind()
         texture.render()
-        shader.setUniformQuantity(1)
+        Application.getShader().bind()
     }
 
     private fun calculateAxisOffset(value: Float, offset: Float): Float {
@@ -65,8 +65,7 @@ class Terrain {
         val camera = Application.getCamera()
 
         val step = 1.0f
-        val size = camera.distanceView / camera.scaleFull * Configs.getPixelsPerMeter()
-        val center = removeRemainder(size * 1.25f, step * 2.0f) / 2.0f
+        val center = removeRemainder(camera.scale, step * 2.0f) / 2.0f
 
         val xMin = camera.position.x - center
         val xMax = camera.position.x + center
@@ -75,7 +74,6 @@ class Terrain {
         val gridX = removeRemainder(camera.position.x, step)
         val gridY = removeRemainder(camera.position.y, step)
 
-        UtilsGraphics.drawPrepare()
         updateColor(0)
 
         var counter = -center + step
@@ -85,12 +83,12 @@ class Terrain {
 
             val isCenterByX = x == 0.0f
             if (isCenterByX) updateColor(1)
-            UtilsGraphics.drawLine(x, yMin, x, yMax, true)
+            Graphics.draw.line(x, yMin, x, yMax, camera::project)
             if (isCenterByX) updateColor(0)
 
             val isCenterByY = y == 0.0f
             if (isCenterByY) updateColor(-1)
-            UtilsGraphics.drawLine(xMin, y, xMax, y, true)
+            Graphics.draw.line(xMin, y, xMax, y, camera::project)
             if (isCenterByY) updateColor(0)
 
             counter += step

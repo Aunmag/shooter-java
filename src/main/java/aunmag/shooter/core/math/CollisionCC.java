@@ -24,7 +24,7 @@ public class CollisionCC extends Collision {
         }
 
         float moveDistance = (distanceToBeCollision - distance) / 2f;
-        float moveRadians = UtilsMath.calculateRadiansBetween(a.position, b.position);
+        float moveRadians = UtilsMath.angle(a.position, b.position);
         float moveX = moveDistance * (float) Math.cos(moveRadians);
         float moveY = moveDistance * (float) Math.sin(moveRadians);
 

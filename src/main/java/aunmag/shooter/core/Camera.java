@@ -11,89 +11,53 @@ import org.joml.Vector3f;
 
 public class Camera extends BaseObject {
 
-    public static final int ZOOM_MIN = 1;
-    public static final int ZOOM_MAX = 8;
-
     private Matrix4f viewMatrix = new Matrix4f();
-    private float distanceView;
-    private float scaleWindow;
-    private float scaleZoom = ZOOM_MIN * 2;
-    private float scaleFull;
+    public float scale = 15;
     public final Mount mount;
 
-    Camera() {
+    public Camera() {
         super(new Vector2f(0, 0), 0);
-        setDistanceView(40);
         mount = new Mount(getPosition(), null);
     }
 
     public void update() {
-        float radians = UtilsMath.correctRadians(getRadians() - UtilsMath.PIx0_5);
+        var angle = UtilsMath.correctRadians(getRadians() - UtilsMath.PIx0_5);
+        var position = getPosition();
 
-        viewMatrix = new Matrix4f(Application.getWindow().projection);
-        viewMatrix.rotateZ(-radians);
-        viewMatrix.scale(scaleFull);
-        viewMatrix.translate(-getPosition().x(), -getPosition().y(), 0);
+        viewMatrix = new Matrix4f(Application.getWindow().projection)
+                .rotateZ(-angle)
+                .scale(getPixelsScale())
+                .translate(-position.x, -position.y, 0);
 
-        Vector3f orientation = new Vector3f(0, 1, 0);
-        Quaternionf quaternion = new Quaternionf(0, 0, 0);
-        quaternion.set(0, 0, 0);
-        quaternion.rotateZ(radians);
-        orientation.rotate(quaternion);
+        var quaternion = new Quaternionf(0, 0, 0, 0).rotateZ(angle);
+
         AudioMaster.setListenerPosition(
-                getPosition().x(),
-                getPosition().y(),
+                position.x,
+                position.y,
                 0,
-                orientation
+                new Vector3f(0, 1, 0).rotate(quaternion)
         );
     }
 
-    private void updateScaleFull() {
-        scaleFull = scaleWindow * scaleZoom;
+    public Vector2f project(float x, float y) {
+        var projected = new Vector3f(x, y, 0).mulPosition(viewMatrix);
+        return new Vector2f(projected.x, projected.y);
     }
 
-    public Vector2f calculateViewPosition(float x, float y) {
-        Vector3f viewPosition = new Vector3f(x, y, 0);
-        viewPosition.mulPosition(viewMatrix);
-        return new Vector2f(viewPosition.x, viewPosition.y);
+    public Matrix4f toViewProjection(float x, float y, float angle) {
+        return new Matrix4f(viewMatrix).translate(x, y, 0).rotateZ(angle);
     }
 
-    public Matrix4f calculateViewProjection(float x, float y, float radians) {
-        Matrix4f projection = new Matrix4f(viewMatrix);
-        projection.translate(x, y, 0);
-        projection.rotateZ(radians);
-        return projection;
+    public float toMeters(float distance) {
+        return distance / getPixelsScale();
     }
 
-    /* Setters */
-
-    public void setDistanceView(float distanceView) {
-        this.distanceView = distanceView;
-        scaleWindow = Application.getWindow().getDiagonal() / distanceView;
-        updateScaleFull();
+    public float toPixels(float distance) {
+        return distance * getPixelsScale();
     }
 
-    public void setScaleZoom(float scaleZoom) {
-        this.scaleZoom = UtilsMath.limitNumber(scaleZoom, ZOOM_MIN, ZOOM_MAX);
-        updateScaleFull();
-    }
-
-    /* Getters */
-
-    public float getDistanceView() {
-        return distanceView;
-    }
-
-    public float getScaleWindow() {
-        return scaleWindow;
-    }
-
-    public float getScaleZoom() {
-        return scaleZoom;
-    }
-
-    public float getScaleFull() {
-        return scaleFull;
+    public float getPixelsScale() {
+        return Application.getWindow().getDiagonal() / scale;
     }
 
 }
