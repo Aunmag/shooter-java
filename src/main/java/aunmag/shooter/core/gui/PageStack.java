@@ -39,10 +39,6 @@ public class PageStack {
         }
     }
 
-    public void remove(int index) {
-        pages.remove(index);
-    }
-
     /* Setters */
 
     public void setOnQuit(@Nullable Runnable onQuit) {
@@ -51,7 +47,7 @@ public class PageStack {
 
     /* Getters */
 
-    public int getCurrentIndex() {
+    private int getCurrentIndex() {
         return pages.size() - 1;
     }
 

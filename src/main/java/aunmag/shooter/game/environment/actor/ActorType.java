@@ -18,7 +18,7 @@ public class ActorType {
     public final float velocityRotation;
     public final float damage;
     public final float reaction;
-    @Nullable public final WeaponType primaryWeaponType;
+    @Nullable public final WeaponType primaryWeapon;
     public final Texture texture;
 
     public ActorType(
@@ -32,7 +32,7 @@ public class ActorType {
             float velocityRotation,
             float damage,
             float reaction,
-            @Nullable WeaponType primaryWeaponType
+            @Nullable WeaponType primaryWeapon
     ) {
         this.name = name;
         this.genus = genus;
@@ -44,7 +44,7 @@ public class ActorType {
         this.velocityRotation = velocityRotation;
         this.damage = damage;
         this.reaction = reaction;
-        this.primaryWeaponType = primaryWeaponType;
+        this.primaryWeapon = primaryWeapon;
 
         texture = Texture.getOrCreate("actors/" + name + "/image", Texture.Type.SPRITE);
     }
@@ -53,7 +53,7 @@ public class ActorType {
 
     public static final ActorType human = new ActorType(
             "human",
-            Genus.Human,
+            Genus.HUMAN,
             0.225f,
             80_000,
             STRENGTH_DEFAULT,
@@ -67,7 +67,7 @@ public class ActorType {
 
     public static final ActorType humanCowboy = new ActorType(
             "human cowboy",
-            Genus.Human,
+            Genus.HUMAN,
             human.radius,
             0.9f * human.mass,
             0.8f * human.strength,
@@ -81,7 +81,7 @@ public class ActorType {
 
     public static final ActorType zombie = new ActorType(
             "zombie",
-            Genus.Zombie,
+            Genus.ZOMBIE,
             human.radius,
             70_000,
             0.4f * human.strength,
@@ -95,7 +95,7 @@ public class ActorType {
 
     public static final ActorType zombieAgile = new ActorType(
             "zombie agile",
-            Genus.Zombie,
+            Genus.ZOMBIE,
             0.8f * zombie.radius,
             40_000,
             0.6f * zombie.strength,
@@ -109,7 +109,7 @@ public class ActorType {
 
     public static final ActorType zombieHeavy = new ActorType(
             "zombie heavy",
-            Genus.Zombie,
+            Genus.ZOMBIE,
             1.2f * zombie.radius,
             120_000,
             2.0f * zombie.strength,
@@ -123,7 +123,7 @@ public class ActorType {
 
 
     public enum Genus {
-        Human,
-        Zombie
+        HUMAN,
+        ZOMBIE
     }
 }

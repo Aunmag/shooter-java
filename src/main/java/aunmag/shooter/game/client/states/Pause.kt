@@ -8,6 +8,8 @@ import aunmag.shooter.core.gui.Page
 import aunmag.shooter.core.gui.font.FontStyle
 import aunmag.shooter.core.structures.Texture
 import aunmag.shooter.core.utilities.UtilsAudio
+import aunmag.shooter.game.environment.actor.ActorType
+import aunmag.shooter.game.scenarios.ScenarioEncircling
 import aunmag.shooter.game.client.Constants
 import aunmag.shooter.game.client.Context
 import org.joml.Vector4f
@@ -82,18 +84,17 @@ class Pause {
                 "images/wallpapers/main_menu", Texture.Type.WALLPAPER
         )
         val page = Page(wallpaper)
-        // val style = FontStyle.LABEL_LIGHT
 
         page.add(Label(3, 3, 6, 1, "Select your character"))
         page.add(Button(4, 7, 4, 1, "Classic") {
-            // TODO: Set actor
+            ScenarioEncircling.selectedActor = ActorType.human
             Context.main.application.newGame()
-            Page.STACK.remove(Page.STACK.getCurrentIndex())
+            Page.STACK.back()
         })
         page.add(Button(4, 8, 4, 1, "Cowboy") {
-            // TODO: Set actor
+            ScenarioEncircling.selectedActor = ActorType.humanCowboy
             Context.main.application.newGame()
-            Page.STACK.remove(Page.STACK.getCurrentIndex())
+            Page.STACK.back()
         })
 
         return page

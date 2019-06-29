@@ -70,7 +70,7 @@ public class ProjectileType {
 
     public static final ProjectileType _11_48x33mmR = new ProjectileType(
             1,
-            25f,
+            15f,
             3f,
             0.1f
     );

@@ -74,12 +74,6 @@ public class Actor extends Operative {
             hands.update();
             updateWeapon();
             updateAudioSource();
-            if (
-                    type.genus != ActorType.Genus.Human
-                    && health < 0.15f
-            ) {
-                health -= 0.00005f;
-            }
         } else {
             remove();
         }
@@ -224,9 +218,6 @@ public class Actor extends Operative {
     }
 
     private void move(double velocity, double radiansTurn) {
-        if (weapon != null && weapon.magazine.isReloading()) {
-            velocity *= 0.7;
-        }
         if (control.isSprinting() && control.isWalkingForward()) {
             float efficiency = this.stamina.calculateEfficiency();
             velocity *= type.velocityFactorSprint * efficiency + (1 - efficiency);

@@ -88,6 +88,17 @@ public class WeaponType {
             GRIP_OFFSET_SHORT
     );
 
+    public static final WeaponType coltSingleActionArmy = new WeaponType(
+            "Colt SAA",
+            SEMI_AUTO_SHOTS_PER_MINUTE / 4,
+            450,
+            0.01f,
+            80_000f,
+            false,
+            new MagazineType(ProjectileType._11_48x33mmR, true, 6, 3f),
+            GRIP_OFFSET_STEP
+    );
+
     public static final WeaponType mp43sawedOff = new WeaponType(
             "MP-43 sawed-off",
             SEMI_AUTO_SHOTS_PER_MINUTE,
@@ -196,17 +207,6 @@ public class WeaponType {
             true,
             new MagazineType(ProjectileType._7_62x54mmR, true, 100, 8f),
             GRIP_OFFSET_EXTENDED
-    );
-
-    public static final WeaponType coltSingleActionArmy = new WeaponType(
-            "Colt SAA",
-            SEMI_AUTO_SHOTS_PER_MINUTE / 4,
-            450,
-            0.01f,
-            0.1f,
-            false,
-            new MagazineType(ProjectileType._11_48x33mmR, true, 6, 3f),
-            GRIP_OFFSET_STEP
     );
 
 }

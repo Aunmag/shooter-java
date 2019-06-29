@@ -39,6 +39,10 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     private var bonusDropChance = 0f
     private var bonusDropLaserGun = 0.00005f
     private val difficulty = 1.1f
+    
+    companion object {
+        var selectedActor = ActorType.human
+    }
 
     init {
         initializeBluffs()
@@ -46,8 +50,8 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     }
 
     override fun createPlayableActor() : Actor {
-        val actor = Actor(ActorType.human, world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
-        actor.weapon = Weapon(world, WeaponType.pm)
+        val actor = Actor(selectedActor, world, 0f, 0f, -UtilsMath.PIx0_5.toFloat())
+        actor.weapon = Weapon(world, selectedActor.primaryWeapon)
         world.actors.all.add(actor)
         return actor
     }
@@ -153,7 +157,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
                 type.velocityRotation,
                 type.damage,
                 type.reaction,
-                type.primaryWeaponType
+                type.primaryWeapon
         )
     }
 
