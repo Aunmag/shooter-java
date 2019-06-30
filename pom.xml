@@ -89,7 +89,7 @@
         <dependency>
             <groupId>org.joml</groupId>
             <artifactId>joml</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.15</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
