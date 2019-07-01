@@ -41,7 +41,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
     private val difficulty = 1.1f
     
     companion object {
-        var selectedActor = ActorType.human
+        var selectedActor = ActorType.soldier
     }
 
     init {

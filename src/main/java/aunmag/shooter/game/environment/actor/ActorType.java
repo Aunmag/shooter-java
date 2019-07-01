@@ -51,8 +51,8 @@ public class ActorType {
 
     /* Types */
 
-    public static final ActorType human = new ActorType(
-            "human",
+    public static final ActorType soldier = new ActorType(
+            "soldier",
             Genus.HUMAN,
             0.225f,
             80_000,
@@ -65,30 +65,30 @@ public class ActorType {
             WeaponType.pm
     );
 
-    public static final ActorType humanCowboy = new ActorType(
-            "human cowboy",
-            Genus.HUMAN,
-            human.radius,
-            0.9f * human.mass,
-            0.8f * human.strength,
-            1.1f * human.velocity,
-            1.2f * human.velocityFactorSprint,
-            1.2f * human.velocityRotation,
-            0.9f * human.damage,
-            1.2f * human.reaction,
-            WeaponType.coltSingleActionArmy
-    );
+   public static final ActorType bandit = new ActorType(
+           "bandit",
+           Genus.HUMAN,
+           soldier.radius * 1.1f,
+           soldier.mass * 1.1f,
+           soldier.strength * 0.8f,
+           soldier.velocity * 1.2f,
+           soldier.velocityFactorSprint * 1.2f,
+           soldier.velocityRotation * 1.2f,
+           soldier.damage * 0.8f,
+           soldier.reaction * 0.8f,
+           WeaponType.tt
+   );
 
     public static final ActorType zombie = new ActorType(
             "zombie",
             Genus.ZOMBIE,
-            human.radius,
+            soldier.radius,
             70_000,
-            0.4f * human.strength,
-            0.4f * human.velocity,
-            0.4f * human.velocityFactorSprint,
-            0.4f * human.velocityRotation,
-            human.strength / 8f,
+            0.4f * soldier.strength,
+            0.4f * soldier.velocity,
+            0.4f * soldier.velocityFactorSprint,
+            0.4f * soldier.velocityRotation,
+            soldier.strength / 8f,
             0.2f,
             null
     );

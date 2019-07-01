@@ -86,13 +86,13 @@ class Pause {
         val page = Page(wallpaper)
 
         page.add(Label(3, 3, 6, 1, "Select your character"))
-        page.add(Button(4, 7, 4, 1, "Classic") {
-            ScenarioEncircling.selectedActor = ActorType.human
+        page.add(Button(4, 7, 4, 1, "Soldier") {
+            ScenarioEncircling.selectedActor = ActorType.soldier
             Context.main.application.newGame()
             Page.STACK.back()
         })
-        page.add(Button(4, 8, 4, 1, "Cowboy") {
-            ScenarioEncircling.selectedActor = ActorType.humanCowboy
+        page.add(Button(4, 8, 4, 1, "Bandit") {
+            ScenarioEncircling.selectedActor = ActorType.bandit
             Context.main.application.newGame()
             Page.STACK.back()
         })
