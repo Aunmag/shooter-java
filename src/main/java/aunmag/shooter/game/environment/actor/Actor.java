@@ -74,8 +74,6 @@ public class Actor extends Operative {
             hands.update();
             updateWeapon();
             updateAudioSource();
-        } else {
-            remove();
         }
 
         control.reset();
@@ -292,13 +290,11 @@ public class Actor extends Operative {
     /* Setters */
 
     private void addHealth(float addHealth) {
-        health = UtilsMath.limit(health + addHealth, 0, 1);
-
-        if (!isAlive()) {
-            remove();
-        } else if (addHealth < -PAIN_THRESHOLD) {
+        if (isAlive() && addHealth < -PAIN_THRESHOLD) {
             soundHurt();
         }
+
+        health = UtilsMath.limit(health + addHealth, 0, 1);
     }
 
     public void setWeapon(Weapon weapon) {
@@ -306,6 +302,11 @@ public class Actor extends Operative {
     }
 
     /* Getters */
+
+    @Override
+    public boolean isActive() {
+        return super.isActive() && isAlive();
+    }
 
     public float getHealth() {
         return health;

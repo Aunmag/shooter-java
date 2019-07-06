@@ -25,13 +25,6 @@ public class Notification extends Component {
     }
 
     @Override
-    public void update() {
-        if (timer.isDone()) {
-            remove();
-        }
-    }
-
-    @Override
     public void render() {
         color.w = getFade();
 
@@ -43,12 +36,15 @@ public class Notification extends Component {
     }
 
     @Override
-    public void remove() {
-        if (!isRemoved()) {
-            title.delete();
-            details.delete();
-            super.remove();
-        }
+    protected void onRemove() {
+        title.remove();
+        details.remove();
+        super.onRemove();
+    }
+
+    @Override
+    public boolean isActive() {
+        return super.isActive() && !timer.isDone();
     }
 
     public float getFade() {

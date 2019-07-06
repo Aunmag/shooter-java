@@ -44,7 +44,7 @@ public abstract class Strategy {
             actorOld = ai.enemy.actor;
         }
 
-        if (actorOld != null && (!actorOld.isAlive() || actorOld.isRemoved())) {
+        if (actorOld != null && (!actorOld.isAlive() || !actorOld.isActive())) {
             actorOld = null;
             ai.enemy = null;
         }

@@ -49,11 +49,6 @@ public class Projectile extends Operative {
     }
 
     public void update() {
-        if (isStopped()) {
-            remove();
-            return;
-        }
-
         kinetics.update((float) world.getTime().getDelta());
         updatePosition();
         updateCollision();
@@ -124,6 +119,11 @@ public class Projectile extends Operative {
 
     public boolean isStopped() {
         return kinetics.velocity.x == 0 && kinetics.velocity.y == 0;
+    }
+
+    @Override
+    public boolean isActive() {
+        return super.isActive() && !isStopped();
     }
 
 }

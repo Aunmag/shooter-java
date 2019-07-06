@@ -7,25 +7,26 @@ public class OperativeManager<T extends Operative> {
     public final ArrayList<T> all = new ArrayList<>();
 
     public void update() {
-        for (int i = all.size() - 1; i >= 0; i--) {
-            T operative = all.get(i);
+        for (var i = all.size() - 1; i >= 0; i--) {
+            var operative = all.get(i);
 
             operative.update();
 
-            if (operative.isRemoved()) {
+            if (!operative.isActive()) {
+                operative.remove();
                 all.remove(i);
             }
         }
     }
 
     public void render() {
-        for (T operative: all) {
+        for (var operative : all) {
             operative.render();
         }
     }
 
     public void remove() {
-        for (T operative: all) {
+        for (var operative : all) {
             operative.remove();
         }
 

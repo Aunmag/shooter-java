@@ -58,16 +58,13 @@ class ItemWeapon private constructor(
 
     override fun update() {
         val owner = this.giver
+
         if (owner == null) {
-            if (timer.isDone) {
-                remove()
-            } else {
-                updateColor()
-                updateRadius()
-                updateWeapon()
-                updatePickup()
-            }
-        } else if (!owner.isAlive || owner.isRemoved) {
+            updateColor()
+            updateRadius()
+            updateWeapon()
+            updatePickup()
+        } else if (!owner.isAlive || !owner.isActive) {
             drop()
         }
     }
@@ -130,13 +127,13 @@ class ItemWeapon private constructor(
         }
     }
 
-    override fun remove() {
-        if (isRemoved) {
-            return
-        }
-
+    override fun onRemove() {
         text.remove()
-        super.remove()
+        super.onRemove()
+    }
+
+    override fun isActive(): Boolean {
+        return super.isActive() && (giver != null || !timer.isDone)
     }
 
 }

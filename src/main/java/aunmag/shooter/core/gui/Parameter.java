@@ -46,11 +46,9 @@ public class Parameter extends Component {
     }
 
     @Override
-    public void remove() {
-        if (!isRemoved()) {
-            label.delete();
-            super.remove();
-        }
+    protected void onRemove() {
+        label.remove();
+        super.onRemove();
     }
 
     public float getPulse() {

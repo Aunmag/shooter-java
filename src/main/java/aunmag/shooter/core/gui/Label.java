@@ -56,8 +56,10 @@ public class Label extends Component {
         text.orderRendering();
     }
 
-    public void delete() {
+    @Override
+    protected void onRemove() {
         text.remove();
+        super.onRemove();
     }
 
     /* Setters */
