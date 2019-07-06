@@ -1,11 +1,9 @@
 package aunmag.shooter.core;
 
-import aunmag.shooter.core.audio.AudioMaster;
 import aunmag.shooter.core.basics.BaseObject;
 import aunmag.shooter.core.utilities.Mount;
 import aunmag.shooter.core.utilities.UtilsMath;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -29,14 +27,7 @@ public class Camera extends BaseObject {
                 .scale(getPixelsScale())
                 .translate(-position.x, -position.y, 0);
 
-        var quaternion = new Quaternionf(0, 0, 0, 0).rotateZ(angle);
-
-        AudioMaster.setListenerPosition(
-                position.x,
-                position.y,
-                0,
-                new Vector3f(0, 1, 0).rotate(quaternion)
-        );
+        Application.getListener().setPosition(position.x, position.y, angle);
     }
 
     public Vector2f project(float x, float y) {

@@ -1,6 +1,6 @@
 package aunmag.shooter.game.environment.weapon;
 
-import aunmag.shooter.core.audio.AudioSource;
+import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.math.BodyLine;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
@@ -19,7 +19,7 @@ public class Weapon extends Operative {
     public final Magazine magazine;
     public final Striker striker;
     public final Trigger trigger;
-    private AudioSource audioSource;
+    private Source audioSource;
 
     public Weapon(World world, WeaponType type) {
         this.body = new BodyLine(0, 0, 0, 0);
@@ -29,8 +29,11 @@ public class Weapon extends Operative {
         this.striker = new Striker(world, type.shotsPerMinute);
         this.trigger = new Trigger(type.isAutomatic);
 
-        audioSource = new AudioSource();
-        audioSource.setSample(type.sample);
+        audioSource = new Source();
+
+        if (type.sample != null) {
+            audioSource.setSample(type.sample);
+        }
     }
 
     public void update() {

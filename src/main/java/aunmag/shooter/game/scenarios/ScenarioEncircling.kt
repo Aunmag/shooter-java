@@ -219,7 +219,8 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         Context.main.application.endGame()
 
         if (!isVictory) {
-            soundGameOver.play()
+            Context.main.application.pause.theme?.stop()
+            soundGameOver?.play()
         }
     }
 
@@ -237,7 +238,11 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
         page.add(Label(4, 3, 4, 1, title))
         page.add(Label(4, 4, 4, 1, score, FontStyle.LABEL_LIGHT))
-        page.add(Button(4, 9, 4, 1, "Back to main menu", Button.ACTION_BACK))
+        page.add(Button(4, 9, 4, 1, "Back to main menu") {
+            soundGameOver?.stop()
+            Context.main.application.pause.theme?.play()
+            Button.ACTION_BACK.run()
+        })
 
         page.open()
         Context.main.application.isPause = true

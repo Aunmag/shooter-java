@@ -15,10 +15,10 @@ import org.joml.Vector4f
 class Pause {
 
     val buttonContinue = Button(4, 7, 4, 1, "Continue", Button.ACTION_BACK)
-    private val theme = UtilsAudio.getOrCreateSoundOgg("sounds/music/menu")
+    val theme = UtilsAudio.provideSound("sounds/music/menu")
 
     init {
-        theme.setIsLooped(true)
+        theme?.setLooped(true)
         buttonContinue.isEnabled = false
         createPageMain()
 
@@ -89,11 +89,11 @@ class Pause {
     }
 
     fun resume() {
-        theme.play()
+        theme?.play()
     }
 
     fun suspend() {
-        theme.stop()
+        theme?.pause()
     }
 
     fun update() {

@@ -1,7 +1,7 @@
 package aunmag.shooter.game.environment.actor;
 
-import aunmag.shooter.core.audio.AudioSample;
-import aunmag.shooter.core.audio.AudioSource;
+import aunmag.shooter.core.audio.Sample;
+import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.math.Kinetics;
@@ -27,7 +27,7 @@ public class Actor extends Operative {
     public static final float RELOADING_STAMINA_COST = 0.2f;
     public static final float PAIN_THRESHOLD = 0.005f;
 
-    private static final int[] samples = new int[6];
+    private static final Sample[] samples = new Sample[6];
 
     public final World world;
     public final ActorType type;
@@ -38,14 +38,14 @@ public class Actor extends Operative {
     private int kills = 0;
     private Weapon weapon = null;
     public final Hands hands;
-    private AudioSource audioSource = new AudioSource();
+    private Source audioSource = new Source();
     public final Control control = new Control();
     public final FluidToggle isAiming;
 
     static {
         for (int i = 0; i < samples.length; i++) {
             String sampleName = "sounds/actors/human_hurt_" + (i + 1);
-            samples[i] = AudioSample.getOrCreate(sampleName);
+            samples[i] = Sample.manger.provide(sampleName);
         }
     }
 
@@ -278,9 +278,12 @@ public class Actor extends Operative {
             return;
         }
 
-        int sample = samples[UtilsMath.random.nextInt(samples.length)];
-        audioSource.setSample(sample);
-        audioSource.play();
+        var sample = samples[UtilsMath.random.nextInt(samples.length)];
+
+        if (sample != null) {
+            audioSource.setSample(sample);
+            audioSource.play();
+        }
     }
 
     private void increaseKills() {

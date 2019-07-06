@@ -66,13 +66,18 @@ class World {
     }
 
     fun playSounds() {
-        soundAmbiance.play()
-        soundAtmosphere.play()
+        soundAmbiance?.play()
+        soundAtmosphere?.play()
+    }
+
+    fun pauseSounds() {
+        soundAmbiance?.pause()
+        soundAtmosphere?.pause()
     }
 
     fun stopSounds() {
-        soundAmbiance.stop()
-        soundAtmosphere.stop()
+        soundAmbiance?.stop()
+        soundAtmosphere?.stop()
     }
 
     fun remove() {

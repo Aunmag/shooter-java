@@ -25,7 +25,7 @@ class Game {
     }
 
     fun suspend() {
-        world.stopSounds()
+        world.pauseSounds()
     }
 
     fun update() {
