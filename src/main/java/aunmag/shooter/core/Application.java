@@ -91,7 +91,7 @@ public abstract class Application {
         gameTerminate();
 
         Text.manager.removeAll();
-        Texture.cleanUp();
+        Texture.manager.clear();
         Model.cleanUp();
         Shader.cleanUp();
         Source.all.remove();

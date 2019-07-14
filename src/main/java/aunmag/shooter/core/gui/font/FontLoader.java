@@ -56,12 +56,13 @@ public class FontLoader {
             }
         }
 
-        return new Font(
-                characters,
-                Texture.getOrCreate("fonts/" + name, Texture.Type.FONT),
-                spaceWidth,
-                LINE_HEIGHT
-        );
+        var texture = Texture.manager.asFont().provide("fonts/" + name);
+
+        if (texture == null) {
+            texture = Texture.empty;
+        }
+
+        return new Font(characters, texture, spaceWidth, LINE_HEIGHT);
     }
 
     private void read(String name) throws IOException {

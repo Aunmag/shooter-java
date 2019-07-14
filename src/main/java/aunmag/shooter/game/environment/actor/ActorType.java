@@ -38,7 +38,13 @@ public class ActorType {
         this.damage = damage;
         this.reaction = reaction;
 
-        texture = Texture.getOrCreate("actors/" + name + "/image", Texture.Type.SPRITE);
+        var texture = Texture.manager.asSprite().provide("actors/" + name + "/image");
+
+        if (texture == null) {
+            texture = Texture.empty;
+        }
+
+        this.texture = texture;
     }
 
     /* Types */

@@ -20,12 +20,11 @@ class Terrain {
         ).toInt()
         val size = (blockSize * textureQuantity).toFloat()
 
-        texture = Texture.getOrCreate(
-            "images/textures/terrain",
-            Texture.Type.SPRITE,
-            null, null,
-            size, size
-        )
+        texture = Texture.manager
+                .asSprite()
+                .withModelSize(size, size)
+                .provide("images/textures/terrain")
+                ?: Texture.empty
     }
 
     fun render() {

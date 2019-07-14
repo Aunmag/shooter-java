@@ -39,9 +39,16 @@ public class WeaponType {
             MagazineType magazine,
             float gripOffset
     ) {
-        String path = "weapons/" + name;
+        var path = "weapons/" + name;
+
+        var texture = Texture.manager.asSprite().provide(path + "/image");
+
+        if (texture == null) {
+            texture = Texture.empty;
+        }
+
         this.name = name;
-        this.texture = Texture.getOrCreate(path + "/image", Texture.Type.SPRITE);
+        this.texture = texture;
         this.sample = Sample.manger.provide(path + "/shot");
         this.shotsPerMinute = shotsPerMinute;
         this.velocity = velocity;

@@ -6,11 +6,13 @@ import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.FluidValue;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.environment.actor.Actor;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
 public class Blackout {
 
     private final Actor player;
+    @Nullable
     private final Texture texture;
     private float healthLast;
     private final FluidValue hurt;
@@ -20,8 +22,7 @@ public class Blackout {
 
     public Blackout(Actor player) {
         this.player = player;
-
-        texture = Texture.getOrCreate("images/gui/blackout1600", Texture.Type.STRETCHED);
+        texture = Texture.manager.asCover().provide("images/gui/blackout1600");
         hurt = new FluidValue(player.world.getTime(), hurtTimeFadeIn);
         healthLast = player.getHealth();
     }
@@ -58,12 +59,15 @@ public class Blackout {
     }
 
     private void renderBoundaries() {
-        float alpha = 1 - player.getHealth() / 1.4f;
-        Application.getShader().bind();
-        Application.getShader().setUniformColour(1, 1, 1, alpha);
-        Application.getShader().setUniformProjection(Application.getWindow().projection);
-        texture.bind();
-        texture.render();
+        if (texture != null) {
+            var alpha = 1 - player.getHealth() / 1.4f;
+            var shader = Application.getShader();
+            shader.bind();
+            shader.setUniformColour(1, 1, 1, alpha);
+            shader.setUniformProjection(Application.getWindow().projection);
+            texture.bind();
+            texture.render();
+        }
     }
 
 }

@@ -13,7 +13,7 @@ public class Font {
     public static final Font DEFAULT = provide("ubuntu");
     public static final Font TITLE = provide("ubuntu-bold");
     public static final Font EMPTY = new Font(
-            new HashMap<>(), Texture.createEmpty(), 0, 0
+            new HashMap<>(), Texture.empty, 0, 0
     );
 
     public static Font provide(String name) {

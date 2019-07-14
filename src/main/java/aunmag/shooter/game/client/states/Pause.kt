@@ -26,9 +26,10 @@ class Pause {
     }
 
     private fun createPageMain() {
-        val wallpaper = Texture.getOrCreate(
-                "images/wallpapers/main_menu", Texture.Type.WALLPAPER
-        )
+        val wallpaper = Texture.manager
+                .asWallpaper()
+                .provide("images/wallpapers/main_menu")
+
         val page = Page(wallpaper)
 
         page.add(Label(3, 3, 6, 1, Constants.TITLE))
@@ -51,9 +52,7 @@ class Pause {
     }
 
     private fun createPageHelp(): Page {
-        val wallpaper = Texture.getOrCreate(
-                "images/wallpapers/help", Texture.Type.WALLPAPER
-        )
+        val wallpaper = Texture.manager.asWallpaper().provide("images/wallpapers/help")
         val page = Page(wallpaper)
         val style = FontStyle.LABEL_LIGHT
 
@@ -76,9 +75,7 @@ class Pause {
     }
 
     private fun createPageExit(): Page {
-        val wallpaper = Texture.getOrCreate(
-                "images/wallpapers/exit", Texture.Type.WALLPAPER
-        )
+        val wallpaper = Texture.manager.asWallpaper().provide("images/wallpapers/exit")
         val page = Page(wallpaper)
 
         page.add(Label(3, 3, 6, 1, "Are you sure you want to exit?"))

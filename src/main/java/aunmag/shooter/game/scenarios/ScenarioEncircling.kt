@@ -226,9 +226,10 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     private fun createGameOverPage(isVictory: Boolean) {
         val wallpaperName = if (isVictory) "victory" else "death"
-        val wallpaper = Texture.getOrCreate(
-                "images/wallpapers/$wallpaperName", Texture.Type.WALLPAPER
-        )
+        val wallpaper = Texture.manager
+                .asWallpaper()
+                .provide("images/wallpapers/$wallpaperName")
+
         val page = Page(wallpaper)
 
         val title = if (isVictory) "Well done!" else "You have died"

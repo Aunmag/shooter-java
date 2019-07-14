@@ -20,11 +20,15 @@ public abstract class ResourceManager<T extends Operative> {
                 UtilsFile.printReadError(path);
             }
 
+            resetSettings();
+
             return resource;
         });
     }
 
     public abstract T load(String path) throws Exception;
+
+    public void resetSettings() {}
 
     public String toPath(String name) {
         return "/" + name;
