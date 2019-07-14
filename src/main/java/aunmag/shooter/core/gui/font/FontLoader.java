@@ -2,11 +2,9 @@ package aunmag.shooter.core.gui.font;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.structures.Texture;
+import aunmag.shooter.core.utilities.UtilsFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,20 +65,7 @@ public class FontLoader {
     }
 
     private void read(String name) throws IOException {
-        var reader = new BufferedReader(
-                new InputStreamReader(
-                        getClass().getResourceAsStream("/fonts/" + name + ".fnt"),
-                        StandardCharsets.UTF_8
-                )
-        );
-
-        while (true) {
-            var line = reader.readLine();
-
-            if (line == null) {
-                break;
-            }
-
+        UtilsFile.readByLine("/fonts/" + name + ".fnt", line -> {
             var type = (String) null;
             var data = new HashMap<String, String>();
 
@@ -103,9 +88,7 @@ public class FontLoader {
                     meta.putAll(data);
                 }
             }
-        }
-
-        reader.close();
+        });
     }
 
     private int toInt(String string) {
