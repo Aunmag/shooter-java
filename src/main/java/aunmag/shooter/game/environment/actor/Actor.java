@@ -217,7 +217,7 @@ public class Actor extends Operative {
 
     private void move(double velocity, double radiansTurn) {
         if (control.isSprinting() && control.isWalkingForward()) {
-            float efficiency = this.stamina.calculateEfficiency();
+            float efficiency = this.stamina.getEfficiency();
             velocity *= type.velocityFactorSprint * efficiency + (1 - efficiency);
         }
 

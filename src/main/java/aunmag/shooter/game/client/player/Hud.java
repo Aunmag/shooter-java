@@ -29,7 +29,7 @@ public class Hud extends Operative {
 
         if (actor != null) {
             health.value = actor.getHealth();
-            stamina.value = actor.stamina.getCurrent();
+            stamina.value = actor.stamina.get();
 
             var weapon = actor.getWeapon();
 
