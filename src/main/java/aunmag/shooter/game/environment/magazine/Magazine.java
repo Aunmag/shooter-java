@@ -14,12 +14,12 @@ public class Magazine {
     public Magazine(World world, MagazineType type) {
         this.world = world;
         this.type = type;
-        cartridgesQuantity = type.getCapacity();
+        cartridgesQuantity = type.capacity;
 
-        float reloadingTime = type.getTimeReloading();
+        float reloadingTime = type.timeReloading;
 
-        if (type.isAutomatic()) {
-            reloadingTime /= (float) type.getCapacity();
+        if (type.isAutomatic) {
+            reloadingTime /= (float) type.capacity;
         }
 
         reloadingTimer = new Timer(world.getTime(), reloadingTime, 0.125f);
@@ -29,7 +29,7 @@ public class Magazine {
         if (isReloading && reloadingTimer.isDone()) {
             cartridgesQuantity++;
 
-            if (isFull() || !type.isAutomatic()) {
+            if (isFull() || !type.isAutomatic) {
                 isReloading = false;
             } else {
                 reloadingTimer.next();
@@ -53,8 +53,8 @@ public class Magazine {
         }
 
         if (reloadingTimer.getDuration() == 0) {
-            if (type.isAutomatic()) {
-                cartridgesQuantity = type.getCapacity();
+            if (type.isAutomatic) {
+                cartridgesQuantity = type.capacity;
             } else {
                 cartridgesQuantity++;
             }
@@ -64,7 +64,7 @@ public class Magazine {
         isReloading = true;
         reloadingTimer.next();
 
-        if (type.isAutomatic()) {
+        if (type.isAutomatic) {
             cartridgesQuantity = 0;
         }
     }
@@ -72,7 +72,7 @@ public class Magazine {
     /* Getters */
 
     public boolean isFull() {
-        return cartridgesQuantity == type.getCapacity();
+        return cartridgesQuantity == type.capacity;
     }
 
     public boolean isEmpty() {
@@ -87,7 +87,7 @@ public class Magazine {
         if (type.isUnlimited()) {
             return 1.0f;
         } else {
-            return cartridgesQuantity / (float) type.getCapacity();
+            return cartridgesQuantity / (float) type.capacity;
         }
     }
 

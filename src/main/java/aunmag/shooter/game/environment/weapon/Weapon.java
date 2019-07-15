@@ -53,7 +53,7 @@ public class Weapon extends Operative {
         audioSource.play();
         trigger.getShooter().shake(calculateRandomRecoil(), true);
 
-        for (int bullet = 0; bullet < magazine.type.getProjectile().shot; bullet++) {
+        for (int bullet = 0; bullet < magazine.type.projectile.shot; bullet++) {
             makeBullet(body.position.x, body.position.y);
         }
     }
@@ -61,7 +61,7 @@ public class Weapon extends Operative {
     private void makeBullet(float x, float y) {
         Projectile projectile = new Projectile(
                 world,
-                magazine.type.getProjectile(),
+                magazine.type.projectile,
                 x,
                 y,
                 calculateRandomRadians(),
