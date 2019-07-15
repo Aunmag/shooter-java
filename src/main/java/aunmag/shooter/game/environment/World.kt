@@ -1,7 +1,6 @@
 package aunmag.shooter.game.environment
 
 import aunmag.shooter.core.Application
-import aunmag.shooter.core.gui.Layer
 import aunmag.shooter.core.utilities.OperativeManager
 import aunmag.shooter.core.utilities.TimeFlow
 import aunmag.shooter.game.ai.Ai
@@ -24,7 +23,6 @@ class World {
     val ais = OperativeManager<Ai>()
     val actors = OperativeManager<Actor>()
     val projectiles = OperativeManager<Projectile>()
-    val notifications = Layer()
     val itemsWeapon = OperativeManager<ItemWeapon>()
     val trees = OperativeManager<Decoration>()
 
@@ -38,7 +36,6 @@ class World {
         actors.update()
         projectiles.update()
         itemsWeapon.update()
-        notifications.update()
     }
 
     fun render() {
@@ -61,8 +58,6 @@ class World {
             Application.getShader().bind()
             trees.render()
         }
-
-        notifications.render()
     }
 
     fun playSounds() {
@@ -81,7 +76,6 @@ class World {
     }
 
     fun remove() {
-        notifications.remove()
         ground.remove()
         trees.remove()
         ais.remove()

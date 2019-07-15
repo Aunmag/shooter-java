@@ -42,7 +42,6 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     init {
         initializeBluffs()
-        startNextWave()
     }
 
     override fun createPlayableActor() : Actor {
@@ -127,7 +126,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
         updateZombiesTypes()
 
-        world.notifications.add(Notification(
+        Context.main.game?.player?.hud?.layer?.add(Notification(
                 world.time,
                 "Wave $wave/$waveFinal",
                 "Kill $zombiesQuantityToSpawn zombies"
