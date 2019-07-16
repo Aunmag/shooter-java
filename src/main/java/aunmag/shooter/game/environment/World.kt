@@ -40,6 +40,7 @@ class World {
 
     fun render() {
         terrain.render()
+        Application.getShader().bind()
 
         if (!Context.main.isDebug) {
             ground.render()

@@ -8,5 +8,5 @@ uniform int quantity;
 
 void main() {
     texturesCoordinates = textures * quantity;
-    gl_Position = projection * vec4(vertices, 1);
+    gl_Position = projection * vec4(vertices * quantity, 1);
 }
