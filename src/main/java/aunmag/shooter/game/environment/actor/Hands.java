@@ -22,7 +22,7 @@ public class Hands {
         coverage.color.set(1f, 0f, 0f, 0.5f);
 
         attackTimer = new Timer(
-                actor.world.getTime(),
+                actor.world.time,
                 RELOADING_TIME,
                 RELOADING_TIME_DEVIATION_FACTOR
         );
@@ -50,7 +50,7 @@ public class Hands {
     }
 
     private void attack() {
-        for (Actor opponent: actor.world.getActors().all) {
+        for (Actor opponent: actor.world.actors.all) {
             if (actor.type == opponent.type || opponent == actor) {
                 continue;
             }

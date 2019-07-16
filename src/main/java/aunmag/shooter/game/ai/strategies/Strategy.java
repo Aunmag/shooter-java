@@ -18,7 +18,7 @@ public abstract class Strategy {
 
     public Strategy(Ai ai) {
         this.ai = ai;
-        this.timer = new Timer(ai.actor.world.getTime(), TIME_LIMIT);
+        this.timer = new Timer(ai.actor.world.time, TIME_LIMIT);
     }
 
     public void update() {
@@ -49,7 +49,7 @@ public abstract class Strategy {
             ai.enemy = null;
         }
 
-        for (var actor: ai.actor.world.getActors().all) {
+        for (var actor: ai.actor.world.actors.all) {
             if (actor.isAlive() && actor.type == ActorType.human) {
                 actorNew = actor;
                 break;

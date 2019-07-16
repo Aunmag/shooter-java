@@ -18,13 +18,13 @@ public class Stamina {
     public void update() {
         if (stamina < MAX) {
             stamina += RECURRENCE_STEP
-                    * actor.world.getTime().getDelta()
+                    * actor.world.time.getDelta()
                     * actor.getHealth();
         }
     }
 
     public void spend(float stepFactor) {
-        var delta = (float) actor.world.getTime().getDelta();
+        var delta = (float) actor.world.time.getDelta();
 
         stamina = UtilsMath.limit(
                 stamina - RECURRENCE_STEP * stepFactor * delta,

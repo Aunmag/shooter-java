@@ -22,7 +22,7 @@ public class Magazine {
             reloadingTime /= (float) type.capacity;
         }
 
-        reloadingTimer = new Timer(world.getTime(), reloadingTime, 0.125f);
+        reloadingTimer = new Timer(world.time, reloadingTime, 0.125f);
     }
 
     public void update() {

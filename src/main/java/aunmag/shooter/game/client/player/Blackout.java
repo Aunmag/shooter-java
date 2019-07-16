@@ -23,7 +23,7 @@ public class Blackout {
     public Blackout(Actor player) {
         this.player = player;
         texture = Texture.manager.asCover().provide("images/gui/blackout1600");
-        hurt = new FluidValue(player.world.getTime(), hurtTimeFadeIn);
+        hurt = new FluidValue(player.world.time, hurtTimeFadeIn);
         healthLast = player.getHealth();
     }
 

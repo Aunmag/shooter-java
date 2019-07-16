@@ -68,7 +68,7 @@ public class Weapon extends Operative {
                 calculateRandomVelocity(),
                 trigger.getShooter()
         );
-        world.getProjectiles().all.add(projectile);
+        world.projectiles.all.add(projectile);
     }
 
     private float calculateRandomRecoil() {

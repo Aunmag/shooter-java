@@ -56,7 +56,7 @@ public class Actor extends Operative {
         hands = new Hands(this);
         stamina = new Stamina(this);
 
-        isAiming = new FluidToggle(world.getTime(), AIMING_TIME);
+        isAiming = new FluidToggle(world.time, AIMING_TIME);
         isAiming.setFlexDegree(AIMING_FLEX);
 
         kinetics = new Kinetics(type.mass);
@@ -100,7 +100,7 @@ public class Actor extends Operative {
     }
 
     protected void updateKinetics() {
-        float timeDelta = (float) world.getTime().getDelta();
+        float timeDelta = (float) world.time.getDelta();
         kinetics.update(timeDelta);
 
         float velocityX = kinetics.velocity.x * timeDelta;
@@ -110,7 +110,7 @@ public class Actor extends Operative {
     }
 
     private void updateCollision() {
-        for (Actor opponent: world.getActors().all) {
+        for (Actor opponent: world.actors.all) {
             if (opponent != this) {
                 CollisionCC collision = new CollisionCC(body, opponent.body);
 
@@ -212,7 +212,7 @@ public class Actor extends Operative {
             velocity /= distanceExcess;
         }
 
-        kinetics.addEnergy(0, 0, velocity, (float) world.getTime().getDelta());
+        kinetics.addEnergy(0, 0, velocity, (float) world.time.getDelta());
     }
 
     private void move(double velocity, double radiansTurn) {
@@ -226,7 +226,7 @@ public class Actor extends Operative {
 
         float moveX = (float) (velocity * Math.cos(body.radians + radiansTurn));
         float moveY = (float) (velocity * Math.sin(body.radians + radiansTurn));
-        float timeDelta = (float) world.getTime().getDelta();
+        float timeDelta = (float) world.time.getDelta();
         kinetics.addEnergy(moveX, moveY, 0, timeDelta);
     }
 

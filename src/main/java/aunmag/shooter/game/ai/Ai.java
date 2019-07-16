@@ -17,7 +17,7 @@ public class Ai extends Operative {
     public Ai(Actor actor) {
         this.actor = actor;
         this.strategy = new ChaseStrategy(this);
-        this.reaction = new Reaction(actor.world.getTime(), actor.type.reaction);
+        this.reaction = new Reaction(actor.world.time, actor.type.reaction);
     }
 
     public void update() {

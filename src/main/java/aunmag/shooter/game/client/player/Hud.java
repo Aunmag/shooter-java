@@ -61,11 +61,11 @@ public class Hud extends Operative {
         var world = game.getWorld();
 
         var message = "";
-        message += String.format("\nAIs: %s", world.getAis().all.size());
-        message += String.format("\nActors: %s", world.getActors().all.size());
-        message += String.format("\nBullets: %s", world.getProjectiles().all.size());
-        message += String.format("\nGround: %s", world.getGround().all.size());
-        message += String.format("\nTrees: %s", world.getTrees().all.size());
+        message += String.format("\nAIs: %s", world.ais.all.size());
+        message += String.format("\nActors: %s", world.actors.all.size());
+        message += String.format("\nBullets: %s", world.projectiles.all.size());
+        message += String.format("\nGround: %s", world.ground.all.size());
+        message += String.format("\nTrees: %s", world.trees.all.size());
 
         debug.load(message);
         debug.orderRendering();
