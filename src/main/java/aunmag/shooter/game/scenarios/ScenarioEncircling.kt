@@ -14,7 +14,7 @@ import aunmag.shooter.core.utilities.UtilsMath.limit
 import aunmag.shooter.game.ai.Ai
 import aunmag.shooter.game.client.Context
 import aunmag.shooter.game.client.player.Player
-import aunmag.shooter.game.data.soundGameOver
+import aunmag.shooter.game.data.Sounds
 import aunmag.shooter.game.environment.World
 import aunmag.shooter.game.environment.actor.Actor
 import aunmag.shooter.game.environment.actor.ActorType
@@ -219,7 +219,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
         if (!isVictory) {
             Context.main.application.pause.theme?.stop()
-            soundGameOver?.play()
+            Sounds.soundGameOver?.play()
         }
     }
 
@@ -239,7 +239,7 @@ class ScenarioEncircling(world: World) : Scenario(world) {
         page.add(Label(4, 3, 4, 1, title))
         page.add(Label(4, 4, 4, 1, score, FontStyle.LABEL_LIGHT))
         page.add(Button(4, 9, 4, 1, "Back to main menu") {
-            soundGameOver?.stop()
+            Sounds.soundGameOver?.stop()
             Context.main.application.pause.theme?.play()
             Button.ACTION_BACK.run()
         })

@@ -6,7 +6,7 @@ import aunmag.shooter.core.utilities.OperativeManager;
 import aunmag.shooter.core.utilities.TimeFlow;
 import aunmag.shooter.game.ai.Ai;
 import aunmag.shooter.game.client.Context;
-import aunmag.shooter.game.data.SoundsKt;
+import aunmag.shooter.game.data.Sounds;
 import aunmag.shooter.game.environment.actor.Actor;
 import aunmag.shooter.game.environment.decorations.Decoration;
 import aunmag.shooter.game.environment.projectile.Projectile;
@@ -73,32 +73,32 @@ public class World extends Operative {
     }
 
     public void playSounds() {
-        if (SoundsKt.getSoundAmbiance() != null) {
-            SoundsKt.getSoundAmbiance().play();
+        if (Sounds.soundAmbiance != null) {
+            Sounds.soundAmbiance.play();
         }
 
-        if (SoundsKt.getSoundAtmosphere() != null) {
-            SoundsKt.getSoundAtmosphere().play();
+        if (Sounds.soundAtmosphere != null) {
+            Sounds.soundAtmosphere.play();
         }
     }
 
     public void pauseSounds() {
-        if (SoundsKt.getSoundAmbiance() != null) {
-            SoundsKt.getSoundAmbiance().pause();
+        if (Sounds.soundAmbiance != null) {
+            Sounds.soundAmbiance.pause();
         }
 
-        if (SoundsKt.getSoundAtmosphere() != null) {
-            SoundsKt.getSoundAtmosphere().pause();
+        if (Sounds.soundAtmosphere != null) {
+            Sounds.soundAtmosphere.pause();
         }
     }
 
     public void stopSounds() {
-        if (SoundsKt.getSoundAmbiance() != null) {
-            SoundsKt.getSoundAmbiance().stop();
+        if (Sounds.soundAmbiance != null) {
+            Sounds.soundAmbiance.stop();
         }
 
-        if (SoundsKt.getSoundAtmosphere() != null) {
-            SoundsKt.getSoundAtmosphere().stop();
+        if (Sounds.soundAtmosphere != null) {
+            Sounds.soundAtmosphere.stop();
         }
     }
 
