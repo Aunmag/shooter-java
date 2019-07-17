@@ -21,8 +21,8 @@ import aunmag.shooter.game.environment.actor.ActorType
 import aunmag.shooter.game.environment.decorations.Decoration
 import aunmag.shooter.game.environment.decorations.DecorationType
 import aunmag.shooter.game.environment.weapon.Weapon
+import aunmag.shooter.game.environment.weapon.WeaponBonus
 import aunmag.shooter.game.environment.weapon.WeaponType
-import aunmag.shooter.game.items.ItemWeapon
 import org.lwjgl.opengl.GL11
 
 class ScenarioEncircling(world: World) : Scenario(world) {
@@ -209,8 +209,8 @@ class ScenarioEncircling(world: World) : Scenario(world) {
 
     private fun createWeaponBonus(giver: Actor, weaponType: WeaponType) {
         val weapon = Weapon(world, weaponType)
-        val bonus = ItemWeapon(giver, weapon)
-        world.itemsWeapon.all.add(bonus)
+        val bonus = WeaponBonus(giver, weapon)
+        world.bonuses.all.add(bonus)
     }
 
     private fun gameOver(isVictory: Boolean) {

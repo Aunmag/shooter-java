@@ -12,7 +12,7 @@ import aunmag.shooter.game.environment.decorations.Decoration;
 import aunmag.shooter.game.environment.projectile.Projectile;
 import aunmag.shooter.game.environment.terrain.Terrain;
 import aunmag.shooter.game.environment.utils.TreesGenerator;
-import aunmag.shooter.game.items.ItemWeapon;
+import aunmag.shooter.game.environment.weapon.WeaponBonus;
 import org.lwjgl.opengl.GL11;
 
 public class World extends Operative {
@@ -23,7 +23,7 @@ public class World extends Operative {
     public final OperativeManager<Ai> ais = new OperativeManager<>();
     public final OperativeManager<Actor> actors = new OperativeManager<>();
     public final OperativeManager<Projectile> projectiles = new OperativeManager<>();
-    public final OperativeManager<ItemWeapon> itemsWeapon = new OperativeManager<>();
+    public final OperativeManager<WeaponBonus> bonuses = new OperativeManager<>();
     public final OperativeManager<Decoration> trees = new OperativeManager<>();
 
     public World() {
@@ -36,7 +36,7 @@ public class World extends Operative {
         ais.update();
         actors.update();
         projectiles.update();
-        itemsWeapon.update();
+        bonuses.update();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class World extends Operative {
             ground.render();
         }
 
-        itemsWeapon.render();
+        bonuses.render();
         actors.render();
         projectiles.render();
         GL11.glLineWidth(1f);
@@ -68,7 +68,7 @@ public class World extends Operative {
         ais.remove();
         actors.remove();
         projectiles.remove();
-        itemsWeapon.remove();
+        bonuses.remove();
         stopSounds();
     }
 
