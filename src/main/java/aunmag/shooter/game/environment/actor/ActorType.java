@@ -47,6 +47,20 @@ public class ActorType {
         this.texture = texture;
     }
 
+    public static ActorType clone(ActorType type, float skill) {
+        return new ActorType(
+                type.name,
+                type.radius,
+                type.mass,
+                skill * type.strength,
+                skill * type.velocity,
+                type.velocityFactorSprint,
+                type.velocityRotation,
+                type.damage,
+                type.reaction
+        );
+    }
+
     /* Types */
 
     public static final ActorType human = new ActorType(

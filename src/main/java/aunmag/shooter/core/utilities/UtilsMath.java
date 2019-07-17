@@ -87,6 +87,10 @@ public final class UtilsMath {
         return randomizeBetween(resultMin, resultMax);
     }
 
+    public static boolean chance(float probability) {
+        return UtilsMath.random.nextFloat() <= probability;
+    }
+
     public static float distance(float x1, float y1, float x2, float y2) {
         var powX = Math.pow(x1 - x2, 2);
         var powY = Math.pow(y1 - y2, 2);
