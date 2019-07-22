@@ -62,7 +62,7 @@ public abstract class Strategy {
     }
 
     public boolean isClose(Enemy enemy) {
-        return enemy.distance.get() < closeDistanceToEnemy;
+        return enemy.distanceSquared.get() < closeDistanceToEnemy * closeDistanceToEnemy;
     }
 
     public boolean isContact(Enemy enemy) {

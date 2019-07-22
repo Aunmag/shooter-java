@@ -77,7 +77,7 @@ public class Projectile extends Operative {
         for (Actor testActor: world.actors.all) {
             CollisionCL testCollision = new CollisionCL(testActor.body, body);
             if (testCollision.isTrue()) {
-                float testDistance = body.position.distance(testActor.body.position);
+                var testDistance = body.position.distanceSquared(testActor.body.position);
                 if (actor == null || testDistance > distance) {
                     actor = testActor;
                     distance = testDistance;

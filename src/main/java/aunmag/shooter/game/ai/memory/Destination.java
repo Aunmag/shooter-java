@@ -12,7 +12,7 @@ public class Destination extends Record {
 
     public final Vector2f positionInitial;
     public final Lazy<Vector2f> position = new Lazy<>(this::computePosition);
-    public final Lazy<Float> distance = new Lazy<>(this::computeDistance);
+    public final Lazy<Float> distanceSquared = new Lazy<>(this::computeDistanceSquared);
     public final Lazy<Float> direction = new Lazy<>(this::computeDirection);
 
     public Destination(Ai ai, Vector2f position) {
@@ -23,7 +23,7 @@ public class Destination extends Record {
     @Override
     public void refresh() {
         position.recompute();
-        distance.recompute();
+        distanceSquared.recompute();
         direction.recompute();
     }
 
@@ -31,8 +31,8 @@ public class Destination extends Record {
         return positionInitial;
     }
 
-    protected float computeDistance() {
-        return position.get().distance(ai.actor.body.position);
+    protected float computeDistanceSquared() {
+        return position.get().distanceSquared(ai.actor.body.position);
     }
 
     protected float computeDirection() {

@@ -136,15 +136,16 @@ public final class UtilsMath {
             return targetPosition;
         }
 
-        var distance = targetPosition.distance(sourcePosition);
-        var advance = distance / new Vector2f()
+        var distance = targetPosition.distanceSquared(sourcePosition);
+        var velocity = new Vector2f()
                 .add(targetVelocity)
                 .sub(sourceVelocity)
-                .length();
+                .lengthSquared();
 
-        return new Vector2f()
-                .add(targetVelocity)
-                .mul(advance)
+        var advance = Math.sqrt(distance / velocity);
+
+        return new Vector2f(targetVelocity)
+                .mul((float) advance)
                 .add(targetPosition);
     }
 

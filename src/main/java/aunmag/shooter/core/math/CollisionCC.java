@@ -4,18 +4,20 @@ import aunmag.shooter.core.utilities.UtilsMath;
 
 public class CollisionCC extends Collision {
 
+    public static final float EXTRA_RESOLVE_DISTANCE = 0.0001f;
+
     public final BodyCircle a;
     public final BodyCircle b;
-    public final float distance;
-    public final float distanceToBeCollision;
+    public final float distanceSquared;
+    public final float distanceMin;
 
     public CollisionCC(BodyCircle a, BodyCircle b) {
         this.a = a;
         this.b = b;
 
-        distanceToBeCollision = a.radius + b.radius;
-        distance = a.position.distance(b.position);
-        isTrue = distance < distanceToBeCollision;
+        distanceSquared = a.position.distanceSquared(b.position);
+        distanceMin = a.radius + b.radius;
+        isTrue = distanceSquared < distanceMin * distanceMin;
     }
 
     public void resolve() {
@@ -23,13 +25,16 @@ public class CollisionCC extends Collision {
             return;
         }
 
-        float moveDistance = (distanceToBeCollision - distance) / 2f;
-        float moveRadians = UtilsMath.angle(a.position, b.position);
-        float moveX = moveDistance * (float) Math.cos(moveRadians);
-        float moveY = moveDistance * (float) Math.sin(moveRadians);
+        var distance = (distanceMin - (float) Math.sqrt(distanceSquared))
+                / 2.0f
+                + EXTRA_RESOLVE_DISTANCE;
 
-        a.position.add(moveX, moveY);
-        b.position.sub(moveX, moveY);
+        var direction = UtilsMath.angle(a.position, b.position);
+        var x = distance * (float) Math.cos(direction);
+        var y = distance * (float) Math.sin(direction);
+
+        a.position.add(x, y);
+        b.position.sub(x, y);
     }
 
 }
