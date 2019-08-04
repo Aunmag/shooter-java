@@ -7,7 +7,6 @@ import aunmag.shooter.core.math.Kinetics;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.actor.Actor;
-import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 
 public class Projectile extends Operative {
@@ -48,6 +47,7 @@ public class Projectile extends Operative {
         kinetics.restitution = 0f;
     }
 
+    @Override
     public void update() {
         kinetics.update((float) world.time.getDelta());
         updatePosition();
@@ -60,7 +60,7 @@ public class Projectile extends Operative {
     }
 
     private void updatePosition() {
-        float velocityFactor = VELOCITY_FACTOR * (float) world.time.getDelta();
+        var velocityFactor = VELOCITY_FACTOR * (float) world.time.getDelta();
 
         body.pullUpTail();
         body.position.add(
@@ -70,12 +70,12 @@ public class Projectile extends Operative {
     }
 
     private void updateCollision() {
-        Actor actor = null;
-        float distance = 0;
-        CollisionCL collision = null;
+        var actor = (Actor) null;
+        var distance = 0.0f;
+        var collision = (CollisionCL) null;
 
-        for (Actor testActor: world.actors.all) {
-            CollisionCL testCollision = new CollisionCL(testActor.body, body);
+        for (var testActor: world.actors.all) {
+            var testCollision = new CollisionCL(testActor.body, body);
             if (testCollision.isTrue()) {
                 var testDistance = body.position.distanceSquared(testActor.body.position);
                 if (actor == null || testDistance > distance) {
@@ -99,7 +99,7 @@ public class Projectile extends Operative {
     }
 
     private void updateVelocity() {
-        Vector2f velocity = kinetics.velocity;
+        var velocity = kinetics.velocity;
 
         if (Math.abs(velocity.x) + Math.abs(velocity.y) < VELOCITY_MIN) {
             stop();
@@ -110,12 +110,11 @@ public class Projectile extends Operative {
         kinetics.velocity.set(0, 0);
     }
 
+    @Override
     public void render() {
         GL11.glLineWidth(Application.getCamera().toPixels(type.size));
         body.render();
     }
-
-    /* Getters */
 
     public boolean isStopped() {
         return kinetics.velocity.x == 0 && kinetics.velocity.y == 0;

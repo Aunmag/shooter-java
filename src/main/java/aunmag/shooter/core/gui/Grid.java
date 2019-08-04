@@ -35,8 +35,6 @@ public class Grid {
         }
     }
 
-    /* Getters */
-
     public float getStepX() {
         return stepX;
     }

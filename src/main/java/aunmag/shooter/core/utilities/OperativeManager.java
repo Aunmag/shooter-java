@@ -1,10 +1,11 @@
 package aunmag.shooter.core.utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OperativeManager<T extends Operative> {
 
-    public final ArrayList<T> all = new ArrayList<>();
+    public final List<T> all = new ArrayList<>();
 
     public void update() {
         for (var i = all.size() - 1; i >= 0; i--) {

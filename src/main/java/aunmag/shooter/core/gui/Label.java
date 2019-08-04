@@ -52,6 +52,7 @@ public class Label extends Component {
         text.updateProjection();
     }
 
+    @Override
     public void render() {
         text.orderRendering();
     }
@@ -61,8 +62,6 @@ public class Label extends Component {
         text.remove();
         super.onRemove();
     }
-
-    /* Setters */
 
     public void setTextColour(Vector4f colour) {
         text.setColour(colour);

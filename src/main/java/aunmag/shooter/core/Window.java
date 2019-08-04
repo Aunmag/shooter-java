@@ -18,16 +18,16 @@ public class Window extends BaseQuad {
     Window() {
         super(1024, 576);
 
-        long monitorId = GLFW.glfwGetPrimaryMonitor();
-        int monitorSizeX = GLFW.glfwGetVideoMode(monitorId).width();
-        int monitorSizeY = GLFW.glfwGetVideoMode(monitorId).height();
+        var monitorId = GLFW.glfwGetPrimaryMonitor();
+        var monitorSizeX = GLFW.glfwGetVideoMode(monitorId).width();
+        var monitorSizeY = GLFW.glfwGetVideoMode(monitorId).height();
 
         if (Configs.isFullscreen()) {
             setSize(monitorSizeX, monitorSizeY);
         }
 
-        int sizeX = (int) getWidth();
-        int sizeY = (int) getHeight();
+        var sizeX = (int) getWidth();
+        var sizeY = (int) getHeight();
 
         projection = new Matrix4f().setOrtho2D(
                 -getCenterX(),
@@ -51,8 +51,8 @@ public class Window extends BaseQuad {
         }
 
         if (!Configs.isFullscreen()) {
-            int centerX = (monitorSizeX - sizeX) / 2;
-            int centerY = (monitorSizeY - sizeY) / 2;
+            var centerX = (monitorSizeX - sizeX) / 2;
+            var centerY = (monitorSizeY - sizeY) / 2;
             GLFW.glfwSetWindowPos(id, centerX, centerY);
         }
 
@@ -82,12 +82,9 @@ public class Window extends BaseQuad {
             GLFW.glfwSetInputMode(id, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
         }
     }
-
-    /* Setters */
-
     protected void setSize(float width, float height) {
         if (isInitialized) {
-            String message = "Unable to change window size after initialization";
+            var message = "Unable to change window size after initialization";
             System.err.println(message);
         } else {
             super.setSize(width, height);

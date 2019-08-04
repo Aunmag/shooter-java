@@ -36,10 +36,11 @@ public class Weapon extends Operative {
         }
     }
 
+    @Override
     public void update() {
-        float muzzleLength = type.texture.getCenterX();
-        float x = body.positionTail.x + muzzleLength * (float) Math.cos(body.radians);
-        float y = body.positionTail.y + muzzleLength * (float) Math.sin(body.radians);
+        var muzzleLength = type.texture.getCenterX();
+        var x = body.positionTail.x + muzzleLength * (float) Math.cos(body.radians);
+        var y = body.positionTail.y + muzzleLength * (float) Math.sin(body.radians);
         body.position.set(x, y);
 
         magazine.update();
@@ -59,7 +60,7 @@ public class Weapon extends Operative {
     }
 
     private void makeBullet(float x, float y) {
-        Projectile projectile = new Projectile(
+        var projectile = new Projectile(
                 world,
                 magazine.type.projectile,
                 x,

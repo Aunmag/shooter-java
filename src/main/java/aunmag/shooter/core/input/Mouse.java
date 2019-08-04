@@ -5,7 +5,6 @@ import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 
-import java.nio.DoubleBuffer;
 import java.util.Arrays;
 
 public class Mouse {
@@ -35,14 +34,14 @@ public class Mouse {
 
     public void updatePosition() {
         if (Input.isAvailable()) {
-            DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
-            DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+            var xBuffer = BufferUtils.createDoubleBuffer(1);
+            var yBuffer = BufferUtils.createDoubleBuffer(1);
             GLFW.glfwGetCursorPos(Application.getWindow().id, xBuffer, yBuffer);
 
             xBuffer.rewind();
             yBuffer.rewind();
-            float x = (float) xBuffer.get();
-            float y = (float) yBuffer.get();
+            var x = (float) xBuffer.get();
+            var y = (float) yBuffer.get();
 
             velocity.set(position.x() - x, position.y() - y);
             position.set(x, y);

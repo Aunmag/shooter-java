@@ -67,7 +67,7 @@ public class Player extends Operative {
             actor.control.aim();
         }
 
-        if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_R) && actor.getHasWeapon()) {
+        if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_R) && actor.hasWeapon()) {
             actor.getWeapon().magazine.reload();
         }
 

@@ -26,15 +26,12 @@ public class BaseQuad extends BaseObject {
     }
 
     public boolean calculateIsPointInside(float testX, float testY) {
-        float x = getPosition().x();
-        float y = getPosition().y();
+        var x = getPosition().x();
+        var y = getPosition().y();
 
         return UtilsMath.inRange(testX, x, x + width)
             && UtilsMath.inRange(testY, y, y + height);
     }
-
-    /* Setters */
-
     protected void setSize(float width, float height) {
         this.width = width;
         this.height = height;
@@ -50,8 +47,6 @@ public class BaseQuad extends BaseObject {
     public void setPositionCenteredBy(float x, float y) {
         getPosition().set(x - getCenterX(), y - getCenterY());
     }
-
-    /* Getters */
 
     public float getWidth() {
         return width;

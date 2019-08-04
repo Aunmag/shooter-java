@@ -30,8 +30,6 @@ public class Source extends AudioObject {
         AL10.alDeleteSources(id);
     }
 
-    /* Setters */
-
     public void setVolume(float volume) {
         AL10.alSourcef(id, AL10.AL_GAIN, volume);
     }
@@ -48,8 +46,6 @@ public class Source extends AudioObject {
     public void setLooped(boolean isLooped) {
         AL10.alSourcei(id, AL10.AL_LOOPING, isLooped ? AL10.AL_TRUE : AL10.AL_FALSE);
     }
-
-    /* Getters */
 
     public boolean isPlaying() {
         return AL10.alGetSourcei(id, AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;

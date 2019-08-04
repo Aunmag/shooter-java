@@ -20,8 +20,8 @@ public class Mount {
             return;
         }
 
-        float x = holder.x + length * (float) Math.cos(radians);
-        float y = holder.y + length * (float) Math.sin(radians);
+        var x = holder.x + length * (float) Math.cos(radians);
+        var y = holder.y + length * (float) Math.sin(radians);
         item.set(x, y);
     }
 

@@ -20,8 +20,8 @@ public class FluidValue {
         if (timer.isDone()) {
             reachTargetNow();
         } else {
-            double isDoneRatio = Math.pow(timer.calculateIsDoneRatio(), flexDegree);
-            double valueIncrease = getValueRange() * isDoneRatio;
+            var progress = Math.pow(timer.calculateIsDoneRatio(), flexDegree);
+            var valueIncrease = getValueRange() * progress;
             current = (float) (initial + valueIncrease);
         }
     }
@@ -29,8 +29,6 @@ public class FluidValue {
     public void reachTargetNow() {
         current = target;
     }
-
-    /* Setters */
 
     public void setTarget(float target) {
         if (target != this.target) {
@@ -43,8 +41,6 @@ public class FluidValue {
     public void setFlexDegree(float flexDegree) {
         this.flexDegree = flexDegree;
     }
-
-    /* Getters */
 
     public float getCurrent() {
         return current;

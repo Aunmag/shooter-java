@@ -83,7 +83,7 @@ public class FontLoader {
             }
 
             if (type != null) {
-                if (type.equals("char")) {
+                if ("char".equals(type)) {
                     charactersMeta.add(data);
                 } else {
                     meta.putAll(data);

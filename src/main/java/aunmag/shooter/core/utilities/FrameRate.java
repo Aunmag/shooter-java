@@ -15,7 +15,7 @@ public class FrameRate {
     public boolean tryTick(double timeCurrent) {
         delta = timeCurrent - lastTickTime;
 
-        boolean isNow = delta >= deltaMin;
+        var isNow = delta >= deltaMin;
 
         if (isNow) {
             lastTickTime = timeCurrent;
@@ -30,8 +30,6 @@ public class FrameRate {
         return isNow;
     }
 
-    /* Setters */
-
     public void setFrequency(int frequency) {
         this.frequency = frequency;
 
@@ -45,8 +43,6 @@ public class FrameRate {
     public void setDeltaMax(double deltaMax) {
         this.deltaMax = deltaMax;
     }
-
-    /* Getters */
 
     public int getFrequency() {
         return frequency;

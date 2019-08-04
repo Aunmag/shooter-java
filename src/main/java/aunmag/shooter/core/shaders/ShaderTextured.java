@@ -16,8 +16,6 @@ public class ShaderTextured extends Shader {
         uniformLocationColour = getUniformLocation("colour");
     }
 
-    /* Setters */
-
     public void setUniformProjection(Matrix4fc projection) {
         Shader.setUniform(uniformLocationProjection, projection);
     }

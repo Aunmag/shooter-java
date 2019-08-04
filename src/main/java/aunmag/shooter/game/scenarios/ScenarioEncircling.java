@@ -270,8 +270,6 @@ public class ScenarioEncircling extends Scenario {
         }
     }
 
-    /* Getters */
-
     public float getZombiesSkill() {
         return 1 + (DIFFICULTY - 1) * (wave - 1);
     }

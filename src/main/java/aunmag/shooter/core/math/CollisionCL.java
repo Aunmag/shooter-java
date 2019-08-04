@@ -1,7 +1,6 @@
 package aunmag.shooter.core.math;
 
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector2f;
 
 public class CollisionCL extends Collision {
 
@@ -17,18 +16,18 @@ public class CollisionCL extends Collision {
         this.circle = circle;
         this.line = line;
 
-        float x1 = circle.position.x - line.position.x;
-        float y1 = circle.position.y - line.position.y;
-        float x2 = circle.position.x - line.positionTail.x;
-        float y2 = circle.position.y - line.positionTail.y;
+        var x1 = circle.position.x - line.position.x;
+        var y1 = circle.position.y - line.position.y;
+        var x2 = circle.position.x - line.positionTail.x;
+        var y2 = circle.position.y - line.positionTail.y;
 
-        float differenceX = x2 - x1;
-        float differenceY = y2 - y1;
-        float radiusSquare = circle.radius * circle.radius;
+        var differenceX = x2 - x1;
+        var differenceY = y2 - y1;
+        var radiusSquare = circle.radius * circle.radius;
 
-        float a = differenceX * differenceX + differenceY * differenceY;
-        float b = (x1 * differenceX + y1 * differenceY) * 2f;
-        float c = x1 * x1 + y1 * y1 - radiusSquare;
+        var a = differenceX * differenceX + differenceY * differenceY;
+        var b = (x1 * differenceX + y1 * differenceY) * 2f;
+        var c = x1 * x1 + y1 * y1 - radiusSquare;
 
         if (b > 0) {
             isTrue = c < 0;
@@ -43,7 +42,7 @@ public class CollisionCL extends Collision {
      * TODO: This is new. Complete it
      */
     public void resolveLineLength() {
-        Vector2f intersection = provideDetails().intersection;
+        var intersection = provideDetails().intersection;
         line.position.set(intersection.x, intersection.y);
     }
 

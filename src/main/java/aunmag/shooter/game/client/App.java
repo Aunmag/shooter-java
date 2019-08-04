@@ -55,8 +55,6 @@ public final class App extends Application {
         endGame();
     }
 
-    /* Getters */
-
     public boolean isDebug() {
         return isDebug;
     }
@@ -69,8 +67,6 @@ public final class App extends Application {
     public Game getGame() {
         return game;
     }
-
-    /* Setters */
 
     public void setPause(boolean isPause) {
         if (this.isPause == isPause || !isPause && game == null) {

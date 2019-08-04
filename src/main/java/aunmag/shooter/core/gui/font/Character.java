@@ -29,8 +29,8 @@ public class Character {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
 
-        float x2 = x1 + textureSizeX;
-        float y2 = y1 + textureSizeY;
+        var x2 = x1 + textureSizeX;
+        var y2 = y1 + textureSizeY;
 
         textureCoordinates = new Float[] {
             x1, y1,

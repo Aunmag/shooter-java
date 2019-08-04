@@ -13,6 +13,7 @@ public class Decoration extends Operative {
         body = new BodyPoint(x, y, radians);
     }
 
+    @Override
     public void render() {
         type.texture.renderOnWorld(
                 body.position.x,

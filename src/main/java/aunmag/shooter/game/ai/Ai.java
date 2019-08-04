@@ -20,6 +20,7 @@ public class Ai extends Operative {
         this.reaction = new Reaction(actor.world.time, actor.type.reaction);
     }
 
+    @Override
     public void update() {
         reaction.update();
 
@@ -34,13 +35,12 @@ public class Ai extends Operative {
         strategy.update();
     }
 
+    @Override
     public void render() {
         if (enemy != null) {
             enemy.render();
         }
     }
-
-    /* Getters */
 
     @Override
     public boolean isActive() {

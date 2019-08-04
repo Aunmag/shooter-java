@@ -13,7 +13,7 @@ public class MouseWheel {
         velocity = 0;
 
         if (Math.abs(velocitySmooth) > VELOCITY_SMOOTH_MIN) {
-            float delta = (float) Application.time.getDelta();
+            var delta = (float) Application.time.getDelta();
             velocitySmooth -= velocitySmooth * smoothness * delta;
         } else {
             velocitySmooth = 0;
@@ -24,8 +24,6 @@ public class MouseWheel {
         velocity = (float) y;
         velocitySmooth += velocity;
     }
-
-    /* Getters */
 
     public float getVelocity() {
         return velocity;

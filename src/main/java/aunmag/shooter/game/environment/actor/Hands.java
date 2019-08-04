@@ -6,7 +6,7 @@ import aunmag.shooter.core.utilities.Timer;
 
 public class Hands {
 
-    public static final float DISTANCE = 0.34375f;
+    public static final float DISTANCE = 0.343_75f;
     public static final float COVERAGE_RADIUS = 0.34f;
     public static final float RELOADING_TIME = 0.4f;
     public static final float RELOADING_TIME_DEVIATION_FACTOR = 0.125f;
@@ -34,7 +34,7 @@ public class Hands {
 
         if (
                 actor.control.isAttacking()
-                && !actor.getHasWeapon()
+                && !actor.hasWeapon()
                 && attackTimer.isDone()
         ) {
             attack();
@@ -43,14 +43,14 @@ public class Hands {
     }
 
     public void updatePosition() {
-        float radians = actor.body.radians;
-        float x = actor.body.position.x + COVERAGE_RADIUS * (float) Math.cos(radians);
-        float y = actor.body.position.y + COVERAGE_RADIUS * (float) Math.sin(radians);
+        var radians = actor.body.radians;
+        var x = actor.body.position.x + COVERAGE_RADIUS * (float) Math.cos(radians);
+        var y = actor.body.position.y + COVERAGE_RADIUS * (float) Math.sin(radians);
         coverage.position.set(x, y);
     }
 
     private void attack() {
-        for (Actor opponent: actor.world.actors.all) {
+        for (var opponent: actor.world.actors.all) {
             if (actor.type == opponent.type || opponent == actor) {
                 continue;
             }

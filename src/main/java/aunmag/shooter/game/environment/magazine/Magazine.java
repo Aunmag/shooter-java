@@ -16,7 +16,7 @@ public class Magazine {
         this.type = type;
         cartridgesQuantity = type.capacity;
 
-        float reloadingTime = type.timeReloading;
+        var reloadingTime = type.timeReloading;
 
         if (type.isAutomatic) {
             reloadingTime /= (float) type.capacity;
@@ -38,7 +38,7 @@ public class Magazine {
     }
 
     public boolean takeNextCartridge() {
-        boolean hasCartridge = !isEmpty();
+        var hasCartridge = !isEmpty();
 
         if (hasCartridge && !type.isUnlimited()) {
             cartridgesQuantity--;
@@ -68,8 +68,6 @@ public class Magazine {
             cartridgesQuantity = 0;
         }
     }
-
-    /* Getters */
 
     public boolean isFull() {
         return cartridgesQuantity == type.capacity;

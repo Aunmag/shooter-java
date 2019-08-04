@@ -63,6 +63,7 @@ public class Text extends BaseQuad {
         isRenderingOrdered = true;
     }
 
+    @Override
     public void render() {
         if (!isRenderingOrdered || vao == null) {
             return;
@@ -99,8 +100,6 @@ public class Text extends BaseQuad {
         }
     }
 
-    /* Setters */
-
     public void setColour(Vector4f colour) {
         this.colour = colour;
     }
@@ -111,8 +110,6 @@ public class Text extends BaseQuad {
             updateProjection();
         }
     }
-
-    /* Getters */
 
     @Nullable
     public String getMessage() {

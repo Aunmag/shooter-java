@@ -25,7 +25,7 @@ public final class UtilsFile {
         try {
             return Paths.get(cls.getResource(path).toURI());
         } catch (URISyntaxException | NullPointerException e) {
-            throw new IOException(e.getMessage(), e.getCause());
+            throw new IOException(e);
         }
     }
 

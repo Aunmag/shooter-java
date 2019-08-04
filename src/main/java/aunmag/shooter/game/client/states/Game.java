@@ -56,8 +56,6 @@ public class Game extends Operative {
         super.onRemove();
     }
 
-    /* Getters */
-
     public World getWorld() {
         return world;
     }

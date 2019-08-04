@@ -26,8 +26,6 @@ public class BaseObject extends Operative {
         return new Vector2f(position);
     }
 
-    /* Setters */
-
     public void setRadians(float radians) {
         this.radians = radians;
     }
@@ -39,8 +37,6 @@ public class BaseObject extends Operative {
     public void subRadians(float radians) {
         setRadians(getRadians() - radians);
     }
-
-    /* Getters */
 
     public Vector2f getPosition() {
         return position;

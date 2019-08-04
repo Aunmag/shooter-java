@@ -33,8 +33,6 @@ public class Stamina {
         );
     }
 
-    /* Getters */
-
     public float get() {
         return stamina;
     }
