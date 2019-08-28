@@ -7,7 +7,13 @@ public class DecorationType {
     public final Texture texture;
 
     public DecorationType(String name) {
-        texture = Texture.getOrCreate("images/textures/" + name, Texture.Type.SPRITE);
+        var texture = Texture.manager.asSprite().provide("images/textures/" + name);
+
+        if (texture == null) {
+            texture = Texture.empty;
+        }
+
+        this.texture = texture;
     }
 
     public static final DecorationType bluff = new DecorationType("bluff");

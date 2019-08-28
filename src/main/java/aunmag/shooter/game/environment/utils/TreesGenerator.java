@@ -30,7 +30,7 @@ public class TreesGenerator {
         for (int i = 0; i < treesQuantity; i++) {
             Decoration tree = tryGenerateTree();
             if (tree != null) {
-                world.getTrees().all.add(tree);
+                world.trees.all.add(tree);
             }
         }
     }
@@ -85,7 +85,7 @@ public class TreesGenerator {
     }
 
     private boolean checkIsPositionUnoccupied(Vector2f position) {
-        for (Decoration tree: world.getTrees().all) {
+        for (Decoration tree: world.trees.all) {
             float intervalX = Math.abs(position.x - tree.body.position.x);
             float intervalY = Math.abs(position.y - tree.body.position.y);
             if (intervalX < intervalMin && intervalY < intervalMin) {

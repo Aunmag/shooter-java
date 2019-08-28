@@ -10,7 +10,7 @@ public class Striker {
 
     public Striker(World world, int shotsPerMinute) {
         this.world = world;
-        nextShotTime = new Timer(world.getTime(), 60f / (float) shotsPerMinute);
+        nextShotTime = new Timer(world.time, 60f / (float) shotsPerMinute);
     }
 
     public boolean isCocked() {

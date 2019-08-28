@@ -1,16 +1,22 @@
 package aunmag.shooter.core.utilities;
 
-import aunmag.shooter.core.audio.AudioSample;
-import aunmag.shooter.core.audio.AudioSource;
+import aunmag.shooter.core.audio.Sample;
+import aunmag.shooter.core.audio.Source;
+import org.jetbrains.annotations.Nullable;
 
 public final class UtilsAudio {
 
     private UtilsAudio() {}
 
-    public static AudioSource getOrCreateSoundOgg(String name) {
-        AudioSource audioSource = new AudioSource();
-        audioSource.setSample(AudioSample.getOrCreate(name));
-        return audioSource;
+    @Nullable
+    public static Source provideSound(String name) {
+        var sample = Sample.manger.provide(name);
+
+        if (sample == null) {
+            return null;
+        } else {
+            return sample.toSource();
+        }
     }
 
 }

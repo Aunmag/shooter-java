@@ -1,9 +1,10 @@
 package aunmag.shooter.game.environment.weapon;
 
-import aunmag.shooter.core.audio.AudioSample;
+import aunmag.shooter.core.audio.Sample;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.game.environment.magazine.MagazineType;
 import aunmag.shooter.game.environment.projectile.ProjectileType;
+import org.jetbrains.annotations.Nullable;
 
 public class WeaponType {
 
@@ -15,7 +16,8 @@ public class WeaponType {
 
     public final String name;
     public final Texture texture;
-    public final int sample;
+    @Nullable
+    public final Sample sample;
     public final int shotsPerMinute;
     public final float velocity;
     public final float velocityDeflection;
@@ -37,10 +39,17 @@ public class WeaponType {
             MagazineType magazine,
             float gripOffset
     ) {
-        String path = "weapons/" + name;
+        var path = "weapons/" + name;
+
+        var texture = Texture.manager.asSprite().provide(path + "/image");
+
+        if (texture == null) {
+            texture = Texture.empty;
+        }
+
         this.name = name;
-        this.texture = Texture.getOrCreate(path + "/image", Texture.Type.SPRITE);
-        this.sample = AudioSample.getOrCreate(path + "/shot");
+        this.texture = texture;
+        this.sample = Sample.manger.provide(path + "/shot");
         this.shotsPerMinute = shotsPerMinute;
         this.velocity = velocity;
         this.velocityDeflection = velocity * 0.03f;

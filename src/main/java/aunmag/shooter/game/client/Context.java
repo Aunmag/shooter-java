@@ -30,7 +30,7 @@ public final class Context {
         if (game == null) {
             return null;
         } else {
-            return game.getPlayer().getActor();
+            return game.player.getActor();
         }
     }
 

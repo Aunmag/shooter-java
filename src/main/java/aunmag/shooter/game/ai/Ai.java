@@ -17,25 +17,21 @@ public class Ai extends Operative {
     public Ai(Actor actor) {
         this.actor = actor;
         this.strategy = new ChaseStrategy(this);
-        this.reaction = new Reaction(actor.world.getTime(), actor.type.reaction);
+        this.reaction = new Reaction(actor.world.time, actor.type.reaction);
     }
 
     public void update() {
-        if (actor.isRemoved() || !actor.isAlive()) {
-            remove();
-        } else {
-            reaction.update();
+        reaction.update();
 
-            if (reaction.isQuickPhase() && enemy != null) {
-                enemy.refresh();
-            }
-
-            if (strategy.isExpired()) {
-                strategy = new ChaseStrategy(this);
-            }
-
-            strategy.update();
+        if (reaction.isQuickPhase() && enemy != null) {
+            enemy.refresh();
         }
+
+        if (strategy.isExpired()) {
+            strategy = new ChaseStrategy(this);
+        }
+
+        strategy.update();
     }
 
     public void render() {
@@ -45,6 +41,11 @@ public class Ai extends Operative {
     }
 
     /* Getters */
+
+    @Override
+    public boolean isActive() {
+        return super.isActive() && actor.isActive() && actor.isAlive();
+    }
 
     public Strategy getStrategy() {
         return strategy;

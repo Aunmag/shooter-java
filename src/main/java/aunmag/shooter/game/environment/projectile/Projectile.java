@@ -49,12 +49,7 @@ public class Projectile extends Operative {
     }
 
     public void update() {
-        if (isStopped()) {
-            remove();
-            return;
-        }
-
-        kinetics.update((float) world.getTime().getDelta());
+        kinetics.update((float) world.time.getDelta());
         updatePosition();
         updateCollision();
         updateVelocity();
@@ -65,7 +60,7 @@ public class Projectile extends Operative {
     }
 
     private void updatePosition() {
-        float velocityFactor = VELOCITY_FACTOR * (float) world.getTime().getDelta();
+        float velocityFactor = VELOCITY_FACTOR * (float) world.time.getDelta();
 
         body.pullUpTail();
         body.position.add(
@@ -79,10 +74,10 @@ public class Projectile extends Operative {
         float distance = 0;
         CollisionCL collision = null;
 
-        for (Actor testActor: world.getActors().all) {
+        for (Actor testActor: world.actors.all) {
             CollisionCL testCollision = new CollisionCL(testActor.body, body);
             if (testCollision.isTrue()) {
-                float testDistance = body.position.distance(testActor.body.position);
+                var testDistance = body.position.distanceSquared(testActor.body.position);
                 if (actor == null || testDistance > distance) {
                     actor = testActor;
                     distance = testDistance;
@@ -124,6 +119,11 @@ public class Projectile extends Operative {
 
     public boolean isStopped() {
         return kinetics.velocity.x == 0 && kinetics.velocity.y == 0;
+    }
+
+    @Override
+    public boolean isActive() {
+        return super.isActive() && !isStopped();
     }
 
 }

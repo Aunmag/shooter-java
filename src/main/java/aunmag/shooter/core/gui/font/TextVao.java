@@ -98,7 +98,7 @@ public class TextVao extends Operative {
     }
 
     public void bind() {
-        if (!isRemoved()) {
+        if (isActive()) {
             GL30.glBindVertexArray(id);
         }
     }
@@ -107,13 +107,12 @@ public class TextVao extends Operative {
         GL30.glBindVertexArray(0);
     }
 
-    public void remove() {
-        if (!isRemoved()) {
-            GL30.glDeleteVertexArrays(id);
-            GL15.glDeleteBuffers(idVertices);
-            GL15.glDeleteBuffers(idTextureCoordinates);
-            super.remove();
-        }
+    @Override
+    protected void onRemove() {
+        GL30.glDeleteVertexArrays(id);
+        GL15.glDeleteBuffers(idVertices);
+        GL15.glDeleteBuffers(idTextureCoordinates);
+        super.onRemove();
     }
 
 }

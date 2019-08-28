@@ -2,13 +2,14 @@ package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.input.Input;
+import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.App;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-public class Player {
+public class Player extends Operative {
 
     public static final float MOUSE_SENSITIVITY = 0.003f;
     public static final float MOUSE_SENSITIVITY_AIMING_FACTOR = 0.75f;
@@ -18,6 +19,7 @@ public class Player {
     public static final float SCALE_DEFAULT = 15.0f;
     public static final float CAMERA_OFFSET_RATIO = 0.25f;
 
+    public final Hud hud = new Hud();
     @Nullable private Actor actor = null;
     @Nullable private Blackout blackout = null;
     private final Crosshair crosshair = new Crosshair();
@@ -80,7 +82,13 @@ public class Player {
         );
     }
 
-    public void updateCameraPosition() {
+    @Override
+    public void update() {
+        hud.update();
+        updateCameraPosition();
+    }
+
+    private void updateCameraPosition() {
         if (actor == null) {
             return;
         }
@@ -99,12 +107,20 @@ public class Player {
         camera.mount.apply();
     }
 
+    @Override
     public void render() {
         if (blackout != null) {
             blackout.render();
         }
 
         crosshair.render();
+        hud.render();
+    }
+
+    @Override
+    protected void onRemove() {
+        hud.remove();
+        super.onRemove();
     }
 
     public void setActor(@Nullable Actor actor) {

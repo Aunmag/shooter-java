@@ -1,15 +1,12 @@
 package aunmag.shooter.core.structures;
 
+import aunmag.shooter.core.utilities.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fc;
 import org.joml.Vector4fc;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,33 +20,12 @@ public class Shader {
     private final int programFragmentId;
 
     @Nullable
-    private static String readFile(Class resourceClass, String type) {
-        String filename = resourceClass.getSimpleName() + '.' + type;
-        StringBuilder stringBuilder = new StringBuilder();
-
+    private static String readFile(Class cls, String type) {
         try {
-            InputStream inputStream = resourceClass.getResourceAsStream(filename);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append("\n");
-            }
-
-            bufferedReader.close();
-        } catch (IOException | NullPointerException ex) {
-            String message = String.format(
-                    "Can't find shader \"%s\" near \"%s\" class!",
-                    filename,
-                    resourceClass.getName()
-            );
-            System.err.println(message);
+            return UtilsFile.read(cls.getSimpleName() + '.' + type, cls);
+        } catch (Exception e) {
             return null;
         }
-
-        return stringBuilder.toString();
     }
 
     protected Shader(Class resourceClass) {

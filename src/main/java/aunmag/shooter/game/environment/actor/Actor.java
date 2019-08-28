@@ -1,7 +1,7 @@
 package aunmag.shooter.game.environment.actor;
 
-import aunmag.shooter.core.audio.AudioSample;
-import aunmag.shooter.core.audio.AudioSource;
+import aunmag.shooter.core.audio.Sample;
+import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.math.Kinetics;
@@ -27,7 +27,7 @@ public class Actor extends Operative {
     public static final float RELOADING_STAMINA_COST = 0.2f;
     public static final float PAIN_THRESHOLD = 0.005f;
 
-    private static final int[] samples = new int[6];
+    private static final Sample[] samples = new Sample[6];
 
     public final World world;
     public final ActorType type;
@@ -38,14 +38,14 @@ public class Actor extends Operative {
     private int kills = 0;
     private Weapon weapon = null;
     public final Hands hands;
-    private AudioSource audioSource = new AudioSource();
+    private Source audioSource = new Source();
     public final Control control = new Control();
     public final FluidToggle isAiming;
 
     static {
         for (int i = 0; i < samples.length; i++) {
             String sampleName = "sounds/actors/human_hurt_" + (i + 1);
-            samples[i] = AudioSample.getOrCreate(sampleName);
+            samples[i] = Sample.manger.provide(sampleName);
         }
     }
 
@@ -56,7 +56,7 @@ public class Actor extends Operative {
         hands = new Hands(this);
         stamina = new Stamina(this);
 
-        isAiming = new FluidToggle(world.getTime(), AIMING_TIME);
+        isAiming = new FluidToggle(world.time, AIMING_TIME);
         isAiming.setFlexDegree(AIMING_FLEX);
 
         kinetics = new Kinetics(type.mass);
@@ -74,8 +74,6 @@ public class Actor extends Operative {
             hands.update();
             updateWeapon();
             updateAudioSource();
-        } else {
-            remove();
         }
 
         control.reset();
@@ -102,7 +100,7 @@ public class Actor extends Operative {
     }
 
     protected void updateKinetics() {
-        float timeDelta = (float) world.getTime().getDelta();
+        float timeDelta = (float) world.time.getDelta();
         kinetics.update(timeDelta);
 
         float velocityX = kinetics.velocity.x * timeDelta;
@@ -112,7 +110,7 @@ public class Actor extends Operative {
     }
 
     private void updateCollision() {
-        for (Actor opponent: world.getActors().all) {
+        for (Actor opponent: world.actors.all) {
             if (opponent != this) {
                 CollisionCC collision = new CollisionCC(body, opponent.body);
 
@@ -214,12 +212,12 @@ public class Actor extends Operative {
             velocity /= distanceExcess;
         }
 
-        kinetics.addEnergy(0, 0, velocity, (float) world.getTime().getDelta());
+        kinetics.addEnergy(0, 0, velocity, (float) world.time.getDelta());
     }
 
     private void move(double velocity, double radiansTurn) {
         if (control.isSprinting() && control.isWalkingForward()) {
-            float efficiency = this.stamina.calculateEfficiency();
+            float efficiency = this.stamina.getEfficiency();
             velocity *= type.velocityFactorSprint * efficiency + (1 - efficiency);
         }
 
@@ -228,7 +226,7 @@ public class Actor extends Operative {
 
         float moveX = (float) (velocity * Math.cos(body.radians + radiansTurn));
         float moveY = (float) (velocity * Math.sin(body.radians + radiansTurn));
-        float timeDelta = (float) world.getTime().getDelta();
+        float timeDelta = (float) world.time.getDelta();
         kinetics.addEnergy(moveX, moveY, 0, timeDelta);
     }
 
@@ -280,9 +278,12 @@ public class Actor extends Operative {
             return;
         }
 
-        int sample = samples[UtilsMath.random.nextInt(samples.length)];
-        audioSource.setSample(sample);
-        audioSource.play();
+        var sample = samples[UtilsMath.random.nextInt(samples.length)];
+
+        if (sample != null) {
+            audioSource.setSample(sample);
+            audioSource.play();
+        }
     }
 
     private void increaseKills() {
@@ -291,14 +292,13 @@ public class Actor extends Operative {
 
     /* Setters */
 
-    private void addHealth(float addHealth) {
-        health = UtilsMath.limit(health + addHealth, 0, 1);
 
-        if (!isAlive()) {
-            remove();
-        } else if (addHealth < -PAIN_THRESHOLD) {
+    private void addHealth(float addHealth) {
+        if (isAlive() && addHealth < -PAIN_THRESHOLD) {
             soundHurt();
         }
+
+        health = UtilsMath.limit(health + addHealth, 0, 1);
     }
 
     public void setWeapon(Weapon weapon) {
@@ -307,8 +307,9 @@ public class Actor extends Operative {
 
     /* Getters */
 
-    public World getWorld() {
-        return world;
+    @Override
+    public boolean isActive() {
+        return super.isActive() && isAlive();
     }
 
     public float getHealth() {

@@ -24,10 +24,11 @@ public class TextManager {
             var textsToDelete = new ArrayList<Text>();
 
             for (var text: texts) {
-                if (text.isRemoved()) {
-                    textsToDelete.add(text);
-                } else {
+                if (text.isActive()) {
                     text.render();
+                } else {
+                    text.remove();
+                    textsToDelete.add(text);
                 }
             }
 

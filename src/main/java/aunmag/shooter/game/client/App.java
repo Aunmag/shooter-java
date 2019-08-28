@@ -14,18 +14,20 @@ public final class App extends Application {
     public final Pause pause = new Pause();
     private Game game;
 
+    public App() {
+        pause.resume();
+    }
+
     public void endGame() {
         if (game != null) {
             game.remove();
         }
         game = null;
-        pause.getButtonContinue().setEnabled(false);
     }
 
     public void newGame() {
         endGame();
         game = new Game();
-        pause.getButtonContinue().setEnabled(true);
         setPause(false);
     }
 

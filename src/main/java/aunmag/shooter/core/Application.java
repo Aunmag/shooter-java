@@ -1,8 +1,8 @@
 package aunmag.shooter.core;
 
-import aunmag.shooter.core.audio.AudioMaster;
-import aunmag.shooter.core.audio.AudioSample;
-import aunmag.shooter.core.audio.AudioSource;
+import aunmag.shooter.core.audio.Listener;
+import aunmag.shooter.core.audio.Sample;
+import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.gui.Parameter;
 import aunmag.shooter.core.gui.font.Text;
 import aunmag.shooter.core.input.Input;
@@ -23,6 +23,7 @@ public abstract class Application {
     private static Window window;
     private static Camera camera;
     private static ShaderTextured shader;
+    private static Listener listener;
     public static final FrameRate frameRate = new FrameRate(60);
     public static final TimeFlow time = new TimeFlow();
 
@@ -47,8 +48,7 @@ public abstract class Application {
 
         camera = new Camera();
         shader = new ShaderTextured();
-
-        AudioMaster.initialize();
+        listener = new Listener();
     }
 
     public final void run() {
@@ -91,12 +91,12 @@ public abstract class Application {
         gameTerminate();
 
         Text.manager.removeAll();
-        Texture.cleanUp();
+        Texture.manager.clear();
         Model.cleanUp();
         Shader.cleanUp();
-        AudioSource.cleanUp();
-        AudioSample.cleanUp();
-        AudioMaster.terminate();
+        Source.all.remove();
+        Sample.manger.clear();
+        listener.remove();
 
         GLFW.glfwSetWindowShouldClose(window.id, true);
         GLFW.glfwTerminate();
@@ -132,6 +132,10 @@ public abstract class Application {
 
     public static ShaderTextured getShader() {
         return shader;
+    }
+
+    public static Listener getListener() {
+        return listener;
     }
 
 }

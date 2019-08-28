@@ -64,7 +64,7 @@ public class Text extends BaseQuad {
     }
 
     public void render() {
-        if (!isRenderingOrdered || isRemoved() || vao == null) {
+        if (!isRenderingOrdered || vao == null) {
             return;
         }
 
@@ -86,11 +86,10 @@ public class Text extends BaseQuad {
         isRenderingOrdered = false;
     }
 
-    public void remove() {
-        if (!isRemoved()) {
-            removeVao();
-            super.remove();
-        }
+    @Override
+    protected void onRemove() {
+        removeVao();
+        super.onRemove();
     }
 
     private void removeVao() {

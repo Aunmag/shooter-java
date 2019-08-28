@@ -2,115 +2,28 @@ package aunmag.shooter.core.structures;
 
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.Camera;
-import aunmag.shooter.core.Configs;
 import aunmag.shooter.core.basics.BaseQuad;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
 
 public class Texture extends BaseQuad {
 
-    public enum Type { SIMPLE, SPRITE, FONT, WALLPAPER, STRETCHED }
-    private static HashMap<String, Texture> all = new HashMap<>();
+    public static final TextureManager manager = new TextureManager();
+    public static final Texture empty = new Texture(
+        new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB),
+        false,
+        false,
+        1,
+        1
+    );
+
     private int id;
     private Model model;
-
-    public static Texture createEmpty() {
-        return new Texture(
-            new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB),
-            true,
-            true,
-            1,
-            1
-        );
-    }
-
-    public static Texture getOrCreate(String name, Type type) {
-        return getOrCreate(name, type, null, null, null, null);
-    }
-
-    public static Texture getOrCreate(
-            String name,
-            Type type,
-            @Nullable Boolean isNearest,
-            @Nullable Boolean useMipMapping,
-            @Nullable Float modelSizeX,
-            @Nullable Float modelSizeY
-    ) {
-        if (all.containsKey(name)) {
-            return all.get(name);
-        }
-
-        if (isNearest == null) {
-            isNearest = type != Type.FONT;
-        }
-
-        if (useMipMapping == null) {
-            useMipMapping = type == Type.SPRITE;
-        }
-
-        BufferedImage image = loadImage(name);
-
-        if (modelSizeX == null || modelSizeY == null) {
-            float sizeX = image.getWidth();
-            float sizeY = image.getHeight();
-            float widowSizeX = Application.getWindow().getWidth();
-            float widowSizeY = Application.getWindow().getHeight();
-
-            if (type == Type.SPRITE) {
-                sizeX /= Configs.getPixelsPerMeter();
-                sizeY /= Configs.getPixelsPerMeter();
-            } else if (type == Type.STRETCHED) {
-                sizeX = widowSizeX;
-                sizeY = widowSizeY;
-            } else if (type == Type.WALLPAPER) {
-                float aspectRatio = sizeX / sizeY;
-
-                if (aspectRatio < Application.getWindow().getAspectRatio()) {
-                    sizeX = widowSizeX;
-                    sizeY = sizeX / aspectRatio;
-                } else {
-                    sizeY = widowSizeY;
-                    sizeX = sizeY * aspectRatio;
-                }
-            }
-
-            modelSizeX = sizeX;
-            modelSizeY = sizeY;
-        }
-
-        Texture texture = new Texture(
-                image,
-                isNearest,
-                useMipMapping,
-                modelSizeX,
-                modelSizeY
-        );
-        all.put(name, texture);
-        return texture;
-    }
-
-    private static BufferedImage loadImage(String name) {
-        String path = "/" + name + ".png";
-        BufferedImage bufferedImage;
-
-        try {
-            bufferedImage = ImageIO.read(Texture.class.getResourceAsStream(path));
-        } catch (Exception e) {
-            bufferedImage = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
-            String message = String.format("Can't load image from \"%s\"!", path);
-            System.err.println(message);
-        }
-
-        return bufferedImage;
-    }
 
     protected Texture(
             BufferedImage bufferedImage,
@@ -192,10 +105,10 @@ public class Texture extends BaseQuad {
         render();
     }
 
-    public static void cleanUp() {
-        for (Texture texture: all.values()) {
-            GL11.glDeleteTextures(texture.id);
-        }
+    @Override
+    protected void onRemove() {
+        GL11.glDeleteTextures(id);
+        super.onRemove();
     }
 
     /* Setters */

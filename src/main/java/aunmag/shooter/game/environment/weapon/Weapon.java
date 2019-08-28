@@ -1,6 +1,6 @@
 package aunmag.shooter.game.environment.weapon;
 
-import aunmag.shooter.core.audio.AudioSource;
+import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.math.BodyLine;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
@@ -19,7 +19,7 @@ public class Weapon extends Operative {
     public final Magazine magazine;
     public final Striker striker;
     public final Trigger trigger;
-    private AudioSource audioSource;
+    private Source audioSource;
 
     public Weapon(World world, WeaponType type) {
         this.body = new BodyLine(0, 0, 0, 0);
@@ -29,8 +29,11 @@ public class Weapon extends Operative {
         this.striker = new Striker(world, type.shotsPerMinute);
         this.trigger = new Trigger(type.isAutomatic);
 
-        audioSource = new AudioSource();
-        audioSource.setSample(type.sample);
+        audioSource = new Source();
+
+        if (type.sample != null) {
+            audioSource.setSample(type.sample);
+        }
     }
 
     public void update() {
@@ -50,7 +53,7 @@ public class Weapon extends Operative {
         audioSource.play();
         trigger.getShooter().shake(calculateRandomRecoil(), true);
 
-        for (int bullet = 0; bullet < magazine.type.getProjectile().shot; bullet++) {
+        for (int bullet = 0; bullet < magazine.type.projectile.shot; bullet++) {
             makeBullet(body.position.x, body.position.y);
         }
     }
@@ -58,14 +61,14 @@ public class Weapon extends Operative {
     private void makeBullet(float x, float y) {
         Projectile projectile = new Projectile(
                 world,
-                magazine.type.getProjectile(),
+                magazine.type.projectile,
                 x,
                 y,
                 calculateRandomRadians(),
                 calculateRandomVelocity(),
                 trigger.getShooter()
         );
-        world.getProjectiles().all.add(projectile);
+        world.projectiles.all.add(projectile);
     }
 
     private float calculateRandomRecoil() {

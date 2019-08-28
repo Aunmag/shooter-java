@@ -46,7 +46,27 @@ public class ActorType {
         this.reaction = reaction;
         this.primaryWeapon = primaryWeapon;
 
-        texture = Texture.getOrCreate("actors/" + name + "/image", Texture.Type.SPRITE);
+        var texture = Texture.manager.asSprite().provide("actors/" + name + "/image");
+
+        if (texture == null) {
+            texture = Texture.empty;
+        }
+
+        this.texture = texture;
+    }
+
+    public static ActorType clone(ActorType type, float skill) {
+        return new ActorType(
+                type.name,
+                type.radius,
+                type.mass,
+                skill * type.strength,
+                skill * type.velocity,
+                type.velocityFactorSprint,
+                type.velocityRotation,
+                type.damage,
+                type.reaction
+        );
     }
 
     /* Types */

@@ -2,18 +2,25 @@ package aunmag.shooter.core.utilities;
 
 public abstract class Operative {
 
-    private boolean isRemoved = false;
+    private boolean isActive = true;
 
     public void update() {}
 
     public void render() {}
 
-    public void remove() {
-        isRemoved = true;
+    public final void remove() {
+        if (isActive) {
+            isActive = false;
+            onRemove();
+        }
     }
 
-    public boolean isRemoved() {
-        return isRemoved;
+    protected void onRemove() {}
+
+    /* Getters */
+
+    public boolean isActive() {
+        return isActive;
     }
 
 }

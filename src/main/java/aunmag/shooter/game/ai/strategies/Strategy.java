@@ -18,7 +18,7 @@ public abstract class Strategy {
 
     public Strategy(Ai ai) {
         this.ai = ai;
-        this.timer = new Timer(ai.actor.world.getTime(), TIME_LIMIT);
+        this.timer = new Timer(ai.actor.world.time, TIME_LIMIT);
     }
 
     public void update() {
@@ -44,13 +44,13 @@ public abstract class Strategy {
             actorOld = ai.enemy.actor;
         }
 
-        if (actorOld != null && (!actorOld.isAlive() || actorOld.isRemoved())) {
+        if (actorOld != null && (!actorOld.isAlive() || !actorOld.isActive())) {
             actorOld = null;
             ai.enemy = null;
         }
 
-        for (var actor: ai.actor.world.getActors().all) {
-            if (actor.isAlive() && actor.type.genus == ActorType.Genus.HUMAN) {
+        for (var actor: ai.actor.world.actors.all) {
+            if (actor.isAlive() && actor.type == ActorType.human) {
                 actorNew = actor;
                 break;
             }
@@ -62,7 +62,7 @@ public abstract class Strategy {
     }
 
     public boolean isClose(Enemy enemy) {
-        return enemy.distance.get() < closeDistanceToEnemy;
+        return enemy.distanceSquared.get() < closeDistanceToEnemy * closeDistanceToEnemy;
     }
 
     public boolean isContact(Enemy enemy) {
