@@ -50,7 +50,7 @@ public abstract class Strategy {
         }
 
         for (var actor: ai.actor.world.actors.all) {
-            if (actor.isAlive() && actor.type == ActorType.human) {
+            if (actor.isAlive() && actor.type == ActorType.soldier) {
                 actorNew = actor;
                 break;
             }

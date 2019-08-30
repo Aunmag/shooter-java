@@ -70,7 +70,7 @@ public class ScenarioEncircling extends Scenario {
 
     @Override
     public Actor createPlayableActor() {
-        var actor = new Actor(ActorType.human, world, 0, 0, (float) -UtilsMath.PIx0_5);
+        var actor = new Actor(ActorType.soldier, world, 0, 0, (float) -UtilsMath.PIx0_5);
         actor.setWeapon(new Weapon(world, WeaponType.pm));
         world.actors.all.add(actor);
         return actor;

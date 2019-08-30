@@ -58,6 +58,7 @@ public class ActorType {
     public static ActorType clone(ActorType type, float skill) {
         return new ActorType(
                 type.name,
+                Genus.HUMAN,
                 type.radius,
                 type.mass,
                 skill * type.strength,
@@ -65,7 +66,8 @@ public class ActorType {
                 type.velocityFactorSprint,
                 type.velocityRotation,
                 type.damage,
-                type.reaction
+                type.reaction,
+                type.primaryWeapon
         );
     }
 

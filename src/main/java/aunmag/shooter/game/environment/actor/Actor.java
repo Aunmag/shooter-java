@@ -64,6 +64,7 @@ public class Actor extends Operative {
         audioSource.setVolume(5);
     }
 
+    @Override
     public void update() {
         if (isAlive()) {
             updateStamina();
@@ -252,6 +253,7 @@ public class Actor extends Operative {
         }
     }
 
+    @Override
     public void render() {
         if (weapon != null) {
             weapon.render();
