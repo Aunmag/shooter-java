@@ -18,7 +18,7 @@ public class ChaseStrategy extends Strategy {
     @Override
     public void proceed() {
         if (ai.enemy != null) {
-            if (ai.enemy.isReached.get()) {
+            if (mayAttack(ai.enemy.actor)) {
                 keepAttacking();
             } else {
                 keepChasingEnemy();

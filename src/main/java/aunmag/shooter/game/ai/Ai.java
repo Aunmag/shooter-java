@@ -25,7 +25,7 @@ public class Ai extends Operative {
         reaction.update();
 
         if (reaction.isQuickPhase() && enemy != null) {
-            enemy.refresh();
+            enemy = new Enemy(enemy);
         }
 
         if (strategy.isExpired()) {

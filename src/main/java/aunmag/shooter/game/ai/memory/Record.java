@@ -10,6 +10,4 @@ public abstract class Record {
         this.ai = ai;
     }
 
-    public abstract void refresh();
-
 }

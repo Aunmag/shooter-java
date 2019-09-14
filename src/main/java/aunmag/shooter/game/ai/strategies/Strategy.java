@@ -1,5 +1,6 @@
 package aunmag.shooter.game.ai.strategies;
 
+import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.ai.Ai;
@@ -62,11 +63,16 @@ public abstract class Strategy {
     }
 
     public boolean isClose(Enemy enemy) {
-        return enemy.distanceSquared.get() < closeDistanceToEnemy * closeDistanceToEnemy;
+        return enemy.position.distanceSquared(ai.actor.body.position)
+                < closeDistanceToEnemy * closeDistanceToEnemy;
     }
 
     public boolean isContact(Enemy enemy) {
-        return Math.abs(enemy.angleRelative.get()) > UtilsMath.PIx0_5;
+        return Math.abs(enemy.getRelativeAngle()) > UtilsMath.PIx0_5;
+    }
+
+    public boolean mayAttack(Actor actor) {
+        return new CollisionCC(actor.body, ai.actor.hands.coverage).isTrue();
     }
 
     /* Proceeding methods */
@@ -82,7 +88,7 @@ public abstract class Strategy {
             return;
         }
 
-        ai.actor.control.turnTo(ai.enemy.direction.get());
+        ai.actor.control.turnTo(ai.enemy.prediction.direction);
         ai.actor.control.walkForward();
 
         if (isContact(enemy) && isClose(enemy)) {
