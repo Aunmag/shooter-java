@@ -291,6 +291,7 @@ public class Actor extends Operative {
     private void increaseKills() {
         kills++;
     }
+
     private void addHealth(float addHealth) {
         if (isAlive() && addHealth < -PAIN_THRESHOLD) {
             soundHurt();

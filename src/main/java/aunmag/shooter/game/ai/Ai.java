@@ -24,7 +24,7 @@ public class Ai extends Operative {
     public void update() {
         reaction.update();
 
-        if (reaction.isQuickPhase() && enemy != null) {
+        if (enemy != null && reaction.isQuickPhase()) {
             enemy = new Enemy(enemy);
         }
 

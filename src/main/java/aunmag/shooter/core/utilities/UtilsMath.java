@@ -97,6 +97,10 @@ public final class UtilsMath {
         return (float) Math.sqrt(powX + powY);
     }
 
+    public static boolean closerThan(Vector2f a, Vector2f b, float distance) {
+        return a.distanceSquared(b) < distance * distance;
+    }
+
     public static float angle(Vector2f a, Vector2f b) {
         return angle(a.x, a.y, b.x, b.y);
     }

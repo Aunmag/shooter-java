@@ -35,7 +35,7 @@ public class Enemy extends Destination {
         Graphics.draw.circle(
                 ai.actor.body.position.x,
                 ai.actor.body.position.y,
-                ai.getStrategy().closeDistanceToEnemy,
+                ai.getStrategy().dangerZoneRadius,
                 true,
                 Application.getCamera()::project
         );

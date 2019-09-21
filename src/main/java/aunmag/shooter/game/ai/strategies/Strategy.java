@@ -13,8 +13,7 @@ public abstract class Strategy {
     public static final int TIME_LIMIT = 30;
 
     public final Ai ai;
-    public final float closeDistanceToDestination = UtilsMath.randomizeBetween(1, 2);
-    public final float closeDistanceToEnemy = closeDistanceToDestination * 2;
+    public final float dangerZoneRadius = UtilsMath.randomizeBetween(3, 6);
     private final Timer timer;
 
     public Strategy(Ai ai) {
@@ -27,7 +26,15 @@ public abstract class Strategy {
         proceed();
     }
 
-    public void analyze() {}
+    public void analyze() {
+        if (ai.enemy != null && !isEnemy(ai.enemy.actor)) {
+            ai.enemy = null;
+        }
+
+        if (ai.reaction.isSlowPhase()) {
+            ai.enemy = findEnemy();
+        }
+    }
 
     public void proceed() {}
 
@@ -37,7 +44,8 @@ public abstract class Strategy {
 
     /* Analyzing methods */
 
-    public void findEnemy() {
+    public Enemy findEnemy() {
+        var me = ai.actor;
         var actorOld = (Actor) null;
         var actorNew = (Actor) null;
 
@@ -45,53 +53,62 @@ public abstract class Strategy {
             actorOld = ai.enemy.actor;
         }
 
-        if (actorOld != null && (!actorOld.isAlive() || !actorOld.isActive())) {
-            actorOld = null;
-            ai.enemy = null;
-        }
+        var distance = Float.MAX_VALUE;
 
-        for (var actor: ai.actor.world.actors.all) {
-            if (actor.isAlive() && actor.type == ActorType.human) {
-                actorNew = actor;
-                break;
+        for (var actor : me.world.actors.all) {
+            if (isEnemy(actor)) {
+                var distanceTest = me.body.position.distanceSquared(actor.body.position);
+
+                if (distanceTest < distance) {
+                    actorNew = actor;
+                    distance = distanceTest;
+                }
             }
         }
 
-        if (actorNew != null && actorOld != actorNew) {
-            ai.enemy = new Enemy(ai, actorNew);
+        if (actorNew == null || actorOld == actorNew) {
+            return ai.enemy;
+        } else {
+            return new Enemy(ai, actorNew);
         }
     }
 
-    public boolean isClose(Enemy enemy) {
-        return enemy.position.distanceSquared(ai.actor.body.position)
-                < closeDistanceToEnemy * closeDistanceToEnemy;
+    public boolean isEnemy(Actor actor) {
+        return (actor.type == ActorType.human || ai.actor.type == ActorType.human)
+            && actor != ai.actor
+            && actor.isActive()
+            && actor.isAlive();
     }
 
-    public boolean isContact(Enemy enemy) {
+    public boolean isDangerouslyClose(Enemy enemy) {
+        return UtilsMath.closerThan(
+                enemy.position,
+                ai.actor.body.position,
+                dangerZoneRadius
+        );
+    }
+
+    public boolean isEyeContact(Enemy enemy) {
         return Math.abs(enemy.getRelativeAngle()) > UtilsMath.PIx0_5;
     }
 
-    public boolean mayAttack(Actor actor) {
-        return new CollisionCC(actor.body, ai.actor.hands.coverage).isTrue();
+    public boolean canAttack(Enemy enemy) {
+        return new CollisionCC(enemy.actor.body, ai.actor.hands.coverage).isTrue();
     }
 
     /* Proceeding methods */
 
-    public void keepAttacking() {
+    public void attack(Enemy enemy) {
+        ai.actor.control.turnTo(enemy.direction);
+        ai.actor.control.walkForward();
         ai.actor.control.attack();
     }
 
-    public void keepChasingEnemy() {
-        var enemy = ai.enemy;
-
-        if (enemy == null) {
-            return;
-        }
-
-        ai.actor.control.turnTo(ai.enemy.prediction.direction);
+    public void chase(Enemy enemy) {
+        ai.actor.control.turnTo(enemy.prediction.direction);
         ai.actor.control.walkForward();
 
-        if (isContact(enemy) && isClose(enemy)) {
+        if (isEyeContact(enemy) && isDangerouslyClose(enemy)) {
             ai.actor.control.sprint();
         }
     }
