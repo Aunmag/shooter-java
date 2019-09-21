@@ -37,7 +37,7 @@ public class Hud extends Operative {
                 ammo.value = 0;
                 ammo.isPulsing = false;
             } else {
-                ammo.value = weapon.magazine.calculateVolumeRatio();
+                ammo.value = weapon.magazine.getVolumeRatio();
                 ammo.isPulsing = weapon.magazine.isReloading();
             }
         }

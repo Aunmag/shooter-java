@@ -19,6 +19,10 @@ public class ChaseStrategy extends Strategy {
 
         if (canAttack(enemy)) {
             attack(enemy);
+
+            if (ai.actor.hasWeapon() && isDangerouslyClose(enemy)) {
+                keepAwayFrom(enemy);
+            }
         } else {
             chase(enemy);
         }

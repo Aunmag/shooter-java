@@ -32,10 +32,12 @@ public class ScenarioEncircling extends Scenario {
     private static final float LASER_GUN_CHANCE = 0.001f;
     private static final int WAVE_FINAL = 6;
     private static final int ZOMBIES_QUANTITY_INITIAL = 5;
+    private static final float HUMAN_SPAWN_CHANCE = 1.0f / WAVE_FINAL / 4.0f;
 
     private int wave = 0;
     private int zombiesToSpawn = 0;
     private final Timer spawnTimer = new Timer(world.time, 0.5);
+    private final Timer waveCheckTimer = new Timer(Application.time, 2);
     private float bonusChance = 0;
     private ActorType zombie = ActorType.zombie;
     private ActorType zombieAgile = ActorType.zombieAgile;
@@ -86,7 +88,7 @@ public class ScenarioEncircling extends Scenario {
             confinePlayerPosition();
 
             if (zombiesToSpawn == 0) {
-                if (world.actors.all.size() == 1) {
+                if (isWaveComplete()) {
                     if (wave == WAVE_FINAL) {
                         gameOver(true);
                     } else {
@@ -97,6 +99,26 @@ public class ScenarioEncircling extends Scenario {
                 spawnZombie();
                 spawnTimer.next();
             }
+        }
+    }
+
+    /**
+     * For performance purposes this method actually checks for wave completion once every
+     * two seconds only. Otherwise, is always returns false.
+     */
+    private boolean isWaveComplete() {
+        if (waveCheckTimer.isDone()) {
+            waveCheckTimer.next();
+
+            for (var actor : world.actors.all) {
+                if (actor.type != ActorType.human) {
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -129,6 +151,10 @@ public class ScenarioEncircling extends Scenario {
                     String.format("Kill %d zombies", zombiesToSpawn)
             ));
         }
+
+        if (wave > 1 && UtilsMath.chance(HUMAN_SPAWN_CHANCE)) {
+            spawnEnemy(ActorType.human);
+        }
     }
 
     private void spawnZombie() {
@@ -140,6 +166,10 @@ public class ScenarioEncircling extends Scenario {
             default: type = zombie;
         }
 
+        spawnEnemy(type);
+    }
+
+    private void spawnEnemy(ActorType type) {
         var direction = -UtilsMath.randomizeBetween(0, (float) UtilsMath.PIx2);
         var distance = Player.SCALE_MAX / 2;
         var x = -distance * (float) Math.cos(direction);
@@ -151,18 +181,22 @@ public class ScenarioEncircling extends Scenario {
             y += player.body.position.y;
         }
 
-        var zombie = new Actor(type, world, x, y, direction);
-        world.actors.all.add(zombie);
-        world.ais.all.add(new Ai(zombie));
+        var enemy = new Actor(type, world, x, y, direction);
+        world.actors.all.add(enemy);
+        world.ais.all.add(new Ai(enemy));
+
+        if (enemy.type == ActorType.human) {
+            enemy.setWeapon(createRandomWeapon());
+        }
 
         if (UtilsMath.chance(bonusChance)) {
-            createBonus(zombie);
+            world.bonuses.all.add(new WeaponBonus(enemy, createRandomWeapon()));
         }
 
         zombiesToSpawn--;
     }
 
-    private void createBonus(Actor giver) {
+    private Weapon createRandomWeapon() {
         var type = (WeaponType) null;
         var index = 0;
 
@@ -186,7 +220,7 @@ public class ScenarioEncircling extends Scenario {
             default: type = WeaponType.laserGun;
         }
 
-        world.bonuses.all.add(new WeaponBonus(giver, new Weapon(world, type)));
+        return new Weapon(world, type);
     }
 
     private void gameOver(boolean isVictory) {

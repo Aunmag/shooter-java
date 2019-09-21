@@ -81,7 +81,7 @@ public class Magazine {
         return isReloading;
     }
 
-    public float calculateVolumeRatio() {
+    public float getVolumeRatio() {
         if (type.isUnlimited()) {
             return 1.0f;
         } else {

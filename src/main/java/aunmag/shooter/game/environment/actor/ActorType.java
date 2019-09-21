@@ -72,7 +72,7 @@ public class ActorType {
             2.76f,
             8,
             STRENGTH_DEFAULT / 16f,
-            0.1f
+            0.06f
     );
 
     public static final ActorType zombie = new ActorType(
