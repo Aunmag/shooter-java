@@ -18,8 +18,6 @@ public final class Input {
         keyboard.update();
     }
 
-    /* Getters */
-
     public static boolean isAvailable() {
         return Application.getWindow().id != Window.UNDEFINED_ID;
     }

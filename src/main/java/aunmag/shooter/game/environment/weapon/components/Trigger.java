@@ -27,15 +27,13 @@ public class Trigger {
         shooter = null;
     }
 
-    /* Getters */
-
     public boolean isFiring() {
         return isAutomaticMode ? isPressed : isClicked();
     }
 
     public boolean isClicked() {
         // TODO: Improve
-        boolean wasClicked = isClicked;
+        var wasClicked = isClicked;
         isClicked = false;
         return wasClicked;
     }

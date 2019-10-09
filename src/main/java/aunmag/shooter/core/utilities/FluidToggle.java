@@ -18,17 +18,14 @@ public class FluidToggle extends FluidValue {
     }
 
     public void toggle() {
-        boolean toggleOn = getTarget() == VALUE_MIN;
+        var toggleOn = getTarget() == VALUE_MIN;
         super.setTarget(toggleOn ? VALUE_MAX : VALUE_MIN);
     }
 
-    /* Setters */
-
+    @Override
     public void setTarget(float target) {
         super.setTarget(UtilsMath.limit(target, VALUE_MIN, VALUE_MAX));
     }
-
-    /* Getters */
 
     public boolean isCompletelyOn() {
         return getCurrent() >= VALUE_MAX;

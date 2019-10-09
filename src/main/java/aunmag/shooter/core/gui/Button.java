@@ -44,12 +44,14 @@ public class Button extends Label {
         this.action = action;
     }
 
+    @Override
     public void update() {
         if (isPressed() && action != null) {
             action.run();
         }
     }
 
+    @Override
     public void render() {
         setTextColour(isEnabled() ? COLOR_FONT : COLOR_FONT_LIGHT);
 
@@ -66,13 +68,9 @@ public class Button extends Label {
         super.render();
     }
 
-    /* Setters */
-
     public void setEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
-
-    /* Getters */
 
     public boolean isEnabled() {
         return isEnabled;

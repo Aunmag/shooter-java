@@ -1,6 +1,5 @@
 package aunmag.shooter.game.client;
 
-import java.io.InputStream;
 import java.util.Properties;
 
 public final class Constants {
@@ -10,12 +9,12 @@ public final class Constants {
     public static final String VERSION;
 
     static {
-        String filename = "/shooter.properties";
-        String version = "X.X.X";
+        var filename = "/shooter.properties";
+        var version = "X.X.X";
 
         try {
-            InputStream inputStream = Constants.class.getResourceAsStream(filename);
-            Properties properties = new Properties();
+            var inputStream = Constants.class.getResourceAsStream(filename);
+            var properties = new Properties();
             properties.load(inputStream);
             version = properties.getProperty("version");
             inputStream.close();

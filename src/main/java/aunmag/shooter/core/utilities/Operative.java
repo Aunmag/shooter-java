@@ -17,8 +17,6 @@ public abstract class Operative {
 
     protected void onRemove() {}
 
-    /* Getters */
-
     public boolean isActive() {
         return isActive;
     }

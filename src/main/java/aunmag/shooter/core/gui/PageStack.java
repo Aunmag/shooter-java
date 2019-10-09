@@ -39,13 +39,9 @@ public class PageStack {
         }
     }
 
-    /* Setters */
-
     public void setOnQuit(@Nullable Runnable onQuit) {
         this.onQuit = onQuit;
     }
-
-    /* Getters */
 
     private int getCurrentIndex() {
         return pages.size() - 1;

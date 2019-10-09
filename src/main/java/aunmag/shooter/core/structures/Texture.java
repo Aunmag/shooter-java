@@ -1,15 +1,12 @@
 package aunmag.shooter.core.structures;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.Camera;
 import aunmag.shooter.core.basics.BaseQuad;
-import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import java.awt.image.BufferedImage;
-import java.nio.ByteBuffer;
 
 public class Texture extends BaseQuad {
 
@@ -34,15 +31,15 @@ public class Texture extends BaseQuad {
     ) {
         super(modelSizeX, modelSizeY);
 
-        int width = bufferedImage.getWidth();
-        int height = bufferedImage.getHeight();
+        var width = bufferedImage.getWidth();
+        var height = bufferedImage.getHeight();
 
         int[] pixelsRaw = bufferedImage.getRGB(0, 0, width, height, null, 0, width);
-        ByteBuffer pixelsBuffer = BufferUtils.createByteBuffer(width * height * 4);
+        var pixelsBuffer = BufferUtils.createByteBuffer(width * height * 4);
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                int pixel = pixelsRaw[i * width + j];
+                var pixel = pixelsRaw[i * width + j];
                 pixelsBuffer.put((byte) ((pixel >> 16) & 0xFF)); // Red
                 pixelsBuffer.put((byte) ((pixel >> 8) & 0xFF)); // Green
                 pixelsBuffer.put((byte) (pixel & 0xFF)); // Blue
@@ -91,13 +88,14 @@ public class Texture extends BaseQuad {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
     }
 
+    @Override
     public void render() {
         model.render();
     }
 
     public void renderOnWorld(float x, float y, float radians) {
-        Camera camera = Application.getCamera();
-        Matrix4f projection = camera.toViewProjection(x, y, radians);
+        var camera = Application.getCamera();
+        var projection = camera.toViewProjection(x, y, radians);
         Application.getShader().setUniformProjection(projection);
         Application.getShader().setUniformColourDefault();
 
@@ -110,8 +108,6 @@ public class Texture extends BaseQuad {
         GL11.glDeleteTextures(id);
         super.onRemove();
     }
-
-    /* Setters */
 
     protected void setSize(float width, float height) {
         super.setSize(width, height);

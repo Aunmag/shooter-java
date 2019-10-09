@@ -55,7 +55,7 @@ public abstract class Application {
         isRunning = true;
 
         while (isRunning) {
-            double timeCurrent = (double) System.currentTimeMillis() / 1000.0;
+            var timeCurrent = (double) System.currentTimeMillis() / 1000.0;
 
             if (frameRate.tryTick(timeCurrent)) {
                 engineUpdate();
@@ -111,8 +111,6 @@ public abstract class Application {
     public static void stopRunning() {
         isRunning = false;
     }
-
-    /* Getters */
 
     public static boolean isInitialized() {
         return isInitialized;

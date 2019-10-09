@@ -9,20 +9,22 @@ public class ChaseStrategy extends Strategy {
     }
 
     @Override
-    public void analyze() {
-        if (ai.reaction.isSlowPhase()) {
-            findEnemy();
-        }
-    }
-
-    @Override
     public void proceed() {
-        if (ai.enemy != null) {
-            if (ai.enemy.isReached.get()) {
-                keepAttacking();
-            } else {
-                keepChasingEnemy();
+        super.proceed();
+
+        var enemy = ai.enemy;
+        if (enemy == null) {
+            return;
+        }
+
+        if (canAttack(enemy)) {
+            attack(enemy);
+
+            if (ai.actor.hasWeapon() && isDangerouslyClose(enemy)) {
+                keepAwayFrom(enemy);
             }
+        } else {
+            chase(enemy);
         }
     }
 

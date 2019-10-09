@@ -20,22 +20,22 @@ public class Crosshair {
         var window = Application.getWindow();
         var camera = Application.getCamera();
 
-        float degree = shooter.isAiming.getCurrent();
-        float radians = shooter.body.radians;
+        var degree = shooter.isAiming.getCurrent();
+        var radians = shooter.body.radians;
 
-        float cos = (float) Math.cos(radians);
-        float sin = (float) Math.sin(radians);
-        float distance = camera.toMeters(window.getCenterY() * degree);
-        float x = shooter.body.position.x + (distance + shooter.body.radius) * cos;
-        float y = shooter.body.position.y + (distance + shooter.body.radius) * sin;
+        var cos = (float) Math.cos(radians);
+        var sin = (float) Math.sin(radians);
+        var distance = camera.toMeters(window.getCenterY() * degree);
+        var x = shooter.body.position.x + (distance + shooter.body.radius) * cos;
+        var y = shooter.body.position.y + (distance + shooter.body.radius) * sin;
 
-        float offset = camera.toMeters(size);
-        float offsetX1 = offset * (float) Math.cos(radians + UtilsMath.PIx0_5);
-        float offsetY1 = offset * (float) Math.sin(radians + UtilsMath.PIx0_5);
-        float offsetX2 = offsetX1 * 3;
-        float offsetY2 = offsetY1 * 3;
+        var offset = camera.toMeters(size);
+        var offsetX1 = offset * (float) Math.cos(radians + UtilsMath.PIx0_5);
+        var offsetY1 = offset * (float) Math.sin(radians + UtilsMath.PIx0_5);
+        var offsetX2 = offsetX1 * 3;
+        var offsetY2 = offsetY1 * 3;
 
-        float alpha = UtilsMath.limit(distance, 0, 1);
+        var alpha = UtilsMath.limit(distance, 0, 1);
         GL11.glColor4f(1f, 1f, 1f, alpha);
 
         Graphics.draw.line(
@@ -56,8 +56,8 @@ public class Crosshair {
 
         GL11.glLineStipple(size, (short) 0xAAAA);
         GL11.glEnable(GL11.GL_LINE_STIPPLE);
-        float x2 = x - distance * cos;
-        float y2 = y - distance * sin;
+        var x2 = x - distance * cos;
+        var y2 = y - distance * sin;
         Graphics.draw.line(x, y, x2, y2, camera::project);
         GL11.glDisable(GL11.GL_LINE_STIPPLE);
     }

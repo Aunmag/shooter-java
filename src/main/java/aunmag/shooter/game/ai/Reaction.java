@@ -6,7 +6,7 @@ import aunmag.shooter.core.utilities.Timer;
 public class Reaction {
 
     private static final int PHASE_QUICK = 1;
-    private static final int PHASE_SLOW = 16;
+    private static final int PHASE_SLOW = 8;
     private static final float DEVIATION_FACTOR = 0.5f;
 
     private final Timer timer;

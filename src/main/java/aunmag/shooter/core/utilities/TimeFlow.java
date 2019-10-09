@@ -16,8 +16,6 @@ public class TimeFlow {
         current += delta;
     }
 
-    /* Getters */
-
     public double getCurrent() {
         return current;
     }
@@ -29,8 +27,6 @@ public class TimeFlow {
     public double getSpeed() {
         return speed;
     }
-
-    /* Setters */
 
     public void setCurrent(double current, boolean doRecalculateDelta) {
         if (doRecalculateDelta) {

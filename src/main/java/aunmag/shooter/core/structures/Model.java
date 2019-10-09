@@ -46,14 +46,14 @@ public class Model {
     }
 
     private static FloatBuffer createBuffer(float[] data) {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
+        var buffer = BufferUtils.createFloatBuffer(data.length);
         buffer.put(data);
         buffer.flip();
         return buffer;
     }
 
     private static IntBuffer createBuffer(int[] data) {
-        IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
+        var buffer = BufferUtils.createIntBuffer(data.length);
         buffer.put(data);
         buffer.flip();
         return buffer;

@@ -9,8 +9,6 @@ public final class Configs {
 
     private Configs() {}
 
-    /* Getters */
-
     public static boolean isFullscreen() {
         return isFullscreen;
     }
@@ -27,11 +25,9 @@ public final class Configs {
         return pixelsPerMeter;
     }
 
-    /* Setters */
-
     public static void setFullscreen(boolean isFullscreen) {
         if (Application.isInitialized()) {
-            String message = "Unable to change screen mode after engine initialization";
+            var message = "Unable to change screen mode after engine initialization";
             System.err.println(message);
         } else {
             Configs.isFullscreen = isFullscreen;
@@ -40,7 +36,7 @@ public final class Configs {
 
     public static void setSamplesLoadingEnabled(boolean isSamplesLoadingEnabled) {
         if (Application.isInitialized()) {
-            String message = "Warning: "
+            var message = "Warning: "
                     + "The all samples loaded already will continue to be available";
             System.err.println(message);
         }
@@ -50,7 +46,7 @@ public final class Configs {
 
     public static void setAntialiasing(int antialiasing) {
         if (Application.isInitialized()) {
-            String message = "Unable to change antialiasing after engine initialization";
+            var message = "Unable to change antialiasing after engine initialization";
             System.err.println(message);
         } else {
             Configs.antialiasing = antialiasing;
@@ -59,7 +55,7 @@ public final class Configs {
 
     public static void setPixelsPerMeter(float pixelsPerMeter) {
         if (Application.isInitialized()) {
-            String message = "Unable to change metrics after engine initialization";
+            var message = "Unable to change metrics after engine initialization";
             System.err.println(message);
         } else {
             Configs.pixelsPerMeter = pixelsPerMeter;

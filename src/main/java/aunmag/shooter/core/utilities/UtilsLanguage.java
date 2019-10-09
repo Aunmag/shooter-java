@@ -20,7 +20,7 @@ public final class UtilsLanguage {
     }
 
     public static Vector4f toVector(Color color) {
-        Vector4f vector = new Vector4f(
+        var vector = new Vector4f(
                 1f + color.getRed(),
                 1f + color.getGreen(),
                 1f + color.getBlue(),

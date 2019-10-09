@@ -36,7 +36,7 @@ public class Blackout {
     private void updateHurt() {
         hurt.update();
 
-        float damage = healthLast - player.getHealth();
+        var damage = healthLast - player.getHealth();
         healthLast = player.getHealth();
 
         if (damage > 0) {
@@ -51,9 +51,9 @@ public class Blackout {
     }
 
     private void renderRectangle() {
-        float alphaHurt = hurt.getCurrent();
-        float alphaWound = (float) Math.pow(1.0f - player.getHealth(), 3);
-        float alpha = alphaHurt + alphaWound - (alphaHurt * alphaWound);
+        var alphaHurt = hurt.getCurrent();
+        var alphaWound = (float) Math.pow(1.0f - player.getHealth(), 3);
+        var alpha = alphaHurt + alphaWound - (alphaHurt * alphaWound);
         GL11.glColor4f(0f, 0f, 0f, UtilsMath.limit(alpha, 0, 1));
         Graphics.draw.fill();
     }

@@ -20,11 +20,12 @@ public class Ai extends Operative {
         this.reaction = new Reaction(actor.world.time, actor.type.reaction);
     }
 
+    @Override
     public void update() {
         reaction.update();
 
-        if (reaction.isQuickPhase() && enemy != null) {
-            enemy.refresh();
+        if (enemy != null && reaction.isQuickPhase()) {
+            enemy = new Enemy(enemy);
         }
 
         if (strategy.isExpired()) {
@@ -34,13 +35,12 @@ public class Ai extends Operative {
         strategy.update();
     }
 
+    @Override
     public void render() {
         if (enemy != null) {
             enemy.render();
         }
     }
-
-    /* Getters */
 
     @Override
     public boolean isActive() {

@@ -14,7 +14,7 @@ public class Striker {
     }
 
     public boolean isCocked() {
-        boolean isCocked = nextShotTime.isDone();
+        var isCocked = nextShotTime.isDone();
         nextShotTime.next(true);
         return isCocked;
     }

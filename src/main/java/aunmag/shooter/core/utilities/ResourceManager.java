@@ -3,10 +3,11 @@ package aunmag.shooter.core.utilities;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class ResourceManager<T extends Operative> {
 
-    private final HashMap<String, T> all = new HashMap<>();
+    private final Map<String, T> all = new HashMap<>();
 
     @Nullable
     public T provide(String name) {

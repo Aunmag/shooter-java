@@ -44,7 +44,7 @@ public class Actor extends Operative {
 
     static {
         for (int i = 0; i < samples.length; i++) {
-            String sampleName = "sounds/actors/human_hurt_" + (i + 1);
+            var sampleName = "sounds/actors/human_hurt_" + (i + 1);
             samples[i] = Sample.manger.provide(sampleName);
         }
     }
@@ -82,7 +82,7 @@ public class Actor extends Operative {
 
     private void updateStamina() {
         stamina.update();
-        float spend = AIMING_STAMINA_COST * isAiming.getCurrent();
+        var spend = AIMING_STAMINA_COST * isAiming.getCurrent();
 
         if (control.isWalking()) {
             spend += WALKING_STAMINA_COST;
@@ -101,19 +101,19 @@ public class Actor extends Operative {
     }
 
     protected void updateKinetics() {
-        float timeDelta = (float) world.time.getDelta();
+        var timeDelta = (float) world.time.getDelta();
         kinetics.update(timeDelta);
 
-        float velocityX = kinetics.velocity.x * timeDelta;
-        float velocityY = kinetics.velocity.y * timeDelta;
+        var velocityX = kinetics.velocity.x * timeDelta;
+        var velocityY = kinetics.velocity.y * timeDelta;
         body.position.add(velocityX, velocityY);
         body.radians += kinetics.spin * timeDelta;
     }
 
     private void updateCollision() {
-        for (Actor opponent: world.actors.all) {
+        for (var opponent: world.actors.all) {
             if (opponent != this) {
-                CollisionCC collision = new CollisionCC(body, opponent.body);
+                var collision = new CollisionCC(body, opponent.body);
 
                 if (collision.isTrue()) {
                     Kinetics.interact(
@@ -135,7 +135,7 @@ public class Actor extends Operative {
 
         weapon.body.radians = body.radians;
 
-        float offset = Hands.DISTANCE;
+        var offset = Hands.DISTANCE;
         offset += weapon.type.length / 2;
         offset -= weapon.type.gripOffset;
 
@@ -218,16 +218,16 @@ public class Actor extends Operative {
 
     private void move(double velocity, double radiansTurn) {
         if (control.isSprinting() && control.isWalkingForward()) {
-            float efficiency = this.stamina.getEfficiency();
+            var efficiency = this.stamina.getEfficiency();
             velocity *= type.velocityFactorSprint * efficiency + (1 - efficiency);
         }
 
         velocity -= velocity * isAiming.getCurrent() * AIMING_VELOCITY_AFFECT;
         velocity *= health;
 
-        float moveX = (float) (velocity * Math.cos(body.radians + radiansTurn));
-        float moveY = (float) (velocity * Math.sin(body.radians + radiansTurn));
-        float timeDelta = (float) world.time.getDelta();
+        var moveX = (float) (velocity * Math.cos(body.radians + radiansTurn));
+        var moveY = (float) (velocity * Math.sin(body.radians + radiansTurn));
+        var timeDelta = (float) world.time.getDelta();
         kinetics.addEnergy(moveX, moveY, 0, timeDelta);
     }
 
@@ -292,9 +292,6 @@ public class Actor extends Operative {
         kills++;
     }
 
-    /* Setters */
-
-
     private void addHealth(float addHealth) {
         if (isAlive() && addHealth < -PAIN_THRESHOLD) {
             soundHurt();
@@ -306,8 +303,6 @@ public class Actor extends Operative {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
-
-    /* Getters */
 
     @Override
     public boolean isActive() {
@@ -322,7 +317,7 @@ public class Actor extends Operative {
         return health > 0;
     }
 
-    public boolean getHasWeapon() {
+    public boolean hasWeapon() {
         return weapon != null;
     }
 

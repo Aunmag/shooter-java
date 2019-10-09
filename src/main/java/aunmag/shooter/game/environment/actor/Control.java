@@ -59,8 +59,6 @@ public class Control {
         turningTo = angle;
     }
 
-    /* Getters */
-
     public boolean isWalking() {
         return isWalkingForward()
                 || isWalkingBack()

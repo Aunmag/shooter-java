@@ -66,7 +66,7 @@ public class TextureManager extends ResourceManager<Texture> {
                 sizeX = widowSizeX;
                 sizeY = widowSizeY;
             } else if (type == Type.WALLPAPER) {
-                float aspectRatio = sizeX / sizeY;
+                var aspectRatio = sizeX / sizeY;
 
                 if (aspectRatio < Application.getWindow().getAspectRatio()) {
                     sizeX = widowSizeX;

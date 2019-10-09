@@ -17,8 +17,6 @@ public class ShaderTerrain extends Shader {
         Shader.setUniform(getUniformLocation("sampler"), 0);
     }
 
-    /* Setters */
-
     public void setUniformProjection(Matrix4fc projection) {
         Shader.setUniform(uniformLocationProjection, projection);
     }

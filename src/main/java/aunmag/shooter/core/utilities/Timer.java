@@ -46,8 +46,6 @@ public class Timer {
         return getPassed() / duration;
     }
 
-    /* Setters */
-
     public void setDuration(double duration) {
         target -= durationCurrent;
 
@@ -64,8 +62,6 @@ public class Timer {
     public void setTarget(double target) {
         this.target = target;
     }
-
-    /* Getters */
 
     public double getDuration() {
         return duration;

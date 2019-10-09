@@ -1,7 +1,6 @@
 package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.Camera;
 import aunmag.shooter.core.utilities.FluidValue;
 import aunmag.shooter.core.utilities.UtilsMath;
 
@@ -13,7 +12,7 @@ public final class CameraShaker {
     private static final float timeDown = timeUp * 8;
 
     static {
-        float flexDegree = 0.8f;
+        var flexDegree = 0.8f;
         radians = new FluidValue(Application.time, timeUp); // TODO: Use world time
         radians.setFlexDegree(flexDegree);
     }
@@ -26,9 +25,8 @@ public final class CameraShaker {
     }
 
     public static void update() {
-        Camera camera = Application.getCamera();
-
         radians.update();
+
         if (radians.isTargetReached() && radians.getTarget() != 0) {
             radians.timer.setDuration(timeDown);
             radians.setTarget(0);
@@ -38,9 +36,10 @@ public final class CameraShaker {
             return;
         }
 
-        float radiansCamera = camera.getRadians();
-        float radiansShaker = radians.getCurrent();
-        float radiansSum = UtilsMath.correctRadians(radiansCamera + radiansShaker);
+        var camera = Application.getCamera();
+        var radiansCamera = camera.getRadians();
+        var radiansShaker = radians.getCurrent();
+        var radiansSum = UtilsMath.correctRadians(radiansCamera + radiansShaker);
 
         camera.setRadians(radiansSum);
         camera.mount.radians = radiansSum;

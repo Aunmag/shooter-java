@@ -18,6 +18,7 @@ public class Camera extends BaseObject {
         mount = new Mount(getPosition(), null);
     }
 
+    @Override
     public void update() {
         var angle = UtilsMath.correctRadians(getRadians() - UtilsMath.PIx0_5);
         var position = getPosition();

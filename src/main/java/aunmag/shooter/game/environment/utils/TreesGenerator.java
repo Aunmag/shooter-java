@@ -28,7 +28,7 @@ public class TreesGenerator {
 
     public void generate() {
         for (int i = 0; i < treesQuantity; i++) {
-            Decoration tree = tryGenerateTree();
+            var tree = tryGenerateTree();
             if (tree != null) {
                 world.trees.all.add(tree);
             }
@@ -37,7 +37,8 @@ public class TreesGenerator {
 
     @Nullable
     private Decoration tryGenerateTree() {
-        @Nullable Vector2f position = null;
+        @Nullable
+        var position = (Vector2f) null;
 
         for (int attempt = 0; attempt < 32; attempt++) {
             position = generatePosition();
@@ -49,22 +50,22 @@ public class TreesGenerator {
             position = null;
         }
 
-        if (position != null) {
+        if (position == null) {
+            return null;
+        } else {
             return new Decoration(
                     generateType(),
                     position.x,
                     position.y,
                     generateRadians()
             );
-        } else {
-            return null;
         }
     }
 
     private Vector2f generatePosition() {
-        float sizeHalf = size / 2f;
-        float x = UtilsMath.randomizeBetween(-sizeHalf, sizeHalf);
-        float y = UtilsMath.randomizeBetween(-sizeHalf, sizeHalf);
+        var sizeHalf = size / 2f;
+        var x = UtilsMath.randomizeBetween(-sizeHalf, sizeHalf);
+        var y = UtilsMath.randomizeBetween(-sizeHalf, sizeHalf);
         return new Vector2f(x, y);
     }
 
@@ -73,7 +74,7 @@ public class TreesGenerator {
     }
 
     private DecorationType generateType() {
-        int number = UtilsMath.random.nextInt(3) + 1;
+        var number = UtilsMath.random.nextInt(3) + 1;
 
         if (number == 1) {
             return DecorationType.tree1;
@@ -85,9 +86,9 @@ public class TreesGenerator {
     }
 
     private boolean checkIsPositionUnoccupied(Vector2f position) {
-        for (Decoration tree: world.trees.all) {
-            float intervalX = Math.abs(position.x - tree.body.position.x);
-            float intervalY = Math.abs(position.y - tree.body.position.y);
+        for (var tree: world.trees.all) {
+            var intervalX = Math.abs(position.x - tree.body.position.x);
+            var intervalY = Math.abs(position.y - tree.body.position.y);
             if (intervalX < intervalMin && intervalY < intervalMin) {
                 return false;
             }

@@ -7,7 +7,6 @@ import org.joml.Vector4fc;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +28,8 @@ public class Shader {
     }
 
     protected Shader(Class resourceClass) {
-        String programVertex = readFile(resourceClass, "vert");
-        String programFragment = readFile(resourceClass, "frag");
+        var programVertex = readFile(resourceClass, "vert");
+        var programFragment = readFile(resourceClass, "frag");
 
         if (programVertex == null || programFragment == null) {
             id = 0;
@@ -89,7 +88,7 @@ public class Shader {
     public static void cleanUp() {
         GL20.glUseProgram(0);
 
-        for (Shader shader: all) {
+        for (var shader: all) {
             GL20.glDetachShader(shader.id, shader.programVertexId);
             GL20.glDetachShader(shader.id, shader.programFragmentId);
             GL20.glDeleteShader(shader.programVertexId);
@@ -97,9 +96,6 @@ public class Shader {
             GL20.glDeleteProgram(shader.id);
         }
     }
-
-    /* Setters */
-
     protected static void setUniform(int location, int value) {
         GL20.glUniform1i(location, value);
     }
@@ -113,7 +109,7 @@ public class Shader {
     }
 
     protected static void setUniform(int location, Matrix4fc matrix) {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+        var buffer = BufferUtils.createFloatBuffer(16);
         matrix.get(buffer);
         GL20.glUniformMatrix4fv(location, false, buffer);
     }

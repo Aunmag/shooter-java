@@ -31,6 +31,7 @@ public final class App extends Application {
         setPause(false);
     }
 
+    @Override
     public void gameUpdate() {
         if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_BACKSPACE)) {
             isDebug = !isDebug;
@@ -43,6 +44,7 @@ public final class App extends Application {
         }
     }
 
+    @Override
     public void gameRender() {
         if (isPause) {
             pause.render();
@@ -51,11 +53,10 @@ public final class App extends Application {
         }
     }
 
+    @Override
     public void gameTerminate() {
         endGame();
     }
-
-    /* Getters */
 
     public boolean isDebug() {
         return isDebug;
@@ -69,8 +70,6 @@ public final class App extends Application {
     public Game getGame() {
         return game;
     }
-
-    /* Setters */
 
     public void setPause(boolean isPause) {
         if (this.isPause == isPause || !isPause && game == null) {
