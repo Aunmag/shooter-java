@@ -85,7 +85,8 @@ public abstract class Strategy {
     }
 
     public boolean isEnemy(Actor actor) {
-        return (actor.type == ActorType.human || ai.actor.type == ActorType.human)
+        return (actor.type.genus == ActorType.Genus.HUMAN
+                || ai.actor.type.genus == ActorType.Genus.HUMAN)
             && actor != ai.actor
             && actor.isActive()
             && actor.isAlive();

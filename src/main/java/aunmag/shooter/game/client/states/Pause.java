@@ -12,6 +12,8 @@ import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsAudio;
 import aunmag.shooter.game.client.Constants;
 import aunmag.shooter.game.client.Context;
+import aunmag.shooter.game.environment.actor.ActorType;
+import aunmag.shooter.game.scenarios.ScenarioEncircling;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 
@@ -46,15 +48,35 @@ public class Pause extends Operative {
 
         version.setTextColour(new Vector4f(1, 1, 1, 0.75f));
 
-        var onNewGame = (Runnable) () -> Context.main.application.newGame();
-
         var page = new Page(wallpaper);
         page.add(new Label(3, 3, 6, 1, Constants.TITLE));
         page.add(version);
         page.add(buttonContinue);
-        page.add(new Button(4, 8, 4, 1, "New game", onNewGame));
+        page.add(new Button(4, 8, 4, 1, "New game",
+                createCharacterSelectionPage()::open));
         page.add(new Button(4, 9, 4, 1, "Help", createPageHelp()::open));
         page.add(new Button(4, 10, 4, 1, "Exit", createPageExit()::open));
+
+        return page;
+    }
+
+    private Page createCharacterSelectionPage() {
+        var wallpaper = Texture.manager
+                .asWallpaper()
+                .provide("images/wallpapers/main_menu");
+        var page = new Page(wallpaper);
+
+        page.add(new Label(3, 3, 6, 1, "Select your character"));
+        page.add(new Button(4, 7, 4, 1, "Soldier", () -> {
+            ScenarioEncircling.selectedActor = ActorType.soldier;
+            Context.main.application.newGame();
+            Page.STACK.back();
+        }));
+        page.add(new Button(4, 8, 4, 1, "Bandit", () -> {
+            ScenarioEncircling.selectedActor = ActorType.bandit;
+            Context.main.application.newGame();
+            Page.STACK.back();
+        }));
 
         return page;
     }

@@ -25,6 +25,8 @@ public class Control {
         turningTo = null;
     }
 
+    /* Setters */
+
     public void walkForward() {
         isWalkingForward = true;
     }

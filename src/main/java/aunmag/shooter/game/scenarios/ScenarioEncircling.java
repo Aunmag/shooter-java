@@ -72,7 +72,8 @@ public class ScenarioEncircling extends Scenario {
 
     @Override
     public Actor createPlayableActor() {
-        var actor = new Actor(ActorType.human, world, 0, 0, (float) -UtilsMath.PIx0_5);
+        var actor = new Actor(
+                selectedActor, world, 0, 0, (float) -UtilsMath.PIx0_5);
         actor.setWeapon(new Weapon(world, WeaponType.pm));
         world.actors.all.add(actor);
         return actor;
@@ -111,7 +112,7 @@ public class ScenarioEncircling extends Scenario {
             waveCheckTimer.next();
 
             for (var actor : world.actors.all) {
-                if (actor.type != ActorType.human) {
+                if (actor.type.genus != ActorType.Genus.HUMAN) {
                     return false;
                 }
             }
@@ -153,7 +154,7 @@ public class ScenarioEncircling extends Scenario {
         }
 
         if (wave > 1 && UtilsMath.chance(HUMAN_SPAWN_CHANCE)) {
-            spawnEnemy(ActorType.human);
+            spawnEnemy(ActorType.soldier);
         }
     }
 
@@ -185,7 +186,7 @@ public class ScenarioEncircling extends Scenario {
         world.actors.all.add(enemy);
         world.ais.all.add(new Ai(enemy));
 
-        if (enemy.type == ActorType.human) {
+        if (enemy.type.genus == ActorType.Genus.HUMAN) {
             enemy.setWeapon(createRandomWeapon());
         }
 

@@ -272,7 +272,7 @@ public class Actor extends Operative {
     }
 
     private void soundHurt() {
-        if (type != ActorType.human) {
+        if (type != ActorType.soldier) {
             return;
         }
 
