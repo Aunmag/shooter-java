@@ -7,6 +7,7 @@ import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.math.Kinetics;
 import aunmag.shooter.core.utilities.FluidToggle;
 import aunmag.shooter.core.utilities.Operative;
+import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.player.CameraShaker;
@@ -26,6 +27,7 @@ public class Actor extends Operative {
     public static final float SPRINT_STAMINA_COST = 1.8f;
     public static final float RELOADING_STAMINA_COST = 0.2f;
     public static final float PAIN_THRESHOLD = 0.005f;
+    public static final float DECAY_TIME = 0.5f;
 
     private static final Sample[] samples = new Sample[6];
 
@@ -41,6 +43,7 @@ public class Actor extends Operative {
     private Source audioSource = new Source();
     public final Control control = new Control();
     public final FluidToggle isAiming;
+    private final Timer decayTimer;
 
     static {
         for (int i = 0; i < samples.length; i++) {
@@ -55,6 +58,7 @@ public class Actor extends Operative {
         body = new BodyCircle(x, y, radians, type.radius);
         hands = new Hands(this);
         stamina = new Stamina(this);
+        decayTimer = new Timer(world.time, DECAY_TIME);
 
         isAiming = new FluidToggle(world.time, AIMING_TIME);
         isAiming.setFlexDegree(AIMING_FLEX);
@@ -66,16 +70,18 @@ public class Actor extends Operative {
 
     @Override
     public void update() {
-        if (isAlive()) {
-            updateStamina();
-            updateAiming();
-            walk();
-            updateKinetics();
-            updateCollision();
-            hands.update();
-            updateWeapon();
-            updateAudioSource();
+        if (!isAlive()) {
+            control.reset();
         }
+
+        updateStamina();
+        updateAiming();
+        walk();
+        updateKinetics();
+        updateCollision();
+        hands.update();
+        updateWeapon();
+        updateAudioSource();
 
         control.reset();
     }
@@ -293,11 +299,19 @@ public class Actor extends Operative {
     }
 
     private void addHealth(float addHealth) {
-        if (isAlive() && addHealth < -PAIN_THRESHOLD) {
-            soundHurt();
-        }
+        var wasAlive = isAlive();
 
         health = UtilsMath.limit(health + addHealth, 0, 1);
+
+        if (wasAlive) {
+            if (isAlive()) {
+                if (addHealth < -PAIN_THRESHOLD) {
+                    soundHurt();
+                }
+            } else {
+                decayTimer.next();
+            }
+        }
     }
 
     public void setWeapon(Weapon weapon) {
@@ -306,7 +320,7 @@ public class Actor extends Operative {
 
     @Override
     public boolean isActive() {
-        return super.isActive() && isAlive();
+        return super.isActive() && (isAlive() || !decayTimer.isDone());
     }
 
     public float getHealth() {
