@@ -97,7 +97,6 @@ public class Texture extends BaseQuad {
         var camera = Application.getCamera();
         var projection = camera.toViewProjection(x, y, radians);
         Application.getShader().setUniformProjection(projection);
-        Application.getShader().setUniformColourDefault();
 
         bind();
         render();
