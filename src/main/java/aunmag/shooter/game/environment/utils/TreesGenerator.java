@@ -1,6 +1,7 @@
 package aunmag.shooter.game.environment.utils;
 
 import aunmag.shooter.core.utilities.UtilsMath;
+import aunmag.shooter.core.utilities.UtilsRandom;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.decorations.Decoration;
 import aunmag.shooter.game.environment.decorations.DecorationType;
@@ -64,25 +65,21 @@ public class TreesGenerator {
 
     private Vector2f generatePosition() {
         var sizeHalf = size / 2f;
-        var x = UtilsMath.randomizeBetween(-sizeHalf, sizeHalf);
-        var y = UtilsMath.randomizeBetween(-sizeHalf, sizeHalf);
+        var x = UtilsRandom.between(-sizeHalf, sizeHalf);
+        var y = UtilsRandom.between(-sizeHalf, sizeHalf);
         return new Vector2f(x, y);
     }
 
     private float generateRadians() {
-        return UtilsMath.randomizeBetween(0, (float) UtilsMath.PIx2);
+        return UtilsRandom.between(0, (float) UtilsMath.PIx2);
     }
 
     private DecorationType generateType() {
-        var number = UtilsMath.random.nextInt(3) + 1;
-
-        if (number == 1) {
-            return DecorationType.tree1;
-        } else if (number == 2) {
-            return DecorationType.tree2;
-        } else {
-            return DecorationType.tree3;
-        }
+        return UtilsRandom.chose(
+            DecorationType.tree1,
+            DecorationType.tree2,
+            DecorationType.tree3
+        );
     }
 
     private boolean checkIsPositionUnoccupied(Vector2f position) {

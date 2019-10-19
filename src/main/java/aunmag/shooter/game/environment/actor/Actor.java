@@ -9,6 +9,7 @@ import aunmag.shooter.core.utilities.FluidToggle;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
+import aunmag.shooter.core.utilities.UtilsRandom;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.environment.World;
@@ -248,7 +249,7 @@ public class Actor extends Operative {
     }
 
     public void shake(float force, boolean randomizeDirection) {
-        if (randomizeDirection && UtilsMath.random.nextBoolean()) {
+        if (randomizeDirection && UtilsRandom.RANDOM.nextBoolean()) {
             force = -force;
         }
 
@@ -286,12 +287,10 @@ public class Actor extends Operative {
             return;
         }
 
-        var sample = samples[UtilsMath.random.nextInt(samples.length)];
-
-        if (sample != null) {
+        UtilsRandom.chose(samples).ifPresent(sample -> {
             audioSource.setSample(sample);
             audioSource.play();
-        }
+        });
     }
 
     private void increaseKills() {

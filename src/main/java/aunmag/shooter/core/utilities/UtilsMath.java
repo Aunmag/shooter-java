@@ -2,11 +2,8 @@ package aunmag.shooter.core.utilities;
 
 import org.joml.Vector2f;
 
-import java.util.Random;
-
 public final class UtilsMath {
 
-    public static final Random random = new Random();
     public static final double PIx0_5 = Math.PI / 2.0;
     public static final double PIx1_5 = Math.PI + PIx0_5;
     public static final double PIx2 = Math.PI * 2.0;
@@ -31,64 +28,6 @@ public final class UtilsMath {
         }
 
         return correctRadians(difference);
-    }
-
-    public static int randomizeBetween(int a, int b) {
-        if (a == b) {
-            return a;
-        }
-
-        int min;
-        int max;
-
-        if (a < b) {
-            min = a;
-            max = b;
-        } else {
-            min = b;
-            max = a;
-        }
-
-        return random.nextInt((max - min) + 1) + min;
-    }
-
-    public static float randomizeBetween(float a, float b) {
-        if (a == b) {
-            return a;
-        }
-
-        float min;
-        float max;
-
-        if (a < b) {
-            min = a;
-            max = b;
-        } else {
-            min = b;
-            max = a;
-        }
-
-        return random.nextFloat() * (max - min) + min;
-    }
-
-    public static float randomizeFlexibly(float middle, float offset) {
-        if (offset == 0) {
-            return middle;
-        }
-
-        var flex = 0.5f;
-        var offsetMin = offset * randomizeBetween(0, flex);
-        var offsetMax = offset * randomizeBetween(flex, 1);
-        var offsetRandom = randomizeBetween(offsetMin, offsetMax);
-
-        var resultMin = middle - offsetRandom;
-        var resultMax = middle + offsetRandom;
-
-        return randomizeBetween(resultMin, resultMax);
-    }
-
-    public static boolean chance(float probability) {
-        return UtilsMath.random.nextFloat() <= probability;
     }
 
     public static float distance(float x1, float y1, float x2, float y2) {

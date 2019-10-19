@@ -36,7 +36,7 @@ public class Timer {
     }
 
     private void updateDurationCurrent() {
-        durationCurrent = UtilsMath.randomizeFlexibly(
+        durationCurrent = UtilsRandom.deviation(
                 (float) duration,
                 (float) (duration * durationDeviationFactor)
         );

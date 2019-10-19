@@ -3,6 +3,7 @@ package aunmag.shooter.game.ai.strategies;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
+import aunmag.shooter.core.utilities.UtilsRandom;
 import aunmag.shooter.game.ai.Ai;
 import aunmag.shooter.game.ai.memory.Destination;
 import aunmag.shooter.game.ai.memory.Enemy;
@@ -18,7 +19,7 @@ public abstract class Strategy {
     public static final float MAGAZINE_CAPACITY_RATIO_MIN = 0.8f;
 
     public final Ai ai;
-    public final float dangerZoneRadius = UtilsMath.randomizeBetween(3, 6);
+    public final float dangerZoneRadius = UtilsRandom.between(3, 6);
     private final Timer timer;
 
     public Strategy(Ai ai) {

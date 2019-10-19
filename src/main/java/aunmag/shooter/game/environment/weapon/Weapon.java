@@ -3,7 +3,7 @@ package aunmag.shooter.game.environment.weapon;
 import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.math.BodyLine;
 import aunmag.shooter.core.utilities.Operative;
-import aunmag.shooter.core.utilities.UtilsMath;
+import aunmag.shooter.core.utilities.UtilsRandom;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.magazine.Magazine;
@@ -73,15 +73,15 @@ public class Weapon extends Operative {
     }
 
     private float calculateRandomRecoil() {
-        return UtilsMath.randomizeFlexibly(type.recoil, type.recoilDeflection);
+        return UtilsRandom.deviation(type.recoil, type.recoilDeflection);
     }
 
     private float calculateRandomRadians() {
-        return UtilsMath.randomizeFlexibly(body.radians, type.radiansDeflection);
+        return UtilsRandom.deviation(body.radians, type.radiansDeflection);
     }
 
     private float calculateRandomVelocity() {
-        return UtilsMath.randomizeFlexibly(type.velocity, type.velocityDeflection);
+        return UtilsRandom.deviation(type.velocity, type.velocityDeflection);
     }
 
     @Override

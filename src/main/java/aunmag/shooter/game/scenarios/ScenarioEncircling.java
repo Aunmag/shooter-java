@@ -10,6 +10,7 @@ import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
+import aunmag.shooter.core.utilities.UtilsRandom;
 import aunmag.shooter.game.ai.Ai;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.player.Player;
@@ -152,7 +153,7 @@ public class ScenarioEncircling extends Scenario {
             ));
         }
 
-        if (wave > 1 && UtilsMath.chance(HUMAN_SPAWN_CHANCE)) {
+        if (wave > 1 && UtilsRandom.chance(HUMAN_SPAWN_CHANCE)) {
             spawnEnemy(ActorType.human);
         }
     }
@@ -160,7 +161,7 @@ public class ScenarioEncircling extends Scenario {
     private void spawnZombie() {
         var type = (ActorType) null;
 
-        switch (UtilsMath.randomizeBetween(1, 4)) {
+        switch (UtilsRandom.between(1, 4)) {
             case 1: type = zombieAgile; break;
             case 2: type = zombieHeavy; break;
             default: type = zombie;
@@ -170,7 +171,7 @@ public class ScenarioEncircling extends Scenario {
     }
 
     private void spawnEnemy(ActorType type) {
-        var direction = -UtilsMath.randomizeBetween(0, (float) UtilsMath.PIx2);
+        var direction = -UtilsRandom.between(0, (float) UtilsMath.PIx2);
         var distance = Player.SCALE_MAX / 2;
         var x = -distance * (float) Math.cos(direction);
         var y = -distance * (float) Math.sin(direction);
@@ -189,7 +190,7 @@ public class ScenarioEncircling extends Scenario {
             enemy.setWeapon(createRandomWeapon());
         }
 
-        if (UtilsMath.chance(bonusChance)) {
+        if (UtilsRandom.chance(bonusChance)) {
             world.bonuses.all.add(new WeaponBonus(enemy, createRandomWeapon()));
         }
 
@@ -200,8 +201,8 @@ public class ScenarioEncircling extends Scenario {
         var type = (WeaponType) null;
         var index = 0;
 
-        if (!UtilsMath.chance(LASER_GUN_CHANCE)) {
-            index = UtilsMath.randomizeBetween(1, 2 * wave);
+        if (!UtilsRandom.chance(LASER_GUN_CHANCE)) {
+            index = UtilsRandom.between(1, 2 * wave);
         }
 
         switch (index) {
