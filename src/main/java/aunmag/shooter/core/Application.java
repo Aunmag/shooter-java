@@ -21,6 +21,7 @@ public abstract class Application {
     private static boolean isInitialized = false;
     private static boolean isRunning = false;
     private static Window window;
+    public final Input input;
     private static Camera camera;
     private static ShaderTextured shader;
     private static Listener listener;
@@ -38,13 +39,16 @@ public abstract class Application {
 
         isInitialized = true;
 
+        Context.main = new Context(this);
+
         window = new Window();
+        input = new Input(window.id);
+
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-        GLFW.glfwSetScrollCallback(window.id, Input.mouse.wheel::onScroll);
 
         camera = new Camera();
         shader = new ShaderTextured();
@@ -68,7 +72,7 @@ public abstract class Application {
 
     private void engineUpdate() {
         time.add(frameRate.getDelta(), true);
-        Input.update();
+        input.update();
         GLFW.glfwPollEvents();
         Parameter.PULSE.update();
 

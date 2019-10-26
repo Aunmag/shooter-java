@@ -4,13 +4,14 @@ import aunmag.shooter.game.client.states.Game;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
 
-public final class Context {
+public class Context extends aunmag.shooter.core.Context {
 
     public static Context main = null;
 
     public final App application;
 
     public Context(App application) {
+        super(application);
         this.application = application;
     }
 

@@ -3,7 +3,6 @@ package aunmag.shooter.game.environment.weapon;
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.gui.font.Text;
-import aunmag.shooter.core.input.Input;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.FluidValue;
@@ -121,8 +120,9 @@ public class WeaponBonus extends Operative {
         }
 
         var collision = new CollisionCC(body, actor.hands.coverage);
+        var input = Context.main.getInput();
 
-        if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_E) && collision.isTrue()) {
+        if (input.keyboard.isKeyPressed(GLFW.GLFW_KEY_E) && collision.isTrue()) {
             var previousWeapon = actor.getWeapon();
 
             if (previousWeapon != null) {

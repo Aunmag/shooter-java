@@ -1,7 +1,6 @@
 package aunmag.shooter.game.client;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.input.Input;
 import aunmag.shooter.game.client.states.Game;
 import aunmag.shooter.game.client.states.Pause;
 import org.jetbrains.annotations.Nullable;
@@ -32,7 +31,7 @@ public final class App extends Application {
     }
 
     public void gameUpdate() {
-        if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_BACKSPACE)) {
+        if (Context.main.getInput().keyboard.isKeyPressed(GLFW.GLFW_KEY_BACKSPACE)) {
             isDebug = !isDebug;
         }
 

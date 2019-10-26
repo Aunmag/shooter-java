@@ -1,9 +1,9 @@
 package aunmag.shooter.core.gui;
 
 import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.font.FontStyle;
-import aunmag.shooter.core.input.Input;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -77,16 +77,17 @@ public class Button extends Label {
     }
 
     public boolean isTouched() {
+        var input = Context.main.getInput();
         return isEnabled() && screenQuad.calculateIsPointInside(
-                Input.mouse.position.x,
-                Input.mouse.position.y
+                input.mouse.position.x,
+                input.mouse.position.y
         );
     }
 
     public boolean isPressed() {
         return isEnabled()
-                && isTouched()
-                && Input.mouse.isButtonReleased(GLFW.GLFW_MOUSE_BUTTON_1);
+            && isTouched()
+            && Context.main.getInput().mouse.isButtonReleased(GLFW.GLFW_MOUSE_BUTTON_1);
     }
 
 }

@@ -1,25 +1,20 @@
 package aunmag.shooter.core.input;
 
-import aunmag.shooter.core.Application;
-import aunmag.shooter.core.Window;
+public class Input {
 
-/**
- * TODO: Do not use static.
- */
-public final class Input {
+    public long window;
+    public final Mouse mouse;
+    public final Keyboard keyboard;
 
-    public static final Mouse mouse = new Mouse();
-    public static final Keyboard keyboard = new Keyboard();
-
-    private Input() {}
-
-    public static void update() {
-        mouse.update();
-        keyboard.update();
+    public Input(long window) {
+        this.window = window;
+        this.mouse = new Mouse(this);
+        this.keyboard = new Keyboard(this);
     }
 
-    public static boolean isAvailable() {
-        return Application.getWindow().id != Window.UNDEFINED_ID;
+    public void update() {
+        mouse.update();
+        keyboard.update();
     }
 
 }

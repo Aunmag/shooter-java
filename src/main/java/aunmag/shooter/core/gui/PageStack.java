@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.input.Input;
+import aunmag.shooter.core.Context;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -14,7 +14,7 @@ public class PageStack {
     private Runnable onQuit = null;
 
     public void update() {
-        if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
+        if (Context.main.getInput().keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
             back();
         }
 

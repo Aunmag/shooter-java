@@ -1,10 +1,10 @@
 package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.input.Input;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.App;
+import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -35,31 +35,33 @@ public class Player extends Operative {
             return;
         }
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
+        var input = Context.main.getInput();
+
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
             actor.control.walkForward();
         }
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
             actor.control.walkBack();
         }
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
             actor.control.walkLeft();
         }
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
             actor.control.walkRight();
         }
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
             actor.control.sprint();
         }
 
-        if (Input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_1)) {
+        if (input.mouse.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_1)) {
             actor.control.attack();
         }
 
-        if (Input.mouse.isButtonPressed(GLFW.GLFW_MOUSE_BUTTON_2)) {
+        if (input.mouse.isButtonPressed(GLFW.GLFW_MOUSE_BUTTON_2)) {
             isAiming = !isAiming;
         }
 
@@ -67,7 +69,7 @@ public class Player extends Operative {
             actor.control.aim();
         }
 
-        if (Input.keyboard.isKeyPressed(GLFW.GLFW_KEY_R) && actor.hasWeapon()) {
+        if (input.keyboard.isKeyPressed(GLFW.GLFW_KEY_R) && actor.hasWeapon()) {
             actor.getWeapon().magazine.reload();
         }
 
@@ -142,23 +144,25 @@ public class Player extends Operative {
     }
 
     public float getRotation() {
+        var input = Context.main.getInput();
         var aimingFactor = 1.0f;
 
         if (actor != null) {
             aimingFactor -= actor.isAiming.getCurrent() * MOUSE_SENSITIVITY_AIMING_FACTOR;
         }
 
-        return Input.mouse.velocity.x * MOUSE_SENSITIVITY * aimingFactor;
+        return input.mouse.velocity.x * MOUSE_SENSITIVITY * aimingFactor;
     }
 
     public float getZooming() {
-        var zooming = Input.mouse.wheel.getVelocitySmooth();
+        var input = Context.main.getInput();
+        var zooming = input.mouse.scrollSmooth;
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_ADD)) {
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_ADD)) {
             zooming += ZOOM_VELOCITY;
         }
 
-        if (Input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_SUBTRACT)) {
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_SUBTRACT)) {
             zooming -= ZOOM_VELOCITY;
         }
 
