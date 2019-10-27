@@ -2,7 +2,6 @@ package aunmag.shooter.game.client.states;
 
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.game.client.Context;
-import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.client.player.Player;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.scenarios.Scenario;
@@ -33,7 +32,6 @@ public class Game extends Operative {
         world.update();
         scenario.update();
         player.update();
-        CameraShaker.update();
 
         if (Context.main.getInput().keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
             Context.main.application.setPause(true);

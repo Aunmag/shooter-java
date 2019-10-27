@@ -1,48 +1,43 @@
 package aunmag.shooter.game.client.player;
 
 import aunmag.shooter.core.Application;
-import aunmag.shooter.core.utilities.FluidValue;
+import aunmag.shooter.core.utilities.Envelope;
+import aunmag.shooter.core.utilities.TimeFlow;
 import aunmag.shooter.core.utilities.UtilsMath;
 
-public final class CameraShaker {
+public class CameraShaker {
 
     private static final float FACTOR = 0.125f;
-    private static FluidValue radians;
-    private static final float timeUp = 0.04f;
-    private static final float timeDown = timeUp * 8;
+    private static final float ENVELOPE_ATTACK = 0.04f;
+    private static final float ENVELOPE_RELEASE = 0.32f;
+    private static final float ENVELOPE_BEND = 0.8f;
 
-    static {
-        var flexDegree = 0.8f;
-        radians = new FluidValue(Application.time, timeUp); // TODO: Use world time
-        radians.setFlexDegree(flexDegree);
+    private final Envelope envelope;
+
+    public CameraShaker(TimeFlow time) {
+        envelope = new Envelope(
+            ENVELOPE_ATTACK,
+            ENVELOPE_RELEASE,
+            ENVELOPE_BEND,
+            time
+        );
     }
 
-    private CameraShaker() {}
-
-    public static void shake(float force) {
-        radians.timer.setDuration(timeUp);
-        radians.setTarget(force * FACTOR);
+    public void shake(float force) {
+        envelope.start(force * FACTOR);
     }
 
-    public static void update() {
-        radians.update();
+    public void update() {
+        envelope.update();
 
-        if (radians.isTargetReached() && radians.getTarget() != 0) {
-            radians.timer.setDuration(timeDown);
-            radians.setTarget(0);
-        }
-
-        if (radians.getCurrent() == 0.0f) {
+        if (envelope.getValue() == 0.0f) {
             return;
         }
 
         var camera = Application.getCamera();
-        var radiansCamera = camera.getRadians();
-        var radiansShaker = radians.getCurrent();
-        var radiansSum = UtilsMath.correctRadians(radiansCamera + radiansShaker);
-
-        camera.setRadians(radiansSum);
-        camera.mount.radians = radiansSum;
+        var radians = UtilsMath.correctRadians(camera.getRadians() + envelope.getValue());
+        camera.setRadians(radians);
+        camera.mount.radians = radians;
         camera.mount.apply();
     }
 

@@ -11,7 +11,6 @@ import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.core.utilities.UtilsRandom;
 import aunmag.shooter.game.client.Context;
-import aunmag.shooter.game.client.player.CameraShaker;
 import aunmag.shooter.game.environment.World;
 import aunmag.shooter.game.environment.weapon.Weapon;
 import org.jetbrains.annotations.Nullable;
@@ -255,8 +254,12 @@ public class Actor extends Operative {
 
         kinetics.push(0, 0, force);
 
-        if (this == Context.main.getPlayerActor()) {
-            CameraShaker.shake(kinetics.compensateMomentum(force));
+        var player = Context.main.getPlayer();
+        if (player != null && player.getActor() == this) {
+            var cameraShaker = player.cameraShaker;
+            if (cameraShaker != null) {
+                cameraShaker.shake(kinetics.compensateMomentum(force));
+            }
         }
     }
 

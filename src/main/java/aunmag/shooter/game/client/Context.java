@@ -1,5 +1,6 @@
 package aunmag.shooter.game.client;
 
+import aunmag.shooter.game.client.player.Player;
 import aunmag.shooter.game.client.states.Game;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
@@ -25,13 +26,24 @@ public class Context extends aunmag.shooter.core.Context {
     }
 
     @Nullable
-    public Actor getPlayerActor() {
+    public Player getPlayer() {
         var game = getGame();
 
         if (game == null) {
             return null;
         } else {
-            return game.player.getActor();
+            return game.player;
+        }
+    }
+
+    @Nullable
+    public Actor getPlayerActor() {
+        var player = getPlayer();
+
+        if (player == null) {
+            return null;
+        } else {
+            return player.getActor();
         }
     }
 

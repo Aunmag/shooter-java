@@ -22,6 +22,7 @@ public class Player extends Operative {
     public final Hud hud = new Hud();
     @Nullable private Actor actor = null;
     @Nullable private Blackout blackout = null;
+    @Nullable public CameraShaker cameraShaker = null;
     private final Crosshair crosshair = new Crosshair();
     private float direction = 0;
     private boolean isAiming = false;
@@ -88,6 +89,10 @@ public class Player extends Operative {
     public void update() {
         hud.update();
         updateCameraPosition();
+
+        if (cameraShaker != null) {
+            cameraShaker.update();
+        }
     }
 
     private void updateCameraPosition() {
@@ -130,9 +135,11 @@ public class Player extends Operative {
 
         if (actor == null) {
             blackout = null;
+            cameraShaker = null;
             App.getCamera().mount.holder = null;
         } else {
             blackout = new Blackout(actor);
+            cameraShaker = new CameraShaker(actor.world.time);
             direction = actor.getDirectionDesired();
             App.getCamera().mount.holder = actor.body.position;
         }

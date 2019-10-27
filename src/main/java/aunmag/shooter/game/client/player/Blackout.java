@@ -3,7 +3,7 @@ package aunmag.shooter.game.client.player;
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.structures.Texture;
-import aunmag.shooter.core.utilities.FluidValue;
+import aunmag.shooter.core.utilities.Envelope;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
@@ -11,20 +11,25 @@ import org.lwjgl.opengl.GL11;
 
 public class Blackout {
 
+    private static final float HURT_FACTOR = 4.0f;
+    private static final float ENVELOPE_ATTACK = 0.06f;
+    private static final float ENVELOPE_RELEASE = 0.48f;
+
     private final Actor player;
     @Nullable
     private final Texture texture;
+    private final Envelope hurt;
     private float healthLast;
-    private final FluidValue hurt;
-    private final float hurtFactor = 4.0f;
-    private final float hurtTimeFadeIn = 0.06f;
-    private final float hurtTimeFadeOut = hurtTimeFadeIn * 8;
 
     public Blackout(Actor player) {
         this.player = player;
-        texture = Texture.manager.asCover().provide("images/gui/blackout1600");
-        hurt = new FluidValue(player.world.time, hurtTimeFadeIn);
-        healthLast = player.getHealth();
+        this.texture = Texture.manager.asCover().provide("images/gui/blackout1600");
+        this.hurt = new Envelope(
+            ENVELOPE_ATTACK,
+            ENVELOPE_RELEASE,
+            player.world.time
+        );
+        this.healthLast = player.getHealth();
     }
 
     public void render() {
@@ -40,18 +45,12 @@ public class Blackout {
         healthLast = player.getHealth();
 
         if (damage > 0) {
-            hurt.timer.setDuration(hurtTimeFadeIn);
-            hurt.setTarget(damage * hurtFactor + hurt.getTarget());
-        }
-
-        if (hurt.getTarget() != 0 && hurt.isTargetReached()) {
-            hurt.timer.setDuration(hurtTimeFadeOut);
-            hurt.setTarget(0);
+            hurt.start(damage * HURT_FACTOR);
         }
     }
 
     private void renderRectangle() {
-        var alphaHurt = hurt.getCurrent();
+        var alphaHurt = hurt.getValue();
         var alphaWound = (float) Math.pow(1.0f - player.getHealth(), 3);
         var alpha = alphaHurt + alphaWound - (alphaHurt * alphaWound);
         GL11.glColor4f(0f, 0f, 0f, UtilsMath.limit(alpha, 0, 1));
