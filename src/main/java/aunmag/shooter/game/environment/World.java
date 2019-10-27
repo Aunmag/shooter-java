@@ -1,6 +1,5 @@
 package aunmag.shooter.game.environment;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.OperativeManager;
 import aunmag.shooter.core.utilities.TimeFlow;
@@ -32,7 +31,7 @@ public class World extends Operative {
 
     @Override
     public void update() {
-        time.add(Application.time.getDelta(), true);
+        time.add(Context.main.getTime().getDelta(), true);
         ais.update();
         actors.update();
         projectiles.update();
@@ -42,7 +41,7 @@ public class World extends Operative {
     @Override
     public void render() {
         terrain.render();
-        Application.getShader().bind();
+        Context.main.getShader().bind();
 
         if (!Context.main.isDebug()) {
             ground.render();
@@ -56,7 +55,7 @@ public class World extends Operative {
         if (Context.main.isDebug()) {
             ais.render();
         } else {
-            Application.getShader().bind();
+            Context.main.getShader().bind();
             trees.render();
         }
     }

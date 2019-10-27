@@ -1,6 +1,6 @@
 package aunmag.shooter.core.input;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
@@ -55,7 +55,7 @@ public class Mouse {
         scroll = 0;
 
         if (Math.abs(scrollSmooth) > SCROLL_SMOOTH_MIN) {
-            scrollSmooth -= scrollSmooth * scrollSmoothness * Application.time.getDelta();
+            scrollSmooth -= scrollSmooth * scrollSmoothness * Context.main.getDelta();
         } else {
             scrollSmooth = 0;
         }

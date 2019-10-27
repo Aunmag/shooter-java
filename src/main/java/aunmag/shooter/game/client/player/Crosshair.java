@@ -1,6 +1,5 @@
 package aunmag.shooter.game.client.player;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.Context;
@@ -17,8 +16,8 @@ public class Crosshair {
             return;
         }
 
-        var window = Application.getWindow();
-        var camera = Application.getCamera();
+        var window = Context.main.getWindow();
+        var camera = Context.main.getCamera();
 
         var degree = shooter.isAiming.getCurrent();
         var radians = shooter.body.radians;

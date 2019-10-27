@@ -1,9 +1,7 @@
 package aunmag.shooter.game.client.player;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
-import aunmag.shooter.game.client.App;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.environment.actor.Actor;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +26,7 @@ public class Player extends Operative {
     private boolean isAiming = false;
 
     public Player() {
-        App.getCamera().scale = SCALE_DEFAULT;
+        Context.main.getCamera().scale = SCALE_DEFAULT;
     }
 
     public void updateInput() {
@@ -78,8 +76,8 @@ public class Player extends Operative {
         actor.control.turnTo(direction);
         actor.body.correctRadians();
 
-        Application.getCamera().scale = UtilsMath.limit(
-                Application.getCamera().scale - getZooming(),
+        Context.main.getCamera().scale = UtilsMath.limit(
+                Context.main.getCamera().scale - getZooming(),
                 SCALE_MIN,
                 SCALE_MAX
         );
@@ -100,8 +98,8 @@ public class Player extends Operative {
             return;
         }
 
-        var camera = App.getCamera();
-        var window = App.getWindow();
+        var camera = Context.main.getCamera();
+        var window = Context.main.getWindow();
         var offset = camera.toMeters(
                 window.getHeight()
                 * CAMERA_OFFSET_RATIO
@@ -136,12 +134,12 @@ public class Player extends Operative {
         if (actor == null) {
             blackout = null;
             cameraShaker = null;
-            App.getCamera().mount.holder = null;
+            Context.main.getCamera().mount.holder = null;
         } else {
             blackout = new Blackout(actor);
             cameraShaker = new CameraShaker(actor.world.time);
             direction = actor.getDirectionDesired();
-            App.getCamera().mount.holder = actor.body.position;
+            Context.main.getCamera().mount.holder = actor.body.position;
         }
     }
 
@@ -173,9 +171,7 @@ public class Player extends Operative {
             zooming -= ZOOM_VELOCITY;
         }
 
-        return Application.getCamera().scale
-                * zooming
-                * (float) Application.time.getDelta();
+        return Context.main.getCamera().scale * zooming * Context.main.getDelta();
     }
 
 }

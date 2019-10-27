@@ -1,19 +1,18 @@
 package aunmag.shooter.game.client;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.game.client.states.Game;
 import aunmag.shooter.game.client.states.Pause;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-public final class App extends Application {
+public final class Application extends aunmag.shooter.core.Application {
 
     private boolean isDebug = false;
     private boolean isPause = true;
     public final Pause pause = new Pause();
     private Game game;
 
-    public App() {
+    public Application() {
         pause.resume();
     }
 
@@ -30,7 +29,7 @@ public final class App extends Application {
         setPause(false);
     }
 
-    public void gameUpdate() {
+    public void update() {
         if (Context.main.getInput().keyboard.isKeyPressed(GLFW.GLFW_KEY_BACKSPACE)) {
             isDebug = !isDebug;
         }
@@ -42,7 +41,7 @@ public final class App extends Application {
         }
     }
 
-    public void gameRender() {
+    public void render() {
         if (isPause) {
             pause.render();
         } else if (game != null) {
@@ -50,8 +49,9 @@ public final class App extends Application {
         }
     }
 
-    public void gameTerminate() {
+    public void onTerminate() {
         endGame();
+        super.onTerminate();
     }
 
     public boolean isDebug() {
@@ -73,7 +73,7 @@ public final class App extends Application {
         }
 
         this.isPause = isPause;
-        Application.getWindow().setCursorGrabbed(!isPause);
+        Context.main.getWindow().setCursorGrabbed(!isPause);
 
         if (isPause) {
             pause.resume();

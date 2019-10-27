@@ -9,9 +9,9 @@ public class Context extends aunmag.shooter.core.Context {
 
     public static Context main = null;
 
-    public final App application;
+    public final Application application;
 
-    public Context(App application) {
+    public Context(Application application) {
         super(application);
         this.application = application;
     }

@@ -1,6 +1,5 @@
 package aunmag.shooter.game.environment.terrain;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.game.client.Context;
@@ -28,7 +27,7 @@ public class Terrain {
     }
 
     private void renderGrid() {
-        var camera = Application.getCamera();
+        var camera = Context.main.getCamera();
         var length = Math.abs(camera.scale / 2);
         var x = camera.getPosition().x;
         var y = camera.getPosition().y;
@@ -55,7 +54,7 @@ public class Terrain {
             return;
         }
 
-        var camera = Application.getCamera();
+        var camera = Context.main.getCamera();
         var blocks = (int) Math.ceil((camera.scale + BLOCK_SIZE) / BLOCK_SIZE / 2) * 2;
         var projection = camera.toViewProjection(
                 round(camera.getPosition().x, BLOCK_SIZE),

@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui.font;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class TextManager {
     }
 
     public void renderAll() {
-        Application.getShader().bind();
+        Context.main.getShader().bind();
 
         for (var font: all.keySet()) {
             font.texture.bind();
@@ -35,7 +35,7 @@ public class TextManager {
             texts.removeAll(textsToDelete);
         }
 
-        Application.getShader().setUniformColourDefault();
+        Context.main.getShader().setUniformColourDefault();
         TextVao.unbind();
     }
 

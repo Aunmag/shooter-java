@@ -1,6 +1,5 @@
 package aunmag.shooter.game.environment.weapon;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.gui.font.Text;
 import aunmag.shooter.core.math.BodyCircle;
@@ -138,7 +137,7 @@ public class WeaponBonus extends Operative {
             text.orderRendering();
 
             if (!Context.main.isDebug()) {
-                Application.getShader().bind();
+                Context.main.getShader().bind();
                 weapon.render();
             }
         }

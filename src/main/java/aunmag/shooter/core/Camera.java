@@ -23,12 +23,12 @@ public class Camera extends BaseObject {
         var angle = UtilsMath.correctRadians(getRadians() - UtilsMath.PIx0_5);
         var position = getPosition();
 
-        viewMatrix = new Matrix4f(Application.getWindow().projection)
+        viewMatrix = new Matrix4f(Context.main.getWindow().projection)
                 .rotateZ(-angle)
                 .scale(getPixelsScale())
                 .translate(-position.x, -position.y, 0);
 
-        Application.getListener().setPosition(position.x, position.y, angle);
+        Context.main.getListener().setPosition(position.x, position.y, angle);
     }
 
     public Vector2f project(float x, float y) {
@@ -49,7 +49,7 @@ public class Camera extends BaseObject {
     }
 
     public float getPixelsScale() {
-        return Application.getWindow().getDiagonal() / scale;
+        return Context.main.getWindow().getDiagonal() / scale;
     }
 
 }

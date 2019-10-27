@@ -1,6 +1,6 @@
 package aunmag.shooter.core.math;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import org.joml.Vector2f;
@@ -35,7 +35,7 @@ public class BodyLine extends BodyPoint {
                 position.y,
                 positionTail.x,
                 positionTail.y,
-                Application.getCamera()::project
+                Context.main.getCamera()::project
         );
     }
 

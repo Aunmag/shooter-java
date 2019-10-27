@@ -1,6 +1,5 @@
 package aunmag.shooter.game.client.states;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.audio.Source;
 import aunmag.shooter.core.gui.Button;
 import aunmag.shooter.core.gui.Grid;
@@ -87,7 +86,9 @@ public class Pause extends Operative {
         var page = new Page(wallpaper);
 
         page.add(new Label(3, 3, 6, 1, "Are you sure you want to exit?"));
-        page.add(new Button(4, 8, 4, 1, "Yes", Application::stopRunning));
+        page.add(new Button(4, 8, 4, 1, "Yes", () -> {
+            Context.main.application.stop();
+        }));
         page.add(new Button(4, 9, 4, 1, "No", Button.ACTION_BACK));
 
         return page;

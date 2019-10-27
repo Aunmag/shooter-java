@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui.font;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.UtilsFile;
 
@@ -26,7 +26,7 @@ public class FontLoader {
 
         var lineHeight = toFloat(meta.get("lineHeight")) - paddingY;
         var lineStretchY = LINE_HEIGHT / lineHeight;
-        var lineStretchX = lineStretchY / Application.getWindow().getAspectRatio();
+        var lineStretchX = lineStretchY / Context.main.getWindow().getAspectRatio();
 
         var textureScale = toFloat(meta.get("scaleW"));
         var spaceWidth = 0f;

@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui.font;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.basics.BaseQuad;
 import aunmag.shooter.core.graphics.Graphics;
 import org.jetbrains.annotations.Nullable;
@@ -40,8 +40,8 @@ public class Text extends BaseQuad {
         vao = new TextVao(message, style);
 
         setSize(
-                vao.sizeX * Application.getWindow().getCenterX(),
-                vao.sizeY * Application.getWindow().getCenterY()
+                vao.sizeX * Context.main.getWindow().getCenterX(),
+                vao.sizeY * Context.main.getWindow().getCenterY()
         );
     }
 
@@ -51,9 +51,9 @@ public class Text extends BaseQuad {
         Vector2f position;
 
         if (isOnWorldRendering) {
-            position = Application.getCamera().project(x, y);
+            position = Context.main.getCamera().project(x, y);
         } else {
-            position = Application.getWindow().project(x, y);
+            position = Context.main.getWindow().project(x, y);
         }
 
         projection = new Matrix4f().translate(position.x(), position.y(), 0);
@@ -75,8 +75,8 @@ public class Text extends BaseQuad {
 
         vao.bind();
 
-        Application.getShader().setUniformColour(colour);
-        Application.getShader().setUniformProjection(projection);
+        Context.main.getShader().setUniformColour(colour);
+        Context.main.getShader().setUniformProjection(projection);
 
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);

@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import org.lwjgl.opengl.GL11;
 
@@ -18,13 +18,13 @@ public class Grid {
     }
 
     public void refresh() {
-        stepX = Application.getWindow().getWidth() / slices;
-        stepY = Application.getWindow().getHeight() / slices;
+        stepX = Context.main.getWindow().getWidth() / slices;
+        stepY = Context.main.getWindow().getHeight() / slices;
     }
 
     public void render() {
         GL11.glColor4f(1f, 1f, 1f, 0.2f);
-        var window = Application.getWindow();
+        var window = Context.main.getWindow();
 
         for (var n = 0; n < slices; n++) {
             var x = n * stepX;

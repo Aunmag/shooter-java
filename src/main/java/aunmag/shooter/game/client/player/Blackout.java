@@ -1,6 +1,6 @@
 package aunmag.shooter.game.client.player;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.Envelope;
@@ -60,10 +60,10 @@ public class Blackout {
     private void renderBoundaries() {
         if (texture != null) {
             var alpha = 1 - player.getHealth() / 1.4f;
-            var shader = Application.getShader();
+            var shader = Context.main.getShader();
             shader.bind();
             shader.setUniformColour(1, 1, 1, alpha);
-            shader.setUniformProjection(Application.getWindow().projection);
+            shader.setUniformProjection(Context.main.getWindow().projection);
             texture.bind();
             texture.render();
         }

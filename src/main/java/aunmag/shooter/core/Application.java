@@ -17,18 +17,17 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class Application {
 
-    private static boolean isInitialized = false;
-    private static boolean isRunning = false;
-    private static Window window;
+    private boolean isRunning = false;
+    public final Window window;
+    public final Camera camera;
     public final Input input;
-    private static Camera camera;
-    private static ShaderTextured shader;
-    private static Listener listener;
-    public static final FrameRate frameRate = new FrameRate(60);
-    public static final TimeFlow time = new TimeFlow();
+    public final ShaderTextured shader;
+    public final Listener listener;
+    public final FrameRate frameRate = new FrameRate(60);
+    public final TimeFlow time = new TimeFlow();
 
     public Application() {
-        if (isInitialized) {
+        if (isInitialized()) {
             throw new IllegalStateException("Engine is already initialized!");
         }
 
@@ -36,12 +35,9 @@ public abstract class Application {
             throw new IllegalStateException("Failed to initialize GLFW!");
         }
 
-        isInitialized = true;
-
         Context.main = new Context(this);
 
         window = new Window();
-        input = new Input(window.id);
 
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -52,6 +48,7 @@ public abstract class Application {
         camera = new Camera();
         shader = new ShaderTextured();
         listener = new Listener();
+        input = new Input(window.id);
     }
 
     public final void run() {
@@ -61,37 +58,35 @@ public abstract class Application {
             var timeCurrent = (double) System.currentTimeMillis() / 1000.0;
 
             if (frameRate.tryTick(timeCurrent)) {
-                engineUpdate();
-                engineRender();
+                updateCore();
+                renderCore();
             }
         }
 
-        engineTerminate();
+        onTerminate();
     }
 
-    private void engineUpdate() {
+    private void updateCore() {
         time.add(frameRate.getDelta(), true);
         input.update();
         GLFW.glfwPollEvents();
 
-        gameUpdate();
+        update();
         camera.update();
 
         if (GLFW.glfwWindowShouldClose(window.id)) {
-            stopRunning();
+            stop();
         }
     }
 
-    private void engineRender() {
+    private void renderCore() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-        gameRender();
+        render();
         Text.manager.renderAll();
         GLFW.glfwSwapBuffers(window.id);
     }
 
-    private void engineTerminate() {
-        gameTerminate();
-
+    protected void onTerminate() {
         Text.manager.removeAll();
         Texture.manager.clear();
         Model.cleanUp();
@@ -104,38 +99,17 @@ public abstract class Application {
         GLFW.glfwTerminate();
     }
 
-    protected abstract void gameUpdate();
+    protected abstract void update();
 
-    protected abstract void gameRender();
+    protected abstract void render();
 
-    protected abstract void gameTerminate();
-
-    public static void stopRunning() {
+    public void stop() {
         isRunning = false;
     }
 
+    // TODO: Remove
     public static boolean isInitialized() {
-        return isInitialized;
-    }
-
-    public static boolean isRunning() {
-        return isRunning;
-    }
-
-    public static Window getWindow() {
-        return window;
-    }
-
-    public static Camera getCamera() {
-        return camera;
-    }
-
-    public static ShaderTextured getShader() {
-        return shader;
-    }
-
-    public static Listener getListener() {
-        return listener;
+        return Context.main != null;
     }
 
 }

@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.structures.Texture;
 import aunmag.shooter.core.utilities.OperativeManager;
@@ -19,8 +19,8 @@ public class Layer extends OperativeManager<Component> {
     @Override
     public void render() {
         if (wallpaper != null) {
-            var projection = Application.getWindow().projection;
-            Application.getShader().setUniformProjection(projection);
+            var projection = Context.main.getWindow().projection;
+            Context.main.getShader().setUniformProjection(projection);
             wallpaper.bind();
             wallpaper.render();
         }

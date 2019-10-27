@@ -1,6 +1,5 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.font.FontStyle;
@@ -62,7 +61,7 @@ public class Button extends Label {
                 screenQuad.getPosition().x + screenQuad.getWidth(),
                 screenQuad.getPosition().y + screenQuad.getHeight(),
                 true,
-                Application.getWindow()::project
+                Context.main.getWindow()::project
         );
 
         super.render();

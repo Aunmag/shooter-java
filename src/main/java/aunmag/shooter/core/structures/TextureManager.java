@@ -1,7 +1,7 @@
 package aunmag.shooter.core.structures;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.Configs;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.utilities.ResourceManager;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,8 +56,8 @@ public class TextureManager extends ResourceManager<Texture> {
         if (modelSizeX == null || modelSizeY == null) {
             float sizeX = image.getWidth();
             float sizeY = image.getHeight();
-            float widowSizeX = Application.getWindow().getWidth();
-            float widowSizeY = Application.getWindow().getHeight();
+            float widowSizeX = Context.main.getWindow().getWidth();
+            float widowSizeY = Context.main.getWindow().getHeight();
 
             if (type == Type.SPRITE) {
                 sizeX /= Configs.getPixelsPerMeter();
@@ -68,7 +68,7 @@ public class TextureManager extends ResourceManager<Texture> {
             } else if (type == Type.WALLPAPER) {
                 var aspectRatio = sizeX / sizeY;
 
-                if (aspectRatio < Application.getWindow().getAspectRatio()) {
+                if (aspectRatio < Context.main.getWindow().getAspectRatio()) {
                     sizeX = widowSizeX;
                     sizeY = sizeX / aspectRatio;
                 } else {

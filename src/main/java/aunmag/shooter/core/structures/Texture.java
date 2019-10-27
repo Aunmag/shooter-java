@@ -1,6 +1,6 @@
 package aunmag.shooter.core.structures;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.basics.BaseQuad;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -94,9 +94,9 @@ public class Texture extends BaseQuad {
     }
 
     public void renderOnWorld(float x, float y, float radians) {
-        var camera = Application.getCamera();
+        var camera = Context.main.getCamera();
         var projection = camera.toViewProjection(x, y, radians);
-        Application.getShader().setUniformProjection(projection);
+        Context.main.getShader().setUniformProjection(projection);
 
         bind();
         render();

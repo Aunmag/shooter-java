@@ -1,6 +1,5 @@
 package aunmag.shooter.game.scenarios;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.Button;
 import aunmag.shooter.core.gui.Label;
@@ -38,7 +37,7 @@ public class ScenarioEncircling extends Scenario {
     private int wave = 0;
     private int zombiesToSpawn = 0;
     private final Timer spawnTimer = new Timer(world.time, 0.5);
-    private final Timer waveCheckTimer = new Timer(Application.time, 2);
+    private final Timer waveCheckTimer = new Timer(Context.main.getTime(), 2);
     private float bonusChance = 0;
     private ActorType zombie = ActorType.zombie;
     private ActorType zombieAgile = ActorType.zombieAgile;
@@ -294,7 +293,7 @@ public class ScenarioEncircling extends Scenario {
     public void render() {
         if (Context.main.isDebug()) {
             var n = BORDERS_DISTANCE;
-            var camera = Application.getCamera();
+            var camera = Context.main.getCamera();
             GL11.glLineWidth(2);
             GL11.glColor3f(1, 0, 0);
             Graphics.draw.line(-n, -n, +n, -n, camera::project);

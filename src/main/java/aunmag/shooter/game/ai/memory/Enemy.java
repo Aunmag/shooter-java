@@ -1,6 +1,6 @@
 package aunmag.shooter.game.ai.memory;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.ai.Ai;
@@ -37,7 +37,7 @@ public class Enemy extends Destination {
                 ai.actor.body.position.y,
                 ai.getStrategy().dangerZoneRadius,
                 true,
-                Application.getCamera()::project
+                Context.main.getCamera()::project
         );
     }
 

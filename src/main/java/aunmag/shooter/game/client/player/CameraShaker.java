@@ -1,9 +1,9 @@
 package aunmag.shooter.game.client.player;
 
-import aunmag.shooter.core.Application;
 import aunmag.shooter.core.utilities.Envelope;
 import aunmag.shooter.core.utilities.TimeFlow;
 import aunmag.shooter.core.utilities.UtilsMath;
+import aunmag.shooter.game.client.Context;
 
 public class CameraShaker {
 
@@ -34,7 +34,7 @@ public class CameraShaker {
             return;
         }
 
-        var camera = Application.getCamera();
+        var camera = Context.main.getCamera();
         var radians = UtilsMath.correctRadians(camera.getRadians() + envelope.getValue());
         camera.setRadians(radians);
         camera.mount.radians = radians;

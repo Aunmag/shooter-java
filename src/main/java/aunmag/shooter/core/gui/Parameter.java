@@ -1,6 +1,6 @@
 package aunmag.shooter.core.gui;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.utilities.UtilsMath;
@@ -27,7 +27,7 @@ public class Parameter extends Component {
     @Override
     public void render() {
         var pulse = getPulse();
-        var window = Application.getWindow();
+        var window = Context.main.getWindow();
 
         var x = GRID.getStepX() * (label.quad.getPosition().x + 2.0f);
         var y = GRID.getStepY() * (label.quad.getPosition().y + 0.3f);
@@ -54,7 +54,7 @@ public class Parameter extends Component {
     public float getPulse() {
         if (isPulsing) {
             return UtilsMath.bound(
-                UtilsMath.oscillateSaw(Application.time.getCurrent(), PULSE_RATE),
+                UtilsMath.oscillateSaw(Context.main.getTime().getCurrent(), PULSE_RATE),
                 PULSE_BOUND
             );
         } else {

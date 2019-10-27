@@ -1,6 +1,6 @@
 package aunmag.shooter.game.environment.projectile;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.math.BodyLine;
 import aunmag.shooter.core.math.CollisionCL;
 import aunmag.shooter.core.math.Kinetics;
@@ -112,7 +112,7 @@ public class Projectile extends Operative {
 
     @Override
     public void render() {
-        GL11.glLineWidth(Application.getCamera().toPixels(type.size));
+        GL11.glLineWidth(Context.main.getCamera().toPixels(type.size));
         body.render();
     }
 

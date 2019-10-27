@@ -1,6 +1,6 @@
 package aunmag.shooter.core.math;
 
-import aunmag.shooter.core.Application;
+import aunmag.shooter.core.Context;
 import aunmag.shooter.core.graphics.Graphics;
 
 public class BodyCircle extends BodyPoint {
@@ -20,7 +20,7 @@ public class BodyCircle extends BodyPoint {
                 position.y,
                 radius,
                 true,
-                Application.getCamera()::project
+                Context.main.getCamera()::project
         );
     }
 
