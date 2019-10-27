@@ -3,14 +3,14 @@ package aunmag.shooter.core.gui;
 import aunmag.shooter.core.Application;
 import aunmag.shooter.core.graphics.Graphics;
 import aunmag.shooter.core.gui.font.FontStyle;
-import aunmag.shooter.core.utilities.Pulse;
+import aunmag.shooter.core.utilities.UtilsMath;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
 public class Parameter extends Component {
 
     public static final Grid GRID = new Grid(36);
-    public static final Pulse PULSE = new Pulse(Application.time, 0.2);
+    public static final float PULSE_RATE = 0.4f;
     public static final float PULSE_BOUND = 0.5f;
     public static final Vector4f TEXT_COLOR = new Vector4f(1.0f, 1.0f, 1.0f, 0.5f);
 
@@ -53,7 +53,10 @@ public class Parameter extends Component {
 
     public float getPulse() {
         if (isPulsing) {
-            return PULSE.getValue(PULSE_BOUND);
+            return UtilsMath.bound(
+                UtilsMath.oscillateSaw(Application.time.getCurrent(), PULSE_RATE),
+                PULSE_BOUND
+            );
         } else {
             return 1.0f;
         }

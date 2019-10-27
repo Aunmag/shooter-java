@@ -5,7 +5,6 @@ import aunmag.shooter.core.gui.font.FontStyle;
 import aunmag.shooter.core.gui.font.Text;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
-import aunmag.shooter.core.utilities.FluidValue;
 import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.Timer;
 import aunmag.shooter.core.utilities.UtilsMath;
@@ -18,17 +17,16 @@ import org.lwjgl.glfw.GLFW;
 public class WeaponBonus extends Operative {
 
     private static final float LIFETIME = 30;
-    private static final float ROTATION_VELOCITY = (float) Math.PI;
-    private static final float PULSE_TIME = 0.4f;
-    private static final float RADIUS_MIN = 0.12f;
-    private static final float RADIUS_MAX = 0.18f;
+    private static final float ROTATION_RATE = 2f;
+    private static final float RADIUS = 0.12f;
+    private static final float RADIUS_EXPAND = 0.06f;
+    private static final float RADIUS_PULSE_RATE = 0.8f;
 
     public final BodyCircle body;
     public final Weapon weapon;
     @Nullable
     private Actor giver;
     private final Text text;
-    private final FluidValue pulse;
     private final Timer timer;
 
     public WeaponBonus(float x, float y, Weapon weapon, @Nullable Actor giver) {
@@ -39,7 +37,6 @@ public class WeaponBonus extends Operative {
         text = new Text(x, y, weapon.type.name, FontStyle.SIMPLE);
         text.setOnWorldRendering(true);
 
-        pulse = new FluidValue(weapon.world.time, PULSE_TIME);
         timer = new Timer(weapon.world.time, LIFETIME);
         timer.next();
     }
@@ -93,22 +90,18 @@ public class WeaponBonus extends Operative {
     }
 
     private void updateRadius() {
-        pulse.update();
-
-        if (pulse.isTargetReached()) {
-            if (pulse.getTarget() == RADIUS_MIN) {
-                pulse.setTarget(RADIUS_MAX);
-            } else {
-                pulse.setTarget(RADIUS_MIN);
-            }
-        }
-
-        body.radius = pulse.getCurrent();
+        body.radius = RADIUS + RADIUS_EXPAND * UtilsMath.oscillateSaw(
+            weapon.world.time.getCurrent(),
+            RADIUS_PULSE_RATE
+        );
     }
 
     private void updateWeapon() {
         weapon.body.positionTail.set(body.position);
-        weapon.body.radians -= ROTATION_VELOCITY * weapon.world.time.getDelta();
+        weapon.body.radians = (float) UtilsMath.PIx2 * (1 - UtilsMath.oscillateTriangle(
+            weapon.world.time.getCurrent(),
+            ROTATION_RATE
+        ));
         weapon.update();
     }
 

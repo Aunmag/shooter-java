@@ -3,7 +3,6 @@ package aunmag.shooter.core;
 import aunmag.shooter.core.audio.Listener;
 import aunmag.shooter.core.audio.Sample;
 import aunmag.shooter.core.audio.Source;
-import aunmag.shooter.core.gui.Parameter;
 import aunmag.shooter.core.gui.font.Text;
 import aunmag.shooter.core.input.Input;
 import aunmag.shooter.core.shaders.ShaderTextured;
@@ -74,7 +73,6 @@ public abstract class Application {
         time.add(frameRate.getDelta(), true);
         input.update();
         GLFW.glfwPollEvents();
-        Parameter.PULSE.update();
 
         gameUpdate();
         camera.update();

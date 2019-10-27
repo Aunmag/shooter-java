@@ -66,6 +66,24 @@ public final class UtilsMath {
         return number;
     }
 
+    public static float oscillateSaw(double time, double rate) {
+        var value = 2 * oscillateTriangle(time, rate);
+
+        if (value > 1) {
+            value = 2 - value;
+        }
+
+        return value;
+    }
+
+    public static float oscillateTriangle(double time, double rate) {
+        return (float) (time / rate) % 1.0f;
+    }
+
+    public static float bound(float value, float bound) {
+        return value * bound + bound / 2.0f;
+    }
+
     /**
      * Predicts the meet point of two moving objects.
      */
