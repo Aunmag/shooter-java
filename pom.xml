@@ -15,7 +15,7 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <lwjgl.version>3.1.5</lwjgl.version>
+        <lwjgl.version>3.2.3</lwjgl.version>
         <junit.version>5.2.0</junit.version>
     </properties>
 
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.joml</groupId>
             <artifactId>joml</artifactId>
-            <version>1.9.15</version>
+            <version>1.9.19</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
