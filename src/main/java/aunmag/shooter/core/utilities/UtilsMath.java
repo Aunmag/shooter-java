@@ -84,6 +84,10 @@ public final class UtilsMath {
         return value * bound + bound / 2.0f;
     }
 
+    public static float average(float average, float range, float value) {
+        return (average * range + value) / (range + 1);
+    }
+
     /**
      * Predicts the meet point of two moving objects.
      */

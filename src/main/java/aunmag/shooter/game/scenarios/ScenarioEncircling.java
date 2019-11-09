@@ -242,7 +242,7 @@ public class ScenarioEncircling extends Scenario {
 
         var score = String.format(
                 "You killed %d zombies and survived %d/%d waves.",
-                Context.main.getPlayerActor().map(Actor::getKills).orElse(0),
+                Context.main.getPlayerActor().map(a -> a.statistics.kills).orElse(0),
                 wavesSurvived,
                 WAVE_FINAL
         );

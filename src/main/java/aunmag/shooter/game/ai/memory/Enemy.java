@@ -19,7 +19,7 @@ public class Enemy extends Destination {
                 ai.actor.hands.coverage.position,
                 ai.actor.kinetics.velocity,
                 actor.body.position,
-                actor.kinetics.velocity
+                actor.statistics.velocityAverage
         ));
     }
 

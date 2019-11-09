@@ -37,7 +37,7 @@ public class Actor extends Operative {
     public final Kinetics kinetics;
     private float health = 1.0f;
     public final Stamina stamina;
-    private int kills = 0;
+    public final ActorStatistics statistics = new ActorStatistics(this);
     private Weapon weapon = null;
     public final Hands hands;
     private Source audioSource = new Source();
@@ -82,6 +82,7 @@ public class Actor extends Operative {
         hands.update();
         updateWeapon();
         updateAudioSource();
+        statistics.update();
 
         control.reset();
     }
@@ -242,7 +243,7 @@ public class Actor extends Operative {
             addHealth(-damage / type.strength);
 
             if (attacker != null && !isAlive()) {
-                attacker.increaseKills();
+                attacker.statistics.commitKill();
             }
         }
     }
@@ -299,10 +300,6 @@ public class Actor extends Operative {
         });
     }
 
-    private void increaseKills() {
-        kills++;
-    }
-
     private void addHealth(float addHealth) {
         var wasAlive = isAlive();
 
@@ -338,10 +335,6 @@ public class Actor extends Operative {
 
     public boolean hasWeapon() {
         return weapon != null;
-    }
-
-    public int getKills() {
-        return kills;
     }
 
     public Weapon getWeapon() {
