@@ -105,29 +105,25 @@ public class WeaponBonus extends Operative {
     }
 
     private void updatePickup() {
-        var actor = Context.main.getPlayerActor();
+        Context.main.getPlayerActor().ifPresent(actor -> {
+            var collision = new CollisionCC(body, actor.hands.coverage);
+            var input = Context.main.getInput();
 
-        if (actor == null) {
-            return;
-        }
+            if (input.keyboard.isKeyPressed(GLFW.GLFW_KEY_E) && collision.isTrue()) {
+                var previousWeapon = actor.getWeapon();
 
-        var collision = new CollisionCC(body, actor.hands.coverage);
-        var input = Context.main.getInput();
+                if (previousWeapon != null) {
+                    actor.world.bonuses.all.add(new WeaponBonus(
+                            body.position.x,
+                            body.position.y,
+                            previousWeapon
+                    ));
+                }
 
-        if (input.keyboard.isKeyPressed(GLFW.GLFW_KEY_E) && collision.isTrue()) {
-            var previousWeapon = actor.getWeapon();
-
-            if (previousWeapon != null) {
-                actor.world.bonuses.all.add(new WeaponBonus(
-                        body.position.x,
-                        body.position.y,
-                        previousWeapon
-                ));
+                actor.setWeapon(weapon);
+                remove();
             }
-
-            actor.setWeapon(weapon);
-            remove();
-        }
+        });
     }
 
     @Override

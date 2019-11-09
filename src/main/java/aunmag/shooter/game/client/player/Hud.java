@@ -25,9 +25,7 @@ public class Hud extends Operative {
     public void update() {
         layer.update();
 
-        var actor = Context.main.getPlayerActor();
-
-        if (actor != null) {
+        Context.main.getPlayerActor().ifPresent(actor -> {
             health.value = actor.getHealth();
             stamina.value = actor.stamina.get();
 
@@ -40,7 +38,7 @@ public class Hud extends Operative {
                 ammo.value = weapon.magazine.getVolumeRatio();
                 ammo.isPulsing = weapon.magazine.isReloading();
             }
-        }
+        });
     }
 
     @Override
@@ -53,22 +51,19 @@ public class Hud extends Operative {
     }
 
     private void renderDebug() {
-        var game = Context.main.getGame();
-        if (game == null) {
-            return;
-        }
+        Context.main.getGame().ifPresent(game -> {
+            var world = game.getWorld();
 
-        var world = game.getWorld();
+            var message = "";
+            message += String.format("\nAIs: %s", world.ais.all.size());
+            message += String.format("\nActors: %s", world.actors.all.size());
+            message += String.format("\nBullets: %s", world.projectiles.all.size());
+            message += String.format("\nGround: %s", world.ground.all.size());
+            message += String.format("\nTrees: %s", world.trees.all.size());
 
-        var message = "";
-        message += String.format("\nAIs: %s", world.ais.all.size());
-        message += String.format("\nActors: %s", world.actors.all.size());
-        message += String.format("\nBullets: %s", world.projectiles.all.size());
-        message += String.format("\nGround: %s", world.ground.all.size());
-        message += String.format("\nTrees: %s", world.trees.all.size());
-
-        debug.load(message);
-        debug.orderRendering();
+            debug.load(message);
+            debug.orderRendering();
+        });
     }
 
     @Override

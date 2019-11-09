@@ -80,11 +80,7 @@ public class ScenarioEncircling extends Scenario {
 
     @Override
     public void update() {
-        var player = Context.main.getPlayerActor();
-
-        if (player == null || !player.isAlive()) {
-            gameOver(false);
-        } else {
+        if (Context.main.getPlayerActor().map(Actor::isAlive).orElse(false)) {
             confinePlayerPosition();
 
             if (zombiesToSpawn == 0) {
@@ -99,6 +95,8 @@ public class ScenarioEncircling extends Scenario {
                 spawnZombie();
                 spawnTimer.next();
             }
+        } else {
+            gameOver(false);
         }
     }
 
@@ -123,15 +121,11 @@ public class ScenarioEncircling extends Scenario {
     }
 
     private void confinePlayerPosition() {
-        var player = Context.main.getPlayerActor();
-
-        if (player == null) {
-            return;
-        }
-
-        var position = player.body.position;
-        position.x = UtilsMath.limit(position.x, -BORDERS_DISTANCE, BORDERS_DISTANCE);
-        position.y = UtilsMath.limit(position.y, -BORDERS_DISTANCE, BORDERS_DISTANCE);
+        Context.main.getPlayerActor().ifPresent(player -> {
+            var position = player.body.position;
+            position.x = UtilsMath.limit(position.x, -BORDERS_DISTANCE, BORDERS_DISTANCE);
+            position.y = UtilsMath.limit(position.y, -BORDERS_DISTANCE, BORDERS_DISTANCE);
+        });
     }
 
     private void startNextWave() {
@@ -143,14 +137,11 @@ public class ScenarioEncircling extends Scenario {
         zombieAgile = ActorType.clone(ActorType.zombieAgile, getZombiesSkill());
         zombieHeavy = ActorType.clone(ActorType.zombieHeavy, getZombiesSkill());
 
-        var game = Context.main.getGame();
-        if (game != null) {
-            game.player.hud.layer.add(new Notification(
-                    world.time,
-                    String.format("Wave %d/%d", wave, WAVE_FINAL),
-                    String.format("Kill %d zombies", zombiesToSpawn)
-            ));
-        }
+        Context.main.getPlayer().ifPresent(p -> p.hud.layer.add(new Notification(
+                world.time,
+                String.format("Wave %d/%d", wave, WAVE_FINAL),
+                String.format("Kill %d zombies", zombiesToSpawn)
+        )));
 
         if (wave > 1 && UtilsRandom.chance(HUMAN_SPAWN_CHANCE)) {
             spawnEnemy(ActorType.human);
@@ -175,11 +166,8 @@ public class ScenarioEncircling extends Scenario {
         var x = -distance * (float) Math.cos(direction);
         var y = -distance * (float) Math.sin(direction);
 
-        var player = Context.main.getPlayerActor();
-        if (player != null) {
-            x += player.body.position.x;
-            y += player.body.position.y;
-        }
+        x += Context.main.getPlayerActor().map(a -> a.body.position.x).orElse(0f);
+        y += Context.main.getPlayerActor().map(a -> a.body.position.y).orElse(0f);
 
         var enemy = new Actor(type, world, x, y, direction);
         world.actors.all.add(enemy);
@@ -242,7 +230,6 @@ public class ScenarioEncircling extends Scenario {
         var wavesSurvived = wave;
         var wallpaperName = (String) null;
         var title = (String) null;
-        var kills = 0;
 
         if (isVictory) {
             wallpaperName = "victory";
@@ -253,14 +240,9 @@ public class ScenarioEncircling extends Scenario {
             title = "You have died";
         }
 
-        var player = Context.main.getPlayerActor();
-        if (player != null) {
-            kills += player.getKills();
-        }
-
         var score = String.format(
                 "You killed %d zombies and survived %d/%d waves.",
-                kills,
+                Context.main.getPlayerActor().map(Actor::getKills).orElse(0),
                 wavesSurvived,
                 WAVE_FINAL
         );

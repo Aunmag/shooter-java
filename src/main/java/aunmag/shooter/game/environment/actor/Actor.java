@@ -254,13 +254,16 @@ public class Actor extends Operative {
 
         kinetics.push(0, 0, force);
 
-        var player = Context.main.getPlayer();
-        if (player != null && player.getActor() == this) {
-            var cameraShaker = player.cameraShaker;
-            if (cameraShaker != null) {
-                cameraShaker.shake(kinetics.compensateMomentum(force));
+        var forceFinal = force;
+
+        Context.main.getPlayer().ifPresent(player -> {
+            if (player.getActor() == this) {
+                var cameraShaker = player.cameraShaker;
+                if (cameraShaker != null) {
+                    cameraShaker.shake(kinetics.compensateMomentum(forceFinal));
+                }
             }
-        }
+        });
     }
 
     @Override

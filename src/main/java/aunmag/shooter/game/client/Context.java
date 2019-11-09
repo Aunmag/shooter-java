@@ -3,7 +3,8 @@ package aunmag.shooter.game.client;
 import aunmag.shooter.game.client.player.Player;
 import aunmag.shooter.game.client.states.Game;
 import aunmag.shooter.game.environment.actor.Actor;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class Context extends aunmag.shooter.core.Context {
 
@@ -16,35 +17,25 @@ public class Context extends aunmag.shooter.core.Context {
         this.application = application;
     }
 
+    @Override
+    public Application getApplication() {
+        return application;
+    }
+
     public boolean isDebug() {
-        return application.isDebug();
+        return getApplication().isDebug();
     }
 
-    @Nullable
-    public Game getGame() {
-        return application.getGame();
+    public Optional<Game> getGame() {
+        return Optional.ofNullable(getApplication().getGame());
     }
 
-    @Nullable
-    public Player getPlayer() {
-        var game = getGame();
-
-        if (game == null) {
-            return null;
-        } else {
-            return game.player;
-        }
+    public Optional<Player> getPlayer() {
+        return getGame().map(game -> game.player);
     }
 
-    @Nullable
-    public Actor getPlayerActor() {
-        var player = getPlayer();
-
-        if (player == null) {
-            return null;
-        } else {
-            return player.getActor();
-        }
+    public Optional<Actor> getPlayerActor() {
+        return getPlayer().flatMap(player -> Optional.ofNullable(player.getActor()));
     }
 
 }

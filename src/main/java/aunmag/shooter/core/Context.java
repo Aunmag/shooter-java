@@ -15,28 +15,32 @@ public class Context {
         this.application = application;
     }
 
+    public Application getApplication() {
+        return application;
+    }
+
     public Window getWindow() {
-        return application.window;
+        return getApplication().window;
     }
 
     public Camera getCamera() {
-        return application.camera;
+        return getApplication().camera;
     }
 
     public ShaderTextured getShader() {
-        return application.shader;
+        return getApplication().shader;
     }
 
     public Listener getListener() {
-        return application.listener;
+        return getApplication().listener;
     }
 
     public Input getInput() {
-        return application.input;
+        return getApplication().input;
     }
 
     public TimeFlow getTime() {
-        return application.time;
+        return getApplication().time;
     }
 
     public float getDelta() {
