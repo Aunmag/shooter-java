@@ -12,6 +12,8 @@ public class Player extends Operative {
     public static final float MOUSE_SENSITIVITY = 0.003f;
     public static final float MOUSE_SENSITIVITY_AIMING_FACTOR = 0.75f;
     public static final float ZOOM_VELOCITY = 1.5f;
+    public static final float ZOOM_VELOCITY_SCROLL = 10f;
+    public static final float ZOOM_AVERAGING_TIME = 0.25f;
     public static final float SCALE_MIN = 5.0f;
     public static final float SCALE_MAX = 30.0f;
     public static final float SCALE_DEFAULT = 15.0f;
@@ -23,6 +25,7 @@ public class Player extends Operative {
     @Nullable public CameraShaker cameraShaker = null;
     private final Crosshair crosshair = new Crosshair();
     private float direction = 0;
+    private float zooming = 0;
     private boolean isAiming = false;
 
     public Player() {
@@ -72,14 +75,45 @@ public class Player extends Operative {
             actor.getWeapon().magazine.reload();
         }
 
-        direction += getRotation();
-        actor.control.turnTo(direction);
-        actor.body.correctRadians();
+        updateRotation();
+        updateZooming();
+    }
 
-        Context.main.getCamera().scale = UtilsMath.limit(
-                Context.main.getCamera().scale - getZooming(),
-                SCALE_MIN,
-                SCALE_MAX
+    private void updateRotation() {
+        if (actor == null) {
+            return;
+        }
+
+        direction += MOUSE_SENSITIVITY
+            * Context.main.getInput().mouse.velocity.x
+            * (1 - actor.isAiming.getCurrent() * MOUSE_SENSITIVITY_AIMING_FACTOR);
+
+        actor.control.turnTo(direction);
+    }
+
+    private void updateZooming() {
+        var camera = Context.main.getCamera();
+        var input = Context.main.getInput();
+        var zoomingNew = input.mouse.scroll * ZOOM_VELOCITY_SCROLL;
+
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_ADD)) {
+            zoomingNew += ZOOM_VELOCITY;
+        }
+
+        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_SUBTRACT)) {
+            zoomingNew -= ZOOM_VELOCITY;
+        }
+
+        zooming = UtilsMath.average(
+            zooming,
+            Context.main.application.frameRate.getFrequency() * ZOOM_AVERAGING_TIME,
+            zoomingNew
+        );
+
+        camera.scale = UtilsMath.limit(
+            camera.scale - (camera.scale * zooming * Context.main.getDelta()),
+            SCALE_MIN,
+            SCALE_MAX
         );
     }
 
@@ -146,32 +180,6 @@ public class Player extends Operative {
     @Nullable
     public Actor getActor() {
         return actor;
-    }
-
-    public float getRotation() {
-        var input = Context.main.getInput();
-        var aimingFactor = 1.0f;
-
-        if (actor != null) {
-            aimingFactor -= actor.isAiming.getCurrent() * MOUSE_SENSITIVITY_AIMING_FACTOR;
-        }
-
-        return input.mouse.velocity.x * MOUSE_SENSITIVITY * aimingFactor;
-    }
-
-    public float getZooming() {
-        var input = Context.main.getInput();
-        var zooming = input.mouse.scrollSmooth;
-
-        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_ADD)) {
-            zooming += ZOOM_VELOCITY;
-        }
-
-        if (input.keyboard.isKeyDown(GLFW.GLFW_KEY_KP_SUBTRACT)) {
-            zooming -= ZOOM_VELOCITY;
-        }
-
-        return Context.main.getCamera().scale * zooming * Context.main.getDelta();
     }
 
 }
