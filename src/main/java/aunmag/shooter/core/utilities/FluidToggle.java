@@ -5,7 +5,7 @@ public class FluidToggle extends FluidValue {
     public static final int VALUE_MIN = 0;
     public static final int VALUE_MAX = 1;
 
-    public FluidToggle(TimeFlow time, double duration) {
+    public FluidToggle(TimeFlow time, float duration) {
         super(time, duration);
     }
 

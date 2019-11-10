@@ -2,6 +2,7 @@ package aunmag.shooter.game.ai;
 
 import aunmag.shooter.core.utilities.TimeFlow;
 import aunmag.shooter.core.utilities.Timer;
+import aunmag.shooter.core.utilities.TimerRandomized;
 
 public class Reaction {
 
@@ -14,7 +15,7 @@ public class Reaction {
     private int phase = 0;
 
     public Reaction(TimeFlow time, float reaction) {
-        timer = new Timer(time, reaction, DEVIATION_FACTOR);
+        timer = new TimerRandomized(time, reaction, DEVIATION_FACTOR);
     }
 
     public void update() {

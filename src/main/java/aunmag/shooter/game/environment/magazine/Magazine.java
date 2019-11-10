@@ -1,6 +1,7 @@
 package aunmag.shooter.game.environment.magazine;
 
 import aunmag.shooter.core.utilities.Timer;
+import aunmag.shooter.core.utilities.TimerRandomized;
 import aunmag.shooter.game.environment.World;
 
 public class Magazine {
@@ -22,7 +23,7 @@ public class Magazine {
             reloadingTime /= (float) type.capacity;
         }
 
-        reloadingTimer = new Timer(world.time, reloadingTime, 0.125f);
+        reloadingTimer = new TimerRandomized(world.time, reloadingTime, 0.125f);
     }
 
     public void update() {
@@ -52,7 +53,7 @@ public class Magazine {
             return;
         }
 
-        if (reloadingTimer.getDuration() == 0) {
+        if (reloadingTimer.duration == 0) {
             if (type.isAutomatic) {
                 cartridgesQuantity = type.capacity;
             } else {

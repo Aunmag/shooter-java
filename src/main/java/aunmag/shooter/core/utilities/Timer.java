@@ -3,25 +3,13 @@ package aunmag.shooter.core.utilities;
 public class Timer {
 
     public final TimeFlow time;
-    private double target = 0.0;
-    private double duration = 0.0;
-    private double durationDeviationFactor = 0.0;
-    private double durationCurrent = 0.0;
+    public float start = 0.0f;
+    public float duration;
 
-    public Timer(TimeFlow time, double duration) {
-        this(time, duration, 0.0);
-    }
-
-    public Timer(
-            TimeFlow time,
-            double duration,
-            double durationDeviationFactor
-    ) {
+    public Timer(TimeFlow time, float duration) {
         this.time = time;
-        this.durationDeviationFactor = durationDeviationFactor;
-
-        target += time.getCurrent(); // TODO: Why do I need it?
-        setDuration(duration);
+        this.duration = duration;
+        next();
     }
 
     public void next(boolean isDoneMustBe) {
@@ -31,68 +19,27 @@ public class Timer {
     }
 
     public void next() {
-        updateDurationCurrent();
-        setTarget(durationCurrent + time.getCurrent());
-    }
-
-    private void updateDurationCurrent() {
-        durationCurrent = UtilsRandom.deviation(
-                (float) duration,
-                (float) (duration * durationDeviationFactor)
-        );
-    }
-
-    public double calculateIsDoneRatio() {
-        return getPassed() / duration;
-    }
-
-    public void setDuration(double duration) {
-        target -= durationCurrent;
-
-        this.duration = duration;
-        updateDurationCurrent();
-
-        target += durationCurrent;
-    }
-
-    public void setDurationDeviationFactor(double durationDeviationFactor) {
-        this.durationDeviationFactor = durationDeviationFactor;
-    }
-
-    public void setTarget(double target) {
-        this.target = target;
-    }
-
-    public double getDuration() {
-        return duration;
-    }
-
-    public double getDurationDeviationFactor() {
-        return durationDeviationFactor;
-    }
-
-    public double getDurationCurrent() {
-        return durationCurrent;
-    }
-
-    public double getInitial() {
-        return target - duration;
-    }
-
-    public double getPassed() {
-        return time.getCurrent() - getInitial();
-    }
-
-    public double getRemain() {
-        return target - time.getCurrent();
-    }
-
-    public double getTarget() {
-        return target;
+        start = (float) time.getCurrent();
     }
 
     public boolean isDone() {
-        return time.getCurrent() >= target;
+        return getPassed() >= duration;
+    }
+
+    public float getPassed() {
+        return (float) time.getCurrent() - start;
+    }
+
+    public float getRemaining() {
+        return duration - getPassed();
+    }
+
+    public float getProgress() {
+        return getPassed() / duration;
+    }
+
+    public float getProgressLimited() {
+        return UtilsMath.limit(getProgress(), 0, 1);
     }
 
 }

@@ -8,7 +8,7 @@ public class FluidValue {
     private float target = 0;
     private float flexDegree = 1;
 
-    public FluidValue(TimeFlow time, double duration) {
+    public FluidValue(TimeFlow time, float duration) {
         timer = new Timer(time, duration);
     }
 
@@ -20,7 +20,7 @@ public class FluidValue {
         if (timer.isDone()) {
             reachTargetNow();
         } else {
-            var progress = Math.pow(timer.calculateIsDoneRatio(), flexDegree);
+            var progress = Math.pow(timer.getProgressLimited(), flexDegree);
             var valueIncrease = getValueRange() * progress;
             current = (float) (initial + valueIncrease);
         }

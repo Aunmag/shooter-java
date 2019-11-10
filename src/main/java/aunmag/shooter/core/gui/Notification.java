@@ -17,7 +17,7 @@ public class Notification extends Component {
     private final Vector4f color = new Vector4f(1, 1, 1, 0);
 
     public Notification(TimeFlow time, String title, String details) {
-        this.timer = new Timer(time, 3.0);
+        this.timer = new Timer(time, 3.0f);
         this.title = new Label(5, 4, 2, 1, title);
         this.details = new Label(5, 5, 2, 1, details, FontStyle.LABEL_LIGHT);
 
@@ -48,15 +48,16 @@ public class Notification extends Component {
     }
 
     public float getFade() {
+        // TODO: Use envelope
         var passed = timer.getPassed();
-        var left = timer.getRemain();
+        var left = timer.getRemaining();
 
         var fade = 0f;
 
         if (passed < left) {
-            fade = (float) passed / TIME_FADE_IN;
+            fade = passed / TIME_FADE_IN;
         } else {
-            fade = (float) left / TIME_FADE_OUT;
+            fade = left / TIME_FADE_OUT;
         }
 
         return UtilsMath.limit(fade, 0, 1);

@@ -21,13 +21,13 @@ public class Envelope {
         value.update();
 
         if (value.isTargetReached() && value.getTarget() != 0) {
-            value.timer.setDuration(release);
+            value.timer.duration = release;
             value.setTarget(0);
         }
     }
 
     public void start(float value) {
-        this.value.timer.setDuration(attack);
+        this.value.timer.duration = attack;
         this.value.setTarget(value + this.value.getCurrent());
     }
 

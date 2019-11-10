@@ -3,6 +3,7 @@ package aunmag.shooter.game.environment.actor;
 import aunmag.shooter.core.math.BodyCircle;
 import aunmag.shooter.core.math.CollisionCC;
 import aunmag.shooter.core.utilities.Timer;
+import aunmag.shooter.core.utilities.TimerRandomized;
 
 public class Hands {
 
@@ -21,7 +22,7 @@ public class Hands {
         coverage = new BodyCircle(0, 0, 0, COVERAGE_RADIUS);
         coverage.color.set(1f, 0f, 0f, 0.5f);
 
-        attackTimer = new Timer(
+        attackTimer = new TimerRandomized(
                 actor.world.time,
                 RELOADING_TIME,
                 RELOADING_TIME_DEVIATION_FACTOR

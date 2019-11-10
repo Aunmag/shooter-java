@@ -79,7 +79,7 @@ public class WeaponBonus extends Operative {
 
     private void updateColor() {
         var alpha = UtilsMath.limit(
-                4.0f * (float) (1 - timer.calculateIsDoneRatio()),
+                4.0f * (1 - timer.getProgressLimited()),
                 0.0f,
                 0.8f
         );

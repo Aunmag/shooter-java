@@ -82,6 +82,7 @@ public class Window extends BaseQuad {
             GLFW.glfwSetInputMode(id, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
         }
     }
+
     protected void setSize(float width, float height) {
         if (isInitialized) {
             var message = "Unable to change window size after initialization";

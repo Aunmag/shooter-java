@@ -36,7 +36,7 @@ public class ScenarioEncircling extends Scenario {
 
     private int wave = 0;
     private int zombiesToSpawn = 0;
-    private final Timer spawnTimer = new Timer(world.time, 0.5);
+    private final Timer spawnTimer = new Timer(world.time, 0.5f);
     private final Timer waveCheckTimer = new Timer(Context.main.getTime(), 2);
     private float bonusChance = 0;
     private ActorType zombie = ActorType.zombie;
