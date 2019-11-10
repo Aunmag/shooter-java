@@ -10,29 +10,24 @@ public class Envelope {
         this(attack, release, 1, time);
     }
 
-    public Envelope(float attack, float release, float bend, TimeFlow time) {
+    public Envelope(float attack, float release, float tensity, TimeFlow time) {
         this.attack = attack;
         this.release = release;
-        this.value = new FluidValue(time, attack);
-        this.value.setFlexDegree(bend);
+        this.value = new FluidValue(time, attack, tensity);
     }
 
     public void update() {
-        value.update();
-
-        if (value.isTargetReached() && value.getTarget() != 0) {
-            value.timer.duration = release;
-            value.setTarget(0);
+        if (value.isTargetReached() && value.target != 0) {
+            value.set(0, release);
         }
     }
 
     public void start(float value) {
-        this.value.timer.duration = attack;
-        this.value.setTarget(value + this.value.getCurrent());
+        this.value.set(value + this.value.get(), attack);
     }
 
     public float getValue() {
-        return value.getCurrent();
+        return value.get();
     }
 
 }

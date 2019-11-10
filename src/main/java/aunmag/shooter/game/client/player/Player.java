@@ -86,7 +86,7 @@ public class Player extends Operative {
 
         direction += MOUSE_SENSITIVITY
             * Context.main.getInput().mouse.velocity.x
-            * (1 - actor.isAiming.getCurrent() * MOUSE_SENSITIVITY_AIMING_FACTOR);
+            * (1 - actor.isAiming.get() * MOUSE_SENSITIVITY_AIMING_FACTOR);
 
         actor.control.turnTo(direction);
     }
@@ -137,7 +137,7 @@ public class Player extends Operative {
         var offset = camera.toMeters(
                 window.getHeight()
                 * CAMERA_OFFSET_RATIO
-                * (1.0f + actor.isAiming.getCurrent())
+                * (1 + actor.isAiming.get())
         );
 
         camera.setRadians(direction);

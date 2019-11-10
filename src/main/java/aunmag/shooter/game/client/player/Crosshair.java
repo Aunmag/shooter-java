@@ -11,14 +11,14 @@ public class Crosshair {
 
     public void render() {
         Context.main.getPlayerActor().ifPresent(shooter -> {
-            if (shooter.isAiming.isCompletelyOff()) {
+            if (shooter.isAiming.isTurnedOff()) {
                 return;
             }
 
             var window = Context.main.getWindow();
             var camera = Context.main.getCamera();
 
-            var degree = shooter.isAiming.getCurrent();
+            var degree = shooter.isAiming.get();
             var radians = shooter.body.radians;
 
             var cos = (float) Math.cos(radians);

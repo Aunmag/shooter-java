@@ -20,7 +20,7 @@ public class Actor extends Operative {
     public static final float VELOCITY_FACTOR_ASIDE = 0.6f;
     public static final float VELOCITY_FACTOR_BACK = 0.8f;
     public static final float AIMING_TIME = 0.25f;
-    public static final float AIMING_FLEX = 1.25f;
+    public static final float AIMING_TENSITY = 1.25f;
     public static final float AIMING_VELOCITY_AFFECT = 0.5f;
     public static final float AIMING_STAMINA_COST = 0.5f;
     public static final float WALKING_STAMINA_COST = 0.7f;
@@ -59,10 +59,7 @@ public class Actor extends Operative {
         hands = new Hands(this);
         stamina = new Stamina(this);
         decayTimer = new Timer(world.time, DECAY_TIME);
-
-        isAiming = new FluidToggle(world.time, AIMING_TIME);
-        isAiming.setFlexDegree(AIMING_FLEX);
-
+        isAiming = new FluidToggle(world.time, AIMING_TIME, AIMING_TENSITY);
         kinetics = new Kinetics(type.mass);
 
         audioSource.setVolume(5);
@@ -89,7 +86,7 @@ public class Actor extends Operative {
 
     private void updateStamina() {
         stamina.update();
-        var spend = AIMING_STAMINA_COST * isAiming.getCurrent();
+        var spend = AIMING_STAMINA_COST * isAiming.get();
 
         if (control.isWalking()) {
             spend += WALKING_STAMINA_COST;
@@ -166,12 +163,10 @@ public class Actor extends Operative {
 
     private void updateAiming() {
         if (control.isAiming()) {
-            isAiming.on();
+            isAiming.turnOn();
         } else {
-            isAiming.off();
+            isAiming.turnOff();
         }
-
-        isAiming.update();
     }
 
     private void walk() {
@@ -229,7 +224,7 @@ public class Actor extends Operative {
             velocity *= type.velocityFactorSprint * efficiency + (1 - efficiency);
         }
 
-        velocity -= velocity * isAiming.getCurrent() * AIMING_VELOCITY_AFFECT;
+        velocity -= velocity * isAiming.get() * AIMING_VELOCITY_AFFECT;
         velocity *= health;
 
         var moveX = (float) (velocity * Math.cos(body.radians + radiansTurn));

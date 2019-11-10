@@ -10,7 +10,7 @@ public class CameraShaker {
     private static final float FACTOR = 0.125f;
     private static final float ENVELOPE_ATTACK = 0.04f;
     private static final float ENVELOPE_RELEASE = 0.32f;
-    private static final float ENVELOPE_BEND = 0.8f;
+    private static final float ENVELOPE_TENSITY = 0.8f;
 
     private final Envelope envelope;
 
@@ -18,7 +18,7 @@ public class CameraShaker {
         envelope = new Envelope(
             ENVELOPE_ATTACK,
             ENVELOPE_RELEASE,
-            ENVELOPE_BEND,
+            ENVELOPE_TENSITY,
             time
         );
     }

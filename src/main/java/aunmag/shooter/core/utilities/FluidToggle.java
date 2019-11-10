@@ -9,30 +9,36 @@ public class FluidToggle extends FluidValue {
         super(time, duration);
     }
 
-    public void on() {
-        super.setTarget(VALUE_MAX);
+    public FluidToggle(TimeFlow time, float duration, float tensity) {
+        super(time, duration, tensity);
     }
 
-    public void off() {
-        super.setTarget(VALUE_MIN);
+    public void turnOn() {
+        if (!isTurningOn()) {
+            set(VALUE_MAX);
+        }
     }
 
-    public void toggle() {
-        var toggleOn = getTarget() == VALUE_MIN;
-        super.setTarget(toggleOn ? VALUE_MAX : VALUE_MIN);
+    public void turnOff() {
+        if (!isTurningOff()) {
+            set(VALUE_MIN);
+        }
     }
 
-    @Override
-    public void setTarget(float target) {
-        super.setTarget(UtilsMath.limit(target, VALUE_MIN, VALUE_MAX));
+    public boolean isTurningOn() {
+        return target == VALUE_MAX;
     }
 
-    public boolean isCompletelyOn() {
-        return getCurrent() >= VALUE_MAX;
+    public boolean isTurningOff() {
+        return target == VALUE_MIN;
     }
 
-    public boolean isCompletelyOff() {
-        return getCurrent() <= VALUE_MIN;
+    public boolean isTurnedOn() {
+        return isTargetReached() && isTurningOn();
+    }
+
+    public boolean isTurnedOff() {
+        return isTargetReached() && isTurningOff();
     }
 
 }
