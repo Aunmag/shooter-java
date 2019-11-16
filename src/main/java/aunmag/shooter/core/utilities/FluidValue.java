@@ -33,6 +33,11 @@ public class FluidValue {
         );
     }
 
+    // TODO: Rename
+    public boolean isSame() {
+        return target == source;
+    }
+
     public boolean isTargetReached() {
         return timer.isDone();
     }

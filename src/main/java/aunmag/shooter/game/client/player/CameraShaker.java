@@ -17,6 +17,7 @@ public class CameraShaker {
     public CameraShaker(TimeFlow time) {
         envelope = new Envelope(
             ENVELOPE_ATTACK,
+            0, // TODO: Try to use sustain
             ENVELOPE_RELEASE,
             ENVELOPE_TENSITY,
             time

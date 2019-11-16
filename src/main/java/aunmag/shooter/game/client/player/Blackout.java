@@ -26,6 +26,7 @@ public class Blackout {
         this.texture = Texture.manager.asCover().provide("images/gui/blackout1600");
         this.hurt = new Envelope(
             ENVELOPE_ATTACK,
+            0, // TODO: Try to use sustain
             ENVELOPE_RELEASE,
             player.world.time
         );
