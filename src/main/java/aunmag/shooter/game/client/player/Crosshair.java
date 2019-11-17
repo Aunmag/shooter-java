@@ -7,34 +7,42 @@ import org.lwjgl.opengl.GL11;
 
 public class Crosshair {
 
-    private static final int size = 5;
+    private static final int WIDTH = 5;
+    private static final float LENGTH_FACTOR = 0.75F;
 
     public void render() {
         Context.main.getPlayerActor().ifPresent(shooter -> {
-            if (shooter.isAiming.isTurnedOff()) {
+            var degree = shooter.isAiming.get();
+            if (degree == 0) {
                 return;
             }
 
             var window = Context.main.getWindow();
             var camera = Context.main.getCamera();
+            var direction = shooter.body.radians;
+            var cos = (float) Math.cos(direction);
+            var sin = (float) Math.sin(direction);
+            var length = camera.toMeters(window.getSizeY() * degree * LENGTH_FACTOR);
+            var x = shooter.body.position.x + (length + shooter.body.radius) * cos;
+            var y = shooter.body.position.y + (length + shooter.body.radius) * sin;
 
-            var degree = shooter.isAiming.get();
-            var radians = shooter.body.radians;
+            GL11.glColor4f(1, 1, 1, degree);
+            GL11.glLineStipple(WIDTH, (short) 0xAAAA);
+            GL11.glEnable(GL11.GL_LINE_STIPPLE);
+            Graphics.draw.line(
+                    x,
+                    y,
+                    x - length * cos,
+                    y - length * sin,
+                    camera::project
+            );
+            GL11.glDisable(GL11.GL_LINE_STIPPLE);
 
-            var cos = (float) Math.cos(radians);
-            var sin = (float) Math.sin(radians);
-            var distance = camera.toMeters(window.getCenterY() * degree);
-            var x = shooter.body.position.x + (distance + shooter.body.radius) * cos;
-            var y = shooter.body.position.y + (distance + shooter.body.radius) * sin;
-
-            var offset = camera.toMeters(size);
-            var offsetX1 = offset * (float) Math.cos(radians + UtilsMath.PIx0_5);
-            var offsetY1 = offset * (float) Math.sin(radians + UtilsMath.PIx0_5);
+            var offset = camera.toMeters(WIDTH);
+            var offsetX1 = offset * (float) Math.cos(direction + UtilsMath.PIx0_5);
+            var offsetY1 = offset * (float) Math.sin(direction + UtilsMath.PIx0_5);
             var offsetX2 = offsetX1 * 3;
             var offsetY2 = offsetY1 * 3;
-
-            var alpha = UtilsMath.limit(distance, 0, 1);
-            GL11.glColor4f(1f, 1f, 1f, alpha);
 
             Graphics.draw.line(
                     x + offsetX1,
@@ -51,13 +59,6 @@ public class Crosshair {
                     y - offsetY2,
                     camera::project
             );
-
-            GL11.glLineStipple(size, (short) 0xAAAA);
-            GL11.glEnable(GL11.GL_LINE_STIPPLE);
-            var x2 = x - distance * cos;
-            var y2 = y - distance * sin;
-            Graphics.draw.line(x, y, x2, y2, camera::project);
-            GL11.glDisable(GL11.GL_LINE_STIPPLE);
         });
     }
 
