@@ -68,8 +68,8 @@ public class ActorType {
             0.225f,
             80_000,
             STRENGTH_DEFAULT,
-            2.58f,
-            2.76f,
+            2.5f,
+            2.0f,
             8,
             STRENGTH_DEFAULT / 16f,
             0.06f
@@ -81,7 +81,7 @@ public class ActorType {
             70_000,
             0.4f * human.strength,
             0.4f * human.velocity,
-            0.4f * human.velocityFactorSprint,
+            1.8f,
             0.4f * human.velocityRotation,
             human.strength / 8f,
             0.2f
