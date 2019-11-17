@@ -58,7 +58,7 @@ public class WeaponType {
         this.recoilDeflection = recoil * 0.25f;
         this.isAutomatic = isAutomatic;
         this.magazine = magazine;
-        this.length = texture.getWidth();
+        this.length = texture.getSizeX();
         this.gripOffset = gripOffset;
     }
 

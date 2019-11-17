@@ -1,13 +1,13 @@
 package aunmag.shooter.core;
 
-import aunmag.shooter.core.basics.BaseQuad;
+import aunmag.shooter.core.utilities.Quad;
 import aunmag.shooter.game.client.Constants;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
-public class Window extends BaseQuad {
+public class Window extends Quad {
 
     public static final int UNDEFINED_ID = 0;
     public final long id;
@@ -26,8 +26,8 @@ public class Window extends BaseQuad {
             setSize(monitorSizeX, monitorSizeY);
         }
 
-        var sizeX = (int) getWidth();
-        var sizeY = (int) getHeight();
+        var sizeX = (int) getSizeX();
+        var sizeY = (int) getSizeY();
 
         projection = new Matrix4f().setOrtho2D(
                 -getCenterX(),
@@ -83,7 +83,7 @@ public class Window extends BaseQuad {
         }
     }
 
-    protected void setSize(float width, float height) {
+    public void setSize(float width, float height) {
         if (isInitialized) {
             var message = "Unable to change window size after initialization";
             System.err.println(message);

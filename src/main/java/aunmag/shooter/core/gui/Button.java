@@ -56,10 +56,10 @@ public class Button extends Label {
 
         Graphics.draw.withColor(isTouched() ? COLOR_TOUCHED : COLOR_DEFAULT);
         Graphics.draw.quad(
-                screenQuad.getPosition().x,
-                screenQuad.getPosition().y,
-                screenQuad.getPosition().x + screenQuad.getWidth(),
-                screenQuad.getPosition().y + screenQuad.getHeight(),
+                screenQuad.position.x,
+                screenQuad.position.y,
+                screenQuad.position.x + screenQuad.getSizeX(),
+                screenQuad.position.y + screenQuad.getSizeY(),
                 true,
                 Context.main.getWindow()::project
         );
@@ -77,7 +77,7 @@ public class Button extends Label {
 
     public boolean isTouched() {
         var input = Context.main.getInput();
-        return isEnabled() && screenQuad.calculateIsPointInside(
+        return isEnabled() && screenQuad.contains(
                 input.mouse.position.x,
                 input.mouse.position.y
         );

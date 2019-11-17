@@ -56,8 +56,8 @@ public class TextureManager extends ResourceManager<Texture> {
         if (modelSizeX == null || modelSizeY == null) {
             float sizeX = image.getWidth();
             float sizeY = image.getHeight();
-            float widowSizeX = Context.main.getWindow().getWidth();
-            float widowSizeY = Context.main.getWindow().getHeight();
+            float widowSizeX = Context.main.getWindow().getSizeX();
+            float widowSizeY = Context.main.getWindow().getSizeY();
 
             if (type == Type.SPRITE) {
                 sizeX /= Configs.getPixelsPerMeter();

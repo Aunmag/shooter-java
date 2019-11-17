@@ -29,8 +29,8 @@ public class Parameter extends Component {
         var pulse = getPulse();
         var window = Context.main.getWindow();
 
-        var x = GRID.getStepX() * (label.quad.getPosition().x + 2.0f);
-        var y = GRID.getStepY() * (label.quad.getPosition().y + 0.3f);
+        var x = GRID.getStepX() * (label.quad.position.x + 2.0f);
+        var y = GRID.getStepY() * (label.quad.position.y + 0.3f);
         var sizeX = GRID.getStepX() * 3.0f;
         var sizeY = GRID.getStepY() / 2.0f;
 

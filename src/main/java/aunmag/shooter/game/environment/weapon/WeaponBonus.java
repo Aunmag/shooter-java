@@ -57,8 +57,8 @@ public class WeaponBonus extends Operative {
         if (giver != null) {
             body.position.x = giver.body.position.x;
             body.position.y = giver.body.position.y;
-            text.getPosition().x = giver.body.position.x;
-            text.getPosition().y = giver.body.position.y;
+            text.position.x = giver.body.position.x;
+            text.position.y = giver.body.position.y;
         }
 
         timer.next();

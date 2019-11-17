@@ -1,6 +1,6 @@
 package aunmag.shooter.core.structures;
 
-import aunmag.shooter.core.basics.BaseQuad;
+import aunmag.shooter.core.utilities.Quad;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -22,7 +22,7 @@ public class Model {
     private int texturesId;
     private int indicesId;
 
-    public static Model createFromQuad(BaseQuad quad) {
+    public static Model createFromQuad(Quad quad) {
         float[] vertices = new float[] {
                 -quad.getCenterX(), +quad.getCenterY(), 0,
                 -quad.getCenterX(), -quad.getCenterY(), 0,

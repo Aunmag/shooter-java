@@ -1,27 +1,23 @@
 package aunmag.shooter.core;
 
-import aunmag.shooter.core.basics.BaseObject;
 import aunmag.shooter.core.utilities.Mount;
+import aunmag.shooter.core.utilities.Operative;
 import aunmag.shooter.core.utilities.UtilsMath;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-public class Camera extends BaseObject {
+public class Camera extends Operative {
 
     private Matrix4f viewMatrix = new Matrix4f();
+    public final Vector2f position = new Vector2f(0, 0);
+    public float radians = 0;
     public float scale = 15;
-    public final Mount mount;
-
-    public Camera() {
-        super(new Vector2f(0, 0), 0);
-        mount = new Mount(getPosition(), null);
-    }
+    public final Mount mount = new Mount(position, null);
 
     @Override
     public void update() {
-        var angle = UtilsMath.correctRadians(getRadians() - UtilsMath.PIx0_5);
-        var position = getPosition();
+        var angle = UtilsMath.correctRadians(radians - UtilsMath.PIx0_5);
 
         viewMatrix = new Matrix4f(Context.main.getWindow().projection)
                 .rotateZ(-angle)

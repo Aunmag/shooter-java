@@ -29,8 +29,8 @@ public class Terrain {
     private void renderGrid() {
         var camera = Context.main.getCamera();
         var length = Math.abs(camera.scale / 2);
-        var x = camera.getPosition().x;
-        var y = camera.getPosition().y;
+        var x = camera.position.x;
+        var y = camera.position.y;
         var step = 1f;
 
         GL11.glColor3f(0.4f, 0.4f, 0.4f);
@@ -57,8 +57,8 @@ public class Terrain {
         var camera = Context.main.getCamera();
         var blocks = (int) Math.ceil((camera.scale + BLOCK_SIZE) / BLOCK_SIZE / 2) * 2;
         var projection = camera.toViewProjection(
-                round(camera.getPosition().x, BLOCK_SIZE),
-                round(camera.getPosition().y, BLOCK_SIZE),
+                round(camera.position.x, BLOCK_SIZE),
+                round(camera.position.y, BLOCK_SIZE),
                 0
         );
 

@@ -35,8 +35,8 @@ public class CameraShaker {
         }
 
         var camera = Context.main.getCamera();
-        var radians = UtilsMath.correctRadians(camera.getRadians() + envelope.getValue());
-        camera.setRadians(radians);
+        var radians = UtilsMath.correctRadians(camera.radians + envelope.getValue());
+        camera.radians = radians;
         camera.mount.radians = radians;
         camera.mount.apply();
     }

@@ -1,8 +1,8 @@
 package aunmag.shooter.core.gui.font;
 
 import aunmag.shooter.core.Context;
-import aunmag.shooter.core.basics.BaseQuad;
 import aunmag.shooter.core.graphics.Graphics;
+import aunmag.shooter.core.utilities.Quad;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -10,7 +10,7 @@ import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
-public class Text extends BaseQuad {
+public class Text extends Quad {
 
     public static final TextManager manager = new TextManager();
 
@@ -46,8 +46,8 @@ public class Text extends BaseQuad {
     }
 
     public void updateProjection() {
-        var x = getPosition().x();
-        var y = getPosition().y();
+        var x = position.x;
+        var y = position.y;
         Vector2f position;
 
         if (isOnWorldRendering) {

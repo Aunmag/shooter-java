@@ -1,14 +1,14 @@
 package aunmag.shooter.core.structures;
 
 import aunmag.shooter.core.Context;
-import aunmag.shooter.core.basics.BaseQuad;
+import aunmag.shooter.core.utilities.Quad;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import java.awt.image.BufferedImage;
 
-public class Texture extends BaseQuad {
+public class Texture extends Quad {
 
     public static final TextureManager manager = new TextureManager();
     public static final Texture empty = new Texture(
@@ -108,7 +108,7 @@ public class Texture extends BaseQuad {
         super.onRemove();
     }
 
-    protected void setSize(float width, float height) {
+    public void setSize(float width, float height) {
         super.setSize(width, height);
         model = Model.createFromQuad(this);
     }

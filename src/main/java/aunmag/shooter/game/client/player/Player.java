@@ -135,12 +135,12 @@ public class Player extends Operative {
         var camera = Context.main.getCamera();
         var window = Context.main.getWindow();
         var offset = camera.toMeters(
-                window.getHeight()
+                window.getSizeY()
                 * CAMERA_OFFSET_RATIO
                 * (1 + actor.isAiming.get())
         );
 
-        camera.setRadians(direction);
+        camera.radians = direction;
         camera.mount.length = offset;
         camera.mount.radians = direction;
         camera.mount.apply();

@@ -18,8 +18,8 @@ public class Grid {
     }
 
     public void refresh() {
-        stepX = Context.main.getWindow().getWidth() / slices;
-        stepY = Context.main.getWindow().getHeight() / slices;
+        stepX = Context.main.getWindow().getSizeX() / slices;
+        stepY = Context.main.getWindow().getSizeY() / slices;
     }
 
     public void render() {
@@ -30,8 +30,8 @@ public class Grid {
             var x = n * stepX;
             var y = n * stepY;
 
-            Graphics.draw.line(x, 0, x, window.getHeight(), window::project);
-            Graphics.draw.line(0, y, window.getWidth(), y, window::project);
+            Graphics.draw.line(x, 0, x, window.getSizeY(), window::project);
+            Graphics.draw.line(0, y, window.getSizeX(), y, window::project);
         }
     }
 
