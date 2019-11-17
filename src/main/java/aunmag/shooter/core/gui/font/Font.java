@@ -3,6 +3,7 @@ package aunmag.shooter.core.gui.font;
 import aunmag.shooter.core.structures.Texture;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class Font {
 
             try {
                 font = new FontLoader().load(n);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println(String.format("Failed to load \"%s\" font!", n));
                 e.printStackTrace();
             }

@@ -17,7 +17,7 @@ public class FontLoader {
     private Map<String, String> meta = new HashMap<>();
     private List<HashMap<String, String>> charactersMeta = new ArrayList<>();
 
-    public Font load(String name) throws Exception {
+    public Font load(String name) throws IOException {
         read(name);
 
         var padding = meta.get("padding").split(",");

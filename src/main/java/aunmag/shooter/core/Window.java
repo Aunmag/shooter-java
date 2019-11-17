@@ -83,6 +83,7 @@ public class Window extends Quad {
         }
     }
 
+    @Override
     public void setSize(float width, float height) {
         if (isInitialized) {
             var message = "Unable to change window size after initialization";

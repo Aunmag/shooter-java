@@ -7,6 +7,7 @@ import org.joml.Vector4fc;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Shader {
     private static String readFile(Class cls, String type) {
         try {
             return UtilsFile.read(cls.getSimpleName() + '.' + type, cls);
-        } catch (Exception e) {
+        } catch (IOException e) {
             return null;
         }
     }
@@ -96,6 +97,7 @@ public class Shader {
             GL20.glDeleteProgram(shader.id);
         }
     }
+
     protected static void setUniform(int location, int value) {
         GL20.glUniform1i(location, value);
     }

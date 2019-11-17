@@ -6,6 +6,7 @@ import aunmag.shooter.core.utilities.ResourceManager;
 import org.jetbrains.annotations.Nullable;
 
 import javax.imageio.ImageIO;
+import java.io.IOException;
 
 public class TextureManager extends ResourceManager<Texture> {
 
@@ -42,7 +43,7 @@ public class TextureManager extends ResourceManager<Texture> {
     }
 
     @Override
-    public Texture load(String path) throws Exception {
+    public Texture load(String path) throws IOException {
         var image = ImageIO.read(TextureManager.class.getResourceAsStream(path));
 
         var type = withType;

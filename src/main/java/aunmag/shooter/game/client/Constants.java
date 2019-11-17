@@ -1,5 +1,6 @@
 package aunmag.shooter.game.client;
 
+import java.io.IOException;
 import java.util.Properties;
 
 public final class Constants {
@@ -18,7 +19,7 @@ public final class Constants {
             properties.load(inputStream);
             version = properties.getProperty("version");
             inputStream.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 

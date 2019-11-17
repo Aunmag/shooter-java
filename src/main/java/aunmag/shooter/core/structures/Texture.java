@@ -108,6 +108,7 @@ public class Texture extends Quad {
         super.onRemove();
     }
 
+    @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);
         model = Model.createFromQuad(this);

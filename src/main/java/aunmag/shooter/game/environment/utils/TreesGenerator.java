@@ -75,11 +75,11 @@ public class TreesGenerator {
     }
 
     private DecorationType generateType() {
-        return UtilsRandom.chose(
+        return UtilsRandom.chose(new DecorationType[] {
             DecorationType.tree1,
             DecorationType.tree2,
             DecorationType.tree3
-        );
+        }).orElse(DecorationType.tree1);
     }
 
     private boolean checkIsPositionUnoccupied(Vector2f position) {

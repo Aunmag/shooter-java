@@ -2,6 +2,7 @@ package aunmag.shooter.core.utilities;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public abstract class ResourceManager<T extends Operative> {
 
             try {
                 resource = load(path);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 UtilsFile.printReadError(path);
             }
 
@@ -27,7 +28,7 @@ public abstract class ResourceManager<T extends Operative> {
         });
     }
 
-    public abstract T load(String path) throws Exception;
+    public abstract T load(String path) throws IOException;
 
     public void resetSettings() {}
 

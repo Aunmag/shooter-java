@@ -17,7 +17,7 @@ public class Lazy<T> {
 
     public void recompute() {
         if (isRecomputing) {
-            throw new RuntimeException("Recursive recomputing");
+            throw new IllegalStateException("Recursive recomputing");
         } else {
             isRecomputing = true;
             value = supplier.get();

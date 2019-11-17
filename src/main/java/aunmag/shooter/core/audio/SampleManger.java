@@ -7,10 +7,12 @@ import org.lwjgl.stb.STBVorbis;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.libc.LibCStdlib;
 
+import java.io.IOException;
+
 public final class SampleManger extends ResourceManager<Sample> {
 
     @Override
-    public Sample load(String path) throws Exception {
+    public Sample load(String path) throws IOException {
         var bytes = UtilsFile.readByteBuffer(path);
 
         MemoryStack.stackPush();
@@ -33,7 +35,7 @@ public final class SampleManger extends ResourceManager<Sample> {
         MemoryStack.stackPop();
 
         if (data == null) {
-            throw new RuntimeException("Failed to read audio data");
+            throw new IOException("Failed to read audio data");
         }
 
         var sample = new Sample(channels > 1, data, frequency);

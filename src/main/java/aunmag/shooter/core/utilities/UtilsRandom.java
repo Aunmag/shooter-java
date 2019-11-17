@@ -78,14 +78,4 @@ public final class UtilsRandom {
         }
     }
 
-    public static <T> T chose(T first, T... values) {
-        var index = RANDOM.nextInt(values.length + 1);
-
-        if (index == values.length) {
-            return first;
-        } else {
-            return values[index];
-        }
-    }
-
 }
