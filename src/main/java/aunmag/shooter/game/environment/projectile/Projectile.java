@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 public class Projectile extends Operative {
 
-    private static final float VELOCITY_MIN = 0.5f;
+    private static final float VELOCITY_MIN = 5;
     private static final float VELOCITY_FACTOR = 1f / 5f;
     private static final float PUSH_FACTOR = 30;
     private static final float PUSH_FACTOR_SPIN = 8;
@@ -99,9 +99,7 @@ public class Projectile extends Operative {
     }
 
     private void updateVelocity() {
-        var velocity = kinetics.velocity;
-
-        if (Math.abs(velocity.x) + Math.abs(velocity.y) < VELOCITY_MIN) {
+        if (kinetics.velocity.lengthSquared() < VELOCITY_MIN * VELOCITY_MIN) {
             stop();
         }
     }
