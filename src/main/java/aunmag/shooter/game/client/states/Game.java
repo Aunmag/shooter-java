@@ -1,6 +1,7 @@
 package aunmag.shooter.game.client.states;
 
 import aunmag.shooter.core.utilities.Operative;
+import aunmag.shooter.core.utilities.UtilsMath;
 import aunmag.shooter.game.client.Context;
 import aunmag.shooter.game.client.player.Player;
 import aunmag.shooter.game.environment.World;
@@ -37,6 +38,13 @@ public class Game extends Operative {
 
         if (Context.main.getInput().keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
             Context.main.application.setPause(true);
+        }
+
+        var player = this.player.getActor();
+        if (player == null) {
+            world.time.setSpeed(1);
+        } else {
+            world.time.setSpeed(UtilsMath.limit(1 - player.isAiming.get(), 0.2f, 1.0f));
         }
     }
 
