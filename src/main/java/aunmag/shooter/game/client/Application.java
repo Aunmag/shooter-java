@@ -29,6 +29,7 @@ public final class Application extends aunmag.shooter.core.Application {
         setPause(false);
     }
 
+    @Override
     public void update() {
         if (Context.main.getInput().keyboard.isKeyPressed(GLFW.GLFW_KEY_BACKSPACE)) {
             isDebug = !isDebug;
@@ -41,6 +42,7 @@ public final class Application extends aunmag.shooter.core.Application {
         }
     }
 
+    @Override
     public void render() {
         if (isPause) {
             pause.render();
@@ -49,6 +51,7 @@ public final class Application extends aunmag.shooter.core.Application {
         }
     }
 
+    @Override
     public void onTerminate() {
         endGame();
         super.onTerminate();

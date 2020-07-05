@@ -24,7 +24,6 @@ public class Player extends Operative {
     @Nullable private Blackout blackout = null;
     @Nullable public CameraShaker cameraShaker = null;
     private final Crosshair crosshair = new Crosshair();
-    private float direction = 0;
     private float zooming = 0;
     private boolean isAiming = false;
 
@@ -84,11 +83,9 @@ public class Player extends Operative {
             return;
         }
 
-        direction += MOUSE_SENSITIVITY
+        actor.body.radians += MOUSE_SENSITIVITY
             * Context.main.getInput().mouse.velocity.x
             * (1 - actor.isAiming.get() * MOUSE_SENSITIVITY_AIMING_FACTOR);
-
-        actor.control.turnTo(direction);
     }
 
     private void updateZooming() {
@@ -140,9 +137,9 @@ public class Player extends Operative {
                 * (1 + actor.isAiming.get())
         );
 
-        camera.radians = direction;
+        camera.radians = actor.body.radians;
         camera.mount.length = offset;
-        camera.mount.radians = direction;
+        camera.mount.radians = actor.body.radians;
         camera.mount.apply();
     }
 
@@ -172,7 +169,6 @@ public class Player extends Operative {
         } else {
             blackout = new Blackout(actor);
             cameraShaker = new CameraShaker(actor.world.time);
-            direction = actor.getDirectionDesired();
             Context.main.getCamera().mount.holder = actor.body.position;
         }
     }

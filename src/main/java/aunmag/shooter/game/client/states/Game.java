@@ -11,10 +11,12 @@ import org.lwjgl.glfw.GLFW;
 public class Game extends Operative {
 
     public final Player player = new Player();
-    private World world = new World();
-    private Scenario scenario = new ScenarioEncircling(world);
+    private World world;
+    private Scenario scenario;
 
     public Game() {
+        world = new World();
+        scenario = new ScenarioEncircling(world);
         player.setActor(scenario.createPlayableActor());
     }
 
