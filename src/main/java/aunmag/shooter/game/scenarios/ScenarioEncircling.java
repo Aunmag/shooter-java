@@ -73,7 +73,7 @@ public class ScenarioEncircling extends Scenario {
     @Override
     public Actor createPlayableActor() {
         var actor = new Actor(ActorType.human, world, 0, 0, (float) -UtilsMath.PIx0_5);
-        actor.setWeapon(new Weapon(world, WeaponType.pm));
+        actor.setWeapon(new Weapon(world, WeaponType.aks74u));
         world.actors.all.add(actor);
         return actor;
     }
@@ -131,7 +131,7 @@ public class ScenarioEncircling extends Scenario {
     private void startNextWave() {
         wave++;
         zombiesToSpawn = ZOMBIES_QUANTITY_INITIAL * wave * wave;
-        bonusChance = wave / (float) zombiesToSpawn;
+        bonusChance = wave / (float) zombiesToSpawn * 2;
 
         zombie = ActorType.clone(ActorType.zombie, getZombiesSkill());
         zombieAgile = ActorType.clone(ActorType.zombieAgile, getZombiesSkill());

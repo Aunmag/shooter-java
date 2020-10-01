@@ -48,9 +48,12 @@ public class World extends Operative {
         }
 
         bonuses.render();
-        actors.render();
         projectiles.render();
         GL11.glLineWidth(1f);
+        Context.main.getShader().bind();
+        actors.render();
+//        projectiles.render();
+//        GL11.glLineWidth(1f);
 
         if (Context.main.isDebug()) {
             ais.render();

@@ -25,14 +25,7 @@ public class CollisionCLDetails {
                 sin * distanceToCenter1
         );
 
-        var distanceToCenter2 = intersection.distance(circle.position);
-        var distanceToEdge = circle.radius - distanceToCenter2;
-        intersection.sub(
-                cos * distanceToEdge,
-                sin * distanceToEdge
-        );
-
-        var deviation = distanceToCenter2 / circle.radius;
+        var deviation = intersection.distance(circle.position) / circle.radius;
 
         var x1 = line.position.x - circle.position.x;
         var y1 = line.position.y - circle.position.y;
